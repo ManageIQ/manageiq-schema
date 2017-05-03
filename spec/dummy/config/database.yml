@@ -1,0 +1,23 @@
+---
+base: &base
+  adapter: postgresql
+  encoding: utf8
+  username: root
+  password: smartvm
+  pool: 5
+  wait_timeout: 5
+  min_messages: warning
+
+development:
+  <<: *base
+  database: dummy_development
+  min_messages: notice
+
+production:
+  <<: *base
+  database: dummy_production
+
+test: &test
+  <<: *base
+  pool: 3
+  database: dummy_test
