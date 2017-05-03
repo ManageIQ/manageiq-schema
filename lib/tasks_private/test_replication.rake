@@ -14,7 +14,7 @@ class EvmTestSetupReplication
 
   def write_released_migrations
     file_contents = released_migrations.sort.join("\n")
-    File.write(Rails.root.join("spec/replication/util/data/previous_migrations"), file_contents)
+    File.write(ManageIQ::Schema::Engine.root.join("spec/replication/util/data/previous_migrations"), file_contents)
   end
 
   private
@@ -24,7 +24,7 @@ class EvmTestSetupReplication
       return []
     end
     files = `git ls-tree -r --name-only #{TEST_BRANCH} db/migrate/`
-    return [] unless $CHILD_STATUS.success?
+    return [] unless $?.success?
 
     migrations = files.split.map do |path|
       filename = path.split("/")[-1]

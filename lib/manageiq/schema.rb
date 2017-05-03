@@ -1,9 +1,10 @@
+require "manageiq/schema/version"
 require "manageiq/schema/engine"
 
 require 'gems/pending/util/miq-password'
+require 'more_core_extensions/all' # TODO: Move this into specific migrations that need it
 
-module ManageIQ
-  module Schema
-    # Your code goes here...
-  end
-end
+require 'migration_helper'
+require 'migration_stub_helper'
+require 'reserve'
+require 'reserved_mixin'
