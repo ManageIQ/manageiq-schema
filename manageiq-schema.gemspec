@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{db,lib}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
 
   s.add_dependency "rails", "~> 5.0.2"
+  s.add_dependency "manageiq-gems-pending"  # This is just for MiqPassword for now
 
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "simplecov"

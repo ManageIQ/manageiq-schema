@@ -12,3 +12,5 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
+
+gem "manageiq-gems-pending", :git => "https://github.com/ManageIQ/manageiq-gems-pending", :branch => "master"

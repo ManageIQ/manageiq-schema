@@ -11,7 +11,9 @@ describe EncryptMiqDatabaseRegistrationHttpProxyPasswordField do
 
       migrate
 
-      expect(miq_database_stub.first.registration_http_proxy_password).to be_encrypted(password)
+      encrypted = miq_database_stub.first.registration_http_proxy_password
+      expect(MiqPassword.encrypted?(encrypted)).to be_truthy
+      expect(MiqPassword.decrypt(encrypted)).to eq password
     end
   end
 
