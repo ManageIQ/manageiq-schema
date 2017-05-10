@@ -1,5 +1,3 @@
-require_relative "./evm_test_helper"
-
 if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
 namespace :test do
   namespace :replication do
