@@ -16,5 +16,7 @@ RSpec.configure do |config|
 
   config.extend  Spec::Support::MigrationHelper::DSL
   config.include Spec::Support::MigrationHelper, :migrations => :up
+  config.include Spec::Support::MigrationIdRegionsHelper, :migrations => :up
   config.include Spec::Support::MigrationHelper, :migrations => :down
+  config.include Spec::Support::MigrationIdRegionsHelper, :migrations => :down
 end
