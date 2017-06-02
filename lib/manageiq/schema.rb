@@ -1,6 +1,6 @@
 require "manageiq/schema/engine"
 
-module Manageiq
+module ManageIQ
   module Schema
     # Your code goes here...
   end

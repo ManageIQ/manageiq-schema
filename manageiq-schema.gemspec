@@ -6,7 +6,7 @@ require "manageiq/schema/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "manageiq-schema"
-  s.version     = Manageiq::Schema::VERSION
+  s.version     = ManageIQ::Schema::VERSION
   s.authors     = ["ManageIQ Developers"]
   s.homepage    = "https://github.com/ManageIQ/manageiq-schema"
   s.summary     = "SQL Schema and migrations for ManageIQ"
