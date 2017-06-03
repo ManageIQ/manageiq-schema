@@ -8,7 +8,7 @@ describe "database schema" do
   end
 
   it "is structured as expected" do
-    message = EvmDatabase.check_schema
+    message = ManageIQ::Schema::Checker.check_schema
 
     expect(message).to be_nil, invalid_schema_message(message)
   end

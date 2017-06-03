@@ -1,4 +1,4 @@
-describe EvmDatabase do
+describe ManageIQ::Schema::Checker do
   subject { described_class }
 
   context "schema checking" do

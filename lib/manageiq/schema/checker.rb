@@ -1,5 +1,6 @@
-class EvmDatabase
+module ManageIQ::Schema::Checker
   SCHEMA_FILE = ManageIQ::Schema::Engine.root.join("db/schema.yml").freeze
+  SYSTEM_TABLES = %w(ar_internal_metadata schema_migrations repl_events repl_monitor repl_nodes).freeze
 
   # Determines if the schema currently being used is the same as the one we expect
   #
@@ -52,8 +53,8 @@ class EvmDatabase
     end
 
     def check_schema_tables(connection)
-      current_tables  = current_schema(connection).keys - MiqPglogical::ALWAYS_EXCLUDED_TABLES
-      expected_tables = expected_schema.keys - MiqPglogical::ALWAYS_EXCLUDED_TABLES
+      current_tables  = current_schema(connection).keys - SYSTEM_TABLES
+      expected_tables = expected_schema.keys - SYSTEM_TABLES
 
       return if current_tables == expected_tables
 
