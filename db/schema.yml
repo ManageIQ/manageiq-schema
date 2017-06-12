@@ -795,6 +795,8 @@ container_nodes:
 - container_runtime_version
 - max_container_groups
 - created_on
+- old_ems_id
+- deleted_on
 container_port_configs:
 - id
 - ems_ref
