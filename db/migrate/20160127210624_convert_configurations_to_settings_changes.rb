@@ -23,7 +23,7 @@ class ConvertConfigurationsToSettingsChanges < ActiveRecord::Migration[4.2]
 
     adjust_config!(config_type, config)
 
-    deltas = Vmdb::Settings::HashDiffer.changes(TEMPLATES[config_type], config)
+    deltas = HashDiffer.changes(TEMPLATES[config_type], config)
     deltas.each do |d|
       d.merge!(
         :resource_type => "MiqServer",
@@ -48,5 +48,45 @@ class ConvertConfigurationsToSettingsChanges < ActiveRecord::Migration[4.2]
   DATA_DIR = Pathname.new(__dir__).join("data", File.basename(__FILE__, ".rb"))
   TEMPLATES = Dir.glob(DATA_DIR.join("*.tmpl.yml")).sort.each_with_object({}) do |f, h|
     h[File.basename(f, ".tmpl.yml")] = YAML.load_file(f).deep_symbolize_keys
+  end
+
+  # Copied from Vmdb::Settings::HashDiffer to keep a snapshot of it for this migration
+  # Inspired by http://stackoverflow.com/questions/1766741/comparing-ruby-hashes/7178108#7178108
+  class HashDiffer
+    class MissingKey; end
+
+    def self.changes(h1, h2)
+      diff_to_deltas(diff(h1, h2))
+    end
+
+    def self.diff(h1, h2)
+      keys = (h1.keys + h2.keys).uniq
+      keys.each_with_object({}) do |k, result|
+        v1 = h1.key?(k) ? h1[k] : MissingKey
+        v2 = h2.key?(k) ? h2[k] : MissingKey
+        next if v1 == v2
+
+        child =
+          if v1.kind_of?(Hash) && v2.kind_of?(Hash)
+            diff(v1, v2)
+          else
+            v2
+          end
+
+        result[k] = child if child != MissingKey
+      end
+    end
+
+    def self.diff_to_deltas(diff, key_path = "")
+      diff.flat_map do |k, v|
+        new_key_path = [key_path, k].join("/")
+        case v
+        when Hash
+          diff_to_deltas(v, new_key_path)
+        else
+          {:key => new_key_path, :value => v}
+        end
+      end.compact
+    end
   end
 end
