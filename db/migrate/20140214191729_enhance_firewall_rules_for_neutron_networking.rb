@@ -1,6 +1,6 @@
 class EnhanceFirewallRulesForNeutronNetworking < ActiveRecord::Migration[4.2]
   class FirewallRule < ActiveRecord::Base
-    include ReservedMixin
+    include ReservedMigrationMixin
     include MigrationStubHelper # NOTE: Must be included after other mixins
   end
 

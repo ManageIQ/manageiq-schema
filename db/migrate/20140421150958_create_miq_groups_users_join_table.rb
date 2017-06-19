@@ -4,7 +4,7 @@ class CreateMiqGroupsUsersJoinTable < ActiveRecord::Migration[4.2]
   end
 
   class User < ActiveRecord::Base
-    include ReservedMixin
+    include ReservedMigrationMixin
     include MigrationStubHelper # NOTE: Must be included after other mixins
   end
 

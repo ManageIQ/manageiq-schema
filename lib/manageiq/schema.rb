@@ -8,5 +8,8 @@ require 'more_core_extensions/all' # TODO: Move this into specific migrations th
 require "manageiq/schema/checker"
 require 'migration_helper'
 require 'migration_stub_helper'
+
 require 'reserve'
+require 'reserved_shared_mixin'
+require 'reserved_migration_mixin'
 require 'reserved_mixin'

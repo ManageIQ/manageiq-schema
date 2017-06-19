@@ -1,6 +1,6 @@
 class UpgradeHostStorageFromReserved < ActiveRecord::Migration[5.0]
   class HostStorage < ActiveRecord::Base
-    include ReservedMixin
+    include ReservedMigrationMixin
     include MigrationStubHelper
   end
 
