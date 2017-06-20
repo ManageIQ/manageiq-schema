@@ -3,10 +3,6 @@ require File.expand_path("../dummy/config/environment", __FILE__)
 
 require 'rspec/rails'
 
-# TODO: Remove me
-Rails.logger.level = 0
-ActiveSupport::Deprecation.silenced = true
-
 MiqPassword.v2_key = MiqPassword::Key.new
 
 Dir[File.expand_path("support/**/*.rb", __dir__)].each { |f| require f }
