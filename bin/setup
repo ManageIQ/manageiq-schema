@@ -2,5 +2,6 @@
 if [[ -n "$CI" ]]; then
   echo 'gem: --no-ri --no-rdoc --no-document' > ~/.gemrc
   psql -c "CREATE USER root SUPERUSER PASSWORD 'smartvm';" -U postgres
-  rake db:create
+else
+  bundle exec rake spec:setup
 fi

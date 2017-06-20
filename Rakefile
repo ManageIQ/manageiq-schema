@@ -13,4 +13,4 @@ require 'bundler/gem_tasks'
 
 FileList['lib/tasks_private/**/*.rake'].each { |r| load r }
 
-task :default => :spec
+task :default => [:spec, "spec:migrations"]

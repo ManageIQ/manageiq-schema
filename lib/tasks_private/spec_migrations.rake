@@ -1,32 +1,23 @@
-if defined?(RSpec) && defined?(RSpec::Core::RakeTask)
-namespace :test do
+namespace :spec do
   desc "Run all migration specs"
   task :migrations => %w(
-    test:initialize
-    test:migrations:down
-    test:migrations:complete_down
-    test:migrations:up
-    test:migrations:complete_up
+    spec:initialize
+    spec:migrations:down
+    spec:migrations:complete_down
+    spec:migrations:up
+    spec:migrations:complete_up
   )
 
   namespace :migrations do
-    desc "Setup environment for migration specs"
-    task :setup => :setup_db
-
     desc "Run the up migration specs only"
     RSpec::Core::RakeTask.new(:up => :initialize) do |t|
-      rspec_opts  = ["--tag", "migrations:up"]
-      rspec_opts += ["--options", File.expand_path("../../.rspec_ci", __dir__)] if ENV['CI']
-      t.rspec_opts = rspec_opts
-
+      t.rspec_opts = ["--tag", "migrations:up"]
       t.pattern = FileList['spec/migrations/**/*_spec.rb'].sort
     end
 
     desc "Run the down migration specs only"
     RSpec::Core::RakeTask.new(:down => :initialize) do |t|
-      rspec_opts  = ["--tag", "migrations:down"]
-      rspec_opts += ["--options", File.expand_path("../../.rspec_ci", __dir__)] if ENV['CI']
-      t.rspec_opts = rspec_opts
+      t.rspec_opts = ["--tag", "migrations:down"]
 
       # NOTE: Since the upgrade to RSpec 2.12, pattern is automatically sorted
       #       under the covers, so the .reverse here is not honored.  There is
@@ -39,22 +30,26 @@ namespace :test do
       t.pattern = FileList['spec/migrations/**/*_spec.rb'].sort.reverse
     end
 
+    desc "Complete the up migrations to the latest"
     task :complete_up => :initialize do
       puts "** Migrating all the way up"
-      run_rake_via_shell("db:migrate", "VERBOSE" => ENV["VERBOSE"] || "false")
+      run_rake_via_shell("db:migrate")
     end
 
+    desc "Complete the down migrations to 0"
     task :complete_down => :initialize do
       puts "** Migrating all the way down"
-      run_rake_via_shell("db:migrate", "VERSION" => "0", "VERBOSE" => ENV["VERBOSE"] || "false")
+      run_rake_via_shell("db:migrate", "VERSION" => "0")
     end
 
     def run_rake_via_shell(rake_command, env = {})
+      env["RAILS_ENV"] = ENV["RAILS_ENV"] || "test"
+      env["VERBOSE"]   = ENV["VERBOSE"] || "false"
+
       cmd = "bundle exec rake #{rake_command}"
       cmd << " --trace" if Rake.application.options.trace
-      _pid, status = Process.wait2(Kernel.spawn(env, cmd, :chdir => Rails.root))
+      _pid, status = Process.wait2(Kernel.spawn(env, cmd))
       exit(status.exitstatus) if status.exitstatus != 0
     end
   end
 end
-end # ifdef
