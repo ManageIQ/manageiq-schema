@@ -26,10 +26,9 @@ describe MigrateProvisioningManagerToEms do
       expect(ems_stub.count).to eq(1)
       ems = ems_stub.first
       expect(ems).to have_attributes(
-        manager.attributes.slice(
-          "type", "provider_id", "last_refresh_error", "last_refresh_date"
-        )
+        manager.attributes.slice("type", "provider_id", "last_refresh_error")
       )
+      expect(manager.last_refresh_date).to be_within(0.001.seconds).of(ems.last_refresh_date)
       expect(ems.guid).to_not be_nil
 
       os_flavors.each do |f|
@@ -62,10 +61,9 @@ describe MigrateProvisioningManagerToEms do
       expect(prov_manager_stub.count).to eq(1)
       manager = prov_manager_stub.first
       expect(manager).to have_attributes(
-        ems.attributes.slice(
-          "type", "provider_id", "last_refresh_error", "last_refresh_date"
-        )
+        ems.attributes.slice("type", "provider_id", "last_refresh_error")
       )
+      expect(manager.last_refresh_date).to be_within(0.001.seconds).of(ems.last_refresh_date)
 
       os_flavors.each do |f|
         expect(f.reload.provisioning_manager_id).to eq(manager.id)
