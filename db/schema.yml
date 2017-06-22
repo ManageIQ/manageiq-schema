@@ -5018,6 +5018,7 @@ miq_queue:
 - for_user
 - for_user_id
 - expires_on
+- tracking_label
 miq_regions:
 - id
 - region
