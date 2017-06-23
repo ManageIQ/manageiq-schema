@@ -30,22 +30,15 @@ class SetupReleasedMigrations
   private
 
   def released_migrations
-    return [] unless system(fetch_command)
-    files = `git ls-tree -r --name-only #{TEST_BRANCH} db/migrate/`
-    return [] unless $?.success?
+    require 'net/http'
+    json = Net::HTTP.get(URI("https://api.github.com/repos/ManageIQ/manageiq/contents/db/migrate?ref=#{RELEASED_BRANCH}"))
 
-    migrations = files.split.map do |path|
-      filename = path.split("/")[-1]
+    migrations = JSON.parse(json).map do |h|
+      filename = h["path"].split("/")[-1]
       filename.split('_')[0]
-    end
+    end.sort
 
     # eliminate any non-timestamp entries
     migrations.keep_if { |timestamp| timestamp =~ /\d+/ }
-  ensure
-    `git branch -D #{TEST_BRANCH}`
-  end
-
-  def fetch_command
-    "git fetch #{'--depth=1 ' if ENV['CI']}http://github.com/ManageIQ/manageiq.git refs/heads/#{RELEASED_BRANCH}:#{TEST_BRANCH}"
   end
 end
