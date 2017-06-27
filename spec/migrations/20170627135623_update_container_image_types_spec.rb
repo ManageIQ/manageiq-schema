@@ -1,6 +1,6 @@
 require_migration
 
-describe AddStiToContainerImage do
+describe UpdateContainerImageTypes do
   let(:container_image_stub) { migration_stub(:ContainerImage) }
 
   migration_context :up do
