@@ -643,24 +643,6 @@ container_conditions:
 - reason
 - message
 - container_entity_type
-container_definitions:
-- id
-- ems_ref
-- name
-- image
-- image_pull_policy
-- memory
-- cpu_cores
-- container_group_id
-- privileged
-- run_as_user
-- run_as_non_root
-- capabilities_add
-- capabilities_drop
-- command
-- deleted_on
-- ems_id
-- old_ems_id
 container_deployment_nodes:
 - id
 - address
@@ -693,7 +675,7 @@ container_env_vars:
 - name
 - value
 - field_path
-- container_definition_id
+- container_id
 container_groups:
 - id
 - ems_ref
@@ -804,7 +786,7 @@ container_port_configs:
 - port
 - host_port
 - protocol
-- container_definition_id
+- container_id
 - name
 container_projects:
 - id
@@ -948,7 +930,6 @@ containers:
 - name
 - backing_ref
 - last_perf_capture_on
-- container_definition_id
 - type
 - container_image_id
 - reason
@@ -971,6 +952,17 @@ containers:
 - request_memory_bytes
 - limit_cpu_cores
 - limit_memory_bytes
+- image
+- image_pull_policy
+- memory
+- cpu_cores
+- container_group_id
+- privileged
+- run_as_user
+- run_as_non_root
+- capabilities_add
+- capabilities_drop
+- command
 custom_attributes:
 - id
 - section
