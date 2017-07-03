@@ -994,6 +994,8 @@ custom_buttons:
 - name
 - visibility
 - applies_to_id
+- enablement_expression
+- disabled_text
 customization_scripts:
 - id
 - name
