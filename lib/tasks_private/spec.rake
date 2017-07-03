@@ -20,19 +20,37 @@ end
 
 class SetupReleasedMigrations
   RELEASED_BRANCH = "fine".freeze
-  TEST_BRANCH = "setup_released_migrations_branch".freeze
 
   def write_released_migrations
-    file_contents = released_migrations.sort.join("\n")
-    File.write(ManageIQ::Schema::Engine.root.join("spec/replication/util/data/released_migrations"), file_contents)
+    puts "** Writing #{released_migrations_file}..."
+    File.write(released_migrations_file, released_migrations.join("\n"))
+    puts "** Writing #{released_migrations_file}...Complete"
+  rescue
+    STDERR.puts "** ERROR: Unable to write #{released_migrations_file}"
+    raise
   end
 
   private
 
+  def data_dir
+    ManageIQ::Schema::Engine.root.join("spec/replication/util/data")
+  end
+
+  def clone_dir
+    data_dir.join("manageiq")
+  end
+
+  def released_migrations_file
+    data_dir.join("released_migrations")
+  end
+
   def released_migrations
-    return [] unless system(fetch_command)
-    files = `git ls-tree -r --name-only #{TEST_BRANCH} db/migrate/`
-    return [] unless $?.success?
+    raise "Unable to update repo" unless update_repo
+
+    files, success = Dir.chdir(clone_dir) do
+      [`git ls-tree -r --name-only #{RELEASED_BRANCH} db/migrate/`, $?.success?]
+    end
+    raise "Unable to list migration files" unless success
 
     migrations = files.split.map do |path|
       filename = path.split("/")[-1]
@@ -40,12 +58,13 @@ class SetupReleasedMigrations
     end
 
     # eliminate any non-timestamp entries
-    migrations.keep_if { |timestamp| timestamp =~ /\d+/ }
-  ensure
-    `git branch -D #{TEST_BRANCH}`
+    migrations.keep_if { |timestamp| timestamp =~ /\d+/ }.sort
   end
 
-  def fetch_command
-    "git fetch #{'--depth=1 ' if ENV['CI']}http://github.com/ManageIQ/manageiq.git refs/heads/#{RELEASED_BRANCH}:#{TEST_BRANCH}"
+  def update_repo
+    unless Dir.exist?(clone_dir)
+      return false unless system("git clone --bare --depth=1 --branch=#{RELEASED_BRANCH} http://github.com/ManageIQ/manageiq.git #{clone_dir}")
+    end
+    system("git fetch --depth=1 origin #{RELEASED_BRANCH}:#{RELEASED_BRANCH}", :chdir => clone_dir)
   end
 end
