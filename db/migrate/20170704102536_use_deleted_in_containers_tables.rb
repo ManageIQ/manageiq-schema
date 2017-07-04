@@ -1,15 +1,15 @@
 class UseDeletedInContainersTables < ActiveRecord::Migration[5.0]
-  class ContainerDefinition < ActiveRecord::Base;
+  class ContainerDefinition < ActiveRecord::Base
   end
 
   class ContainerGroup < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
   end
 
-  class ContainerImage < ActiveRecord::Base;
+  class ContainerImage < ActiveRecord::Base
   end
 
-  class ContainerProject < ActiveRecord::Base;
+  class ContainerProject < ActiveRecord::Base
   end
 
   class ContainerNode < ActiveRecord::Base
