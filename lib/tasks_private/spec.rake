@@ -20,25 +20,51 @@ end
 
 class SetupReleasedMigrations
   RELEASED_BRANCH = "fine".freeze
-  TEST_BRANCH = "setup_released_migrations_branch".freeze
 
   def write_released_migrations
-    file_contents = released_migrations.sort.join("\n")
-    File.write(ManageIQ::Schema::Engine.root.join("spec/replication/util/data/released_migrations"), file_contents)
+    puts "** Writing #{released_migrations_file}..."
+    File.write(released_migrations_file, released_migrations.join("\n"))
+    puts "** Writing #{released_migrations_file}...Complete"
+  rescue
+    STDERR.puts "** ERROR: Unable to write #{released_migrations_file}"
+    raise
   end
 
   private
 
-  def released_migrations
-    require 'net/http'
-    json = Net::HTTP.get(URI("https://api.github.com/repos/ManageIQ/manageiq/contents/db/migrate?ref=#{RELEASED_BRANCH}"))
+  def data_dir
+    ManageIQ::Schema::Engine.root.join("spec/replication/util/data")
+  end
 
-    migrations = JSON.parse(json).map do |h|
-      filename = h["path"].split("/")[-1]
+  def clone_dir
+    data_dir.join("manageiq")
+  end
+
+  def released_migrations_file
+    data_dir.join("released_migrations")
+  end
+
+  def released_migrations
+    raise "Unable to update repo" unless update_repo
+
+    files, success = Dir.chdir(clone_dir) do
+      [`git ls-tree -r --name-only #{RELEASED_BRANCH} db/migrate/`, $?.success?]
+    end
+    raise "Unable to list migration files" unless success
+
+    migrations = files.split.map do |path|
+      filename = path.split("/")[-1]
       filename.split('_')[0]
-    end.sort
+    end
 
     # eliminate any non-timestamp entries
-    migrations.keep_if { |timestamp| timestamp =~ /\d+/ }
+    migrations.keep_if { |timestamp| timestamp =~ /\d+/ }.sort
+  end
+
+  def update_repo
+    unless Dir.exist?(clone_dir)
+      return false unless system("git clone --bare --depth=1 --branch=#{RELEASED_BRANCH} http://github.com/ManageIQ/manageiq.git #{clone_dir}")
+    end
+    system("git fetch --depth=1 origin #{RELEASED_BRANCH}:#{RELEASED_BRANCH}", :chdir => clone_dir)
   end
 end
