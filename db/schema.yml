@@ -5976,6 +5976,12 @@ showback_rates:
 - showback_price_plan_id
 - created_at
 - updated_at
+- fixed_rate_per_unit
+- fixed_rate_per_time
+- variable_rate_per_unit
+- variable_rate_per_time
+- step_value
+- step_unit
 showback_usage_types:
 - id
 - category
