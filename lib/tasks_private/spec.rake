@@ -9,8 +9,15 @@ namespace :spec do
     SetupReleasedMigrations.new.write_released_migrations
   end
 
+  task :setup_region do
+    ENV["REGION"] ||= (rand(99) + 1).to_s # Ensure we have a random, non-0, region
+    puts "** Creating database with REGION #{ENV["REGION"]}"
+  end
+
+  task :setup_db => [:setup_region, "db:drop", "db:create", "db:migrate"]
+
   desc "Prepare all specs"
-  task :setup => [:initialize, "db:drop", "db:create", "db:migrate", :setup_released_migrations]
+  task :setup => [:initialize, :setup_db, :setup_released_migrations]
 end
 
 desc "Run all specs"
