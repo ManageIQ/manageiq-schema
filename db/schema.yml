@@ -5981,6 +5981,8 @@ showback_rates:
 - variable_rate_per_unit
 - variable_rate_per_time
 - step_value
+- step_time_unit
+- step_time_value
 - step_unit
 showback_usage_types:
 - id
