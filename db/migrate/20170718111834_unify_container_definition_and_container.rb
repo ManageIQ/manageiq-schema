@@ -23,6 +23,9 @@ class UnifyContainerDefinitionAndContainer < ActiveRecord::Migration[5.0]
     belongs_to :container_definition, :class_name => 'UnifyContainerDefinitionAndContainer::ContainerDefinition'
   end
 
+  class MiqQueue < ActiveRecord::Base
+  end
+
   def up
     # attributes
     add_column :containers, :image,              :string
@@ -62,13 +65,15 @@ class UnifyContainerDefinitionAndContainer < ActiveRecord::Migration[5.0]
       ContainerEnvVar.update_all("container_definition_id = (#{join_sql})")
     end
 
-    say_with_time("switch container_definition_id with container_id for security_contexts") do
+    say_with_time("switch resource_id with container_id, resource_type to 'Container' for security_contexts") do
       security_contexts = Arel::Table.new(:security_contexts)
       join_sql = containers.project(containers[:id])
                            .where(containers[:container_definition_id].eq(security_contexts[:resource_id])
                            .and(security_contexts[:resource_type].eq(Arel::Nodes::Quoted.new('ContainerDefinition')))).to_sql
       SecurityContext.where(:resource_type => 'ContainerDefinition').update_all("resource_type = 'Container', resource_id = (#{join_sql})")
     end
+
+    MiqQueue.where(:method_name => "purge_timer", :class_name => 'ContainerDefinition').destroy_all
 
     # relationships
     rename_column :container_port_configs, :container_definition_id, :container_id
@@ -80,12 +85,12 @@ class UnifyContainerDefinitionAndContainer < ActiveRecord::Migration[5.0]
 
   def down
     create_table :container_definitions do |t|
-      t.belongs_to :ems, :type => :bigint
+      t.belongs_to :ems, :type => :bigint       # reconstructed columns
       t.string     :ems_ref
       t.bigint     :old_ems_id
       t.timestamp  :deleted_on
       t.string     :name
-      t.string     :image
+      t.string     :image                       # copied over columns
       t.string     :image_pull_policy
       t.string     :memory
       t.float      :cpu_cores
@@ -96,35 +101,35 @@ class UnifyContainerDefinitionAndContainer < ActiveRecord::Migration[5.0]
       t.string     :capabilities_add
       t.string     :capabilities_drop
       t.text       :command
+      t.bigint     :container_id                # temp column
     end
+
+    add_index :container_definitions, :deleted_on
 
     add_column :containers, :container_definition_id, :bigint
 
-    say_with_time("splitting columns from container into container_definition") do
-      ContainerDefinition.transaction do
-        Container.all.each do |container|
-          container_def = ContainerDefinition.create(
-            :ems_id             => container.ems_id,
-            :ems_ref            => container.ems_ref,
-            :old_ems_id         => container.old_ems_id,
-            :deleted_on         => container.deleted_on,
-            :name               => container.name,
-            :image              => container.image,
-            :image_pull_policy  => container.image_pull_policy,
-            :memory             => container.memory,
-            :cpu_cores          => container.cpu_cores,
-            :container_group_id => container.container_group_id,
-            :privileged         => container.privileged,
-            :run_as_user        => container.run_as_user,
-            :run_as_non_root    => container.run_as_non_root,
-            :capabilities_add   => container.capabilities_add,
-            :capabilities_drop  => container.capabilities_drop,
-            :command            => container.command
-          )
-          container.update!(:container_definition_id => container_def.id)
-        end
-      end
+    say_with_time("populate container_definitions. use container_id to keep relation to containers") do
+      insert_statement = "INSERT INTO container_definitions (container_id, ems_id, ems_ref, old_ems_id, deleted_on, name, image,
+                                                           image_pull_policy, memory, cpu_cores, container_group_id,
+                                                           privileged, run_as_user, run_as_non_root, capabilities_add,
+                                                           capabilities_drop, command)
+                        SELECT id, ems_id, ems_ref, old_ems_id, deleted_on, name, image, image_pull_policy, memory, cpu_cores,
+                               container_group_id, privileged, run_as_user, run_as_non_root, capabilities_add,
+                               capabilities_drop, command
+                        FROM   containers"
+      ActiveRecord::Base.connection.execute(insert_statement)
     end
+
+    say_with_time("use container_id to join tables and update container_definition_id in containers") do
+      update_statement = "UPDATE containers
+                          SET container_definition_id = (SELECT container_definitions.id
+                                                         FROM container_definitions
+                                                         WHERE containers.id = container_definitions.container_id)"
+      ActiveRecord::Base.connection.execute(update_statement)
+    end
+
+    # finally, remove the temp column
+    remove_column :container_definitions, :container_id
 
     containers = Arel::Table.new(:containers)
     say_with_time("switch container_definition_id with container_id for container_port_configs") do
@@ -134,14 +139,14 @@ class UnifyContainerDefinitionAndContainer < ActiveRecord::Migration[5.0]
       ContainerPortConfig.update_all("container_id = (#{join_sql})")
     end
 
-    say_with_time("switch container_definition_id with container_id for container_port_configs") do
+    say_with_time("switch container_definition_id with container_id for for container_env_vars") do
       env_vars = Arel::Table.new(:container_env_vars)
       join_sql = containers.project(containers[:container_definition_id])
                            .where(containers[:id].eq(env_vars[:container_id])).to_sql
       ContainerEnvVar.update_all("container_id = (#{join_sql})")
     end
 
-    say_with_time("switch container_definition_id with container_id for security_contexts") do
+    say_with_time("swtich resource_id with container_id, resource_type to 'Container' for security_contexts") do
       security_contexts = Arel::Table.new(:security_contexts)
       join_sql = containers.project(containers[:container_definition_id])
                            .where(containers[:id].eq(security_contexts[:resource_id])
