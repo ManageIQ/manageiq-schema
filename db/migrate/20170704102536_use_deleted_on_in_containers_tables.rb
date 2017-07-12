@@ -1,4 +1,4 @@
-class UseDeletedInContainersTables < ActiveRecord::Migration[5.0]
+class UseDeletedOnInContainersTables < ActiveRecord::Migration[5.0]
   class ContainerDefinition < ActiveRecord::Base
   end
 

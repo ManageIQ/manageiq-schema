@@ -1,4 +1,4 @@
-class AddDeletedToContainersTables < ActiveRecord::Migration[5.0]
+class AddDeletedOnIndexesToContainersTables < ActiveRecord::Migration[5.0]
   def change
     add_index :container_definitions, :deleted_on
     add_index :container_groups, :deleted_on

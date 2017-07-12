@@ -1,6 +1,6 @@
 require_migration
 
-describe UseDeletedInContainersTables do
+describe UseDeletedOnInContainersTables do
   let(:container_definitions_stub) { migration_stub(:ContainerDefinition) }
   let(:container_groups_stub)      { migration_stub(:ContainerGroup) }
   let(:container_images_stub)      { migration_stub(:ContainerImage) }
