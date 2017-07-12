@@ -12,6 +12,7 @@ describe UseDeletedOnInContainersTables do
     model.create!(:ems_id => 10, :old_ems_id => nil)
     model.create!(:ems_id => 10, :old_ems_id => 10)
     model.create!(:ems_id => nil, :old_ems_id => 10, :deleted_on => Time.now.utc)
+    model.create!(:ems_id => 15, :old_ems_id => 15, :deleted_on => Time.now.utc)
     model.create!(:ems_id => nil, :old_ems_id => 20, :deleted_on => Time.now.utc)
     model.create!(:ems_id => nil, :old_ems_id => nil, :deleted_on => Time.now.utc)
   end
@@ -19,33 +20,41 @@ describe UseDeletedOnInContainersTables do
   def create_after_migration_stub_data_for(model)
     model.create!(:ems_id => 10, :old_ems_id => nil)
     model.create!(:ems_id => 10, :old_ems_id => 10)
+    model.create!(:ems_id => 15, :old_ems_id => 15, :deleted_on => nil)
     model.create!(:ems_id => 10, :old_ems_id => 10, :deleted_on => Time.now.utc)
     model.create!(:ems_id => 20, :old_ems_id => 20, :deleted_on => Time.now.utc)
     model.create!(:ems_id => nil, :old_ems_id => nil, :deleted_on => Time.now.utc)
   end
 
-  def assert_before_migration_data_of(model)
-    expect(model.where.not(:deleted_on => nil).count).to eq 3
-    expect(model.where(:deleted_on => nil).count).to eq 2
+  def assert_before_migration_data_of(model, context)
+    if context == :up
+      expect(model.where.not(:deleted_on => nil).count).to eq 4
+      expect(model.where(:deleted_on => nil).count).to eq 2
+    else
+      expect(model.where.not(:deleted_on => nil).count).to eq 3
+      expect(model.where(:deleted_on => nil).count).to eq 3
+    end
     expect(model.where(:ems_id => nil).count).to eq 3
     expect(model.where(:ems_id => 10).count).to eq 2
+    expect(model.where(:ems_id => 15).count).to eq 1
     expect(model.where(:ems_id => 20).count).to eq 0
-    expect(model.where.not(:ems_id => nil).count).to eq 2
+    expect(model.where.not(:ems_id => nil).count).to eq 3
   end
 
   def assert_after_migration_data_of(model)
     expect(model.where.not(:deleted_on => nil).count).to eq 3
-    expect(model.where(:deleted_on => nil).count).to eq 2
+    expect(model.where(:deleted_on => nil).count).to eq 3
     expect(model.where(:ems_id => nil).count).to eq 1
     expect(model.where(:ems_id => 10).count).to eq 3
+    expect(model.where(:ems_id => 15).count).to eq 1
     expect(model.where(:ems_id => 20).count).to eq 1
-    expect(model.where.not(:ems_id => nil).count).to eq 4
+    expect(model.where.not(:ems_id => nil).count).to eq 5
   end
 
   def assert_up_migration_for(model)
     create_before_migration_stub_data_for(model)
 
-    assert_before_migration_data_of(model)
+    assert_before_migration_data_of(model, :up)
     migrate
     assert_after_migration_data_of(model)
   end
@@ -55,7 +64,7 @@ describe UseDeletedOnInContainersTables do
 
     assert_after_migration_data_of(model)
     migrate
-    assert_before_migration_data_of(model)
+    assert_before_migration_data_of(model, :down)
   end
 
   ALL_STUBS = [
