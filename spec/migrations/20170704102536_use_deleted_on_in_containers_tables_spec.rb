@@ -10,45 +10,71 @@ describe UseDeletedOnInContainersTables do
 
   def create_before_migration_stub_data_for(model)
     model.create!(:ems_id => 10, :old_ems_id => nil)
-    model.create!(:ems_id => 10, :old_ems_id => 10)
-    model.create!(:ems_id => nil, :old_ems_id => 10, :deleted_on => Time.now.utc)
+    model.create!(:ems_id => 11, :old_ems_id => 11)
+    model.create!(:ems_id => nil, :old_ems_id => 12, :deleted_on => Time.now.utc)
     model.create!(:ems_id => 15, :old_ems_id => 15, :deleted_on => Time.now.utc)
     model.create!(:ems_id => nil, :old_ems_id => 20, :deleted_on => Time.now.utc)
     model.create!(:ems_id => nil, :old_ems_id => nil, :deleted_on => Time.now.utc)
+    model.create!(:ems_id => nil, :old_ems_id => 25, :deleted_on => nil)
   end
 
   def create_after_migration_stub_data_for(model)
     model.create!(:ems_id => 10, :old_ems_id => nil)
-    model.create!(:ems_id => 10, :old_ems_id => 10)
+    model.create!(:ems_id => 11, :old_ems_id => 11)
     model.create!(:ems_id => 15, :old_ems_id => 15, :deleted_on => nil)
-    model.create!(:ems_id => 10, :old_ems_id => 10, :deleted_on => Time.now.utc)
+    model.create!(:ems_id => 12, :old_ems_id => 12, :deleted_on => Time.now.utc)
     model.create!(:ems_id => 20, :old_ems_id => 20, :deleted_on => Time.now.utc)
     model.create!(:ems_id => nil, :old_ems_id => nil, :deleted_on => Time.now.utc)
+    model.create!(:ems_id => 25, :old_ems_id => 25, :deleted_on => Time.now.utc)
   end
 
   def assert_before_migration_data_of(model, context)
     if context == :up
       expect(model.where.not(:deleted_on => nil).count).to eq 4
-      expect(model.where(:deleted_on => nil).count).to eq 2
-    else
-      expect(model.where.not(:deleted_on => nil).count).to eq 3
       expect(model.where(:deleted_on => nil).count).to eq 3
+      expect(model.where.not(:deleted_on => nil).collect(&:ems_id)).to(
+        match_array([15, nil, nil, nil])
+      )
+      expect(model.where(:deleted_on => nil).collect(&:ems_id)).to(
+        match_array([10, 11, nil])
+      )
+    else
+      expect(model.where.not(:deleted_on => nil).count).to eq 4
+      expect(model.where(:deleted_on => nil).count).to eq 3
+      expect(model.where.not(:deleted_on => nil).collect(&:ems_id)).to(
+        match_array([nil, nil, nil, nil])
+      )
+      expect(model.where(:deleted_on => nil).collect(&:ems_id)).to(
+        match_array([10, 11, 15])
+      )
     end
-    expect(model.where(:ems_id => nil).count).to eq 3
-    expect(model.where(:ems_id => 10).count).to eq 2
+    expect(model.where(:ems_id => nil).count).to eq 4
+    expect(model.where(:ems_id => 10).count).to eq 1
+    expect(model.where(:ems_id => 11).count).to eq 1
+    expect(model.where(:ems_id => 12).count).to eq 0
     expect(model.where(:ems_id => 15).count).to eq 1
     expect(model.where(:ems_id => 20).count).to eq 0
+    expect(model.where(:ems_id => 25).count).to eq 0
     expect(model.where.not(:ems_id => nil).count).to eq 3
   end
 
   def assert_after_migration_data_of(model)
-    expect(model.where.not(:deleted_on => nil).count).to eq 3
+    expect(model.where.not(:deleted_on => nil).count).to eq 4
+    expect(model.where.not(:deleted_on => nil).collect(&:ems_id)).to(
+      match_array([12, 20, nil, 25])
+    )
     expect(model.where(:deleted_on => nil).count).to eq 3
+    expect(model.where(:deleted_on => nil).collect(&:ems_id)).to(
+      match_array([10, 11, 15])
+    )
     expect(model.where(:ems_id => nil).count).to eq 1
-    expect(model.where(:ems_id => 10).count).to eq 3
+    expect(model.where(:ems_id => 10).count).to eq 1
+    expect(model.where(:ems_id => 11).count).to eq 1
+    expect(model.where(:ems_id => 12).count).to eq 1
     expect(model.where(:ems_id => 15).count).to eq 1
     expect(model.where(:ems_id => 20).count).to eq 1
-    expect(model.where.not(:ems_id => nil).count).to eq 5
+    expect(model.where(:ems_id => 25).count).to eq 1
+    expect(model.where.not(:ems_id => nil).count).to eq 6
   end
 
   def assert_up_migration_for(model)
