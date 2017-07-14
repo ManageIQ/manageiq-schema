@@ -61,8 +61,8 @@ describe CleanUpDuplicatesInContainersTables do
     expect(model.count).to eq(10)
 
     # Check there are 5 duplicates in the data
-    expect(original_values.count).to eq(5)
-    expect(duplicate_values.count).to eq(5)
+    expect(original_values.count).to eq(original_values_count(model))
+    expect(duplicate_values.values.flatten.count).to eq(duplicate_values_count(model))
 
     # Check that original values ids are the min or all duplicated ids
     original_values.each do |key, value|
@@ -70,11 +70,31 @@ describe CleanUpDuplicatesInContainersTables do
     end
   end
 
-  def assert_after_migration_test_data(model, original_values, duplicate_values)
-    expect(model.count).to eq(5)
+  def assert_after_migration_test_data(model, original_values, _duplicate_values)
+    expect(model.count).to eq(original_values_count(model))
 
     model.all.each do |record|
       expect(original_values[record.attributes.symbolize_keys.slice(*model_unique_keys(model))]).to eq record.id
+    end
+  end
+
+  def original_values_count(model)
+    if [CleanUpDuplicatesInContainersTables::Hardware,
+        CleanUpDuplicatesInContainersTables::OperatingSystem].include? model
+      # These models do not have any ems_ref like field
+      4
+    else
+      5
+    end
+  end
+
+  def duplicate_values_count(model)
+    if [CleanUpDuplicatesInContainersTables::Hardware,
+        CleanUpDuplicatesInContainersTables::OperatingSystem].include? model
+      # These models do not have any ems_ref like field
+      6
+    else
+      5
     end
   end
 

@@ -22,6 +22,7 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
 
   class ContainerCondition < ActiveRecord::Base; end
   class SecurityContext < ActiveRecord::Base; end
+  class ComputerSystem < ActiveRecord::Base; end
   class ContainerEnvVar < ActiveRecord::Base; end
   class ContainerLimitItem < ActiveRecord::Base; end
   class ContainerPortConfig < ActiveRecord::Base; end
@@ -30,6 +31,8 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
   class ContainerTemplateParameter < ActiveRecord::Base; end
   class ContainerVolume < ActiveRecord::Base; end
   class CustomAttribute < ActiveRecord::Base; end
+  class Hardware < ActiveRecord::Base; end
+  class OperatingSystem < ActiveRecord::Base; end
 
   class ContainerDefinition < ActiveRecord::Base; end
   class Container < ActiveRecord::Base
@@ -65,6 +68,7 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     # Nested tables, not having :ems_id and the foreign_key is a part of the unique index
     ContainerCondition         => [:container_entity_id, :container_entity_type, :name],
     SecurityContext            => [:resource_id, :resource_type],
+    ComputerSystem             => [:managed_entity_id, :managed_entity_type],
     ContainerEnvVar            => [:container_definition_id, :name, :value, :field_path],
     ContainerLimitItem         => [:container_limit_id, :resource, :item_type],
     ContainerPortConfig        => [:container_definition_id, :ems_ref],
@@ -73,6 +77,8 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     ContainerTemplateParameter => [:container_template_id, :name],
     ContainerVolume            => [:parent_id, :parent_type, :name],
     CustomAttribute            => [:resource_id, :resource_type, :name, :unique_name, :section, :source],
+    Hardware                   => [:vm_or_template_id, :host_id, :computer_system_id],
+    OperatingSystem            => [:vm_or_template_id, :host_id, :computer_system_id],
     # Questionable
     ContainerDefinition        => [:ems_id, :ems_ref],
     Container                  => [:ems_id, :ems_ref]
