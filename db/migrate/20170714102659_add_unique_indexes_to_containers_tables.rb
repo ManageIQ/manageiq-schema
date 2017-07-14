@@ -35,6 +35,10 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               [:resource_id, :resource_type],
               :unique => true,
               :name   => "index_security_contexts_unique_multi_column"
+    add_index :computer_systems,
+              [:managed_entity_id, :managed_entity_type],
+              :unique => true,
+              :name   => "index_computer_systems_unique_multi_column"
     add_index :container_env_vars,
               [:container_definition_id, :name, :value, :field_path],
               :unique => true,
@@ -65,6 +69,14 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               [:resource_id, :resource_type, :name, :unique_name, :section, :source],
               :unique => true,
               :name   => "index_custom_attributes_parameters_unique_multi_column"
+    add_index :hardwares,
+              [:vm_or_template_id, :host_id, :computer_system_id],
+              :unique => true,
+              :name => "index_hardwares_on_unique_multi_column"
+    add_index :operating_systems,
+              [:vm_or_template_id, :host_id, :computer_system_id],
+              :unique => true,
+              :name   => "index_operating_systems_unique_multi_column"
 
     # FIXME(lsmola) questionable, these were modeled as nested, but they have :ems_id & :ems_ref
     # Is ems_ref unique? we were saving these under container_group
