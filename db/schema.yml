@@ -5929,6 +5929,7 @@ showback_charges:
 - showback_event_id
 - created_at
 - updated_at
+- stored_data
 showback_events:
 - id
 - data
