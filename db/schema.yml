@@ -967,6 +967,10 @@ containers:
 - deleted_on
 - ems_id
 - old_ems_id
+- request_cpu_cores
+- request_memory_bytes
+- limit_cpu_cores
+- limit_memory_bytes
 custom_attributes:
 - id
 - section
