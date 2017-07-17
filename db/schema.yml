@@ -984,7 +984,7 @@ custom_buttons:
 - guid
 - description
 - applies_to_class
-- applies_to_exp
+- visibility_expression
 - options
 - userid
 - wait_for_complete
