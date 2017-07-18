@@ -1871,6 +1871,8 @@ metric_rollups:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_01:
 - id
 - timestamp
@@ -1948,6 +1950,8 @@ metric_rollups_01:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_02:
 - id
 - timestamp
@@ -2025,6 +2029,8 @@ metric_rollups_02:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_03:
 - id
 - timestamp
@@ -2102,6 +2108,8 @@ metric_rollups_03:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_04:
 - id
 - timestamp
@@ -2179,6 +2187,8 @@ metric_rollups_04:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_05:
 - id
 - timestamp
@@ -2256,6 +2266,8 @@ metric_rollups_05:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_06:
 - id
 - timestamp
@@ -2333,6 +2345,8 @@ metric_rollups_06:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_07:
 - id
 - timestamp
@@ -2410,6 +2424,8 @@ metric_rollups_07:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_08:
 - id
 - timestamp
@@ -2487,6 +2503,8 @@ metric_rollups_08:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_09:
 - id
 - timestamp
@@ -2564,6 +2582,8 @@ metric_rollups_09:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_10:
 - id
 - timestamp
@@ -2641,6 +2661,8 @@ metric_rollups_10:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_11:
 - id
 - timestamp
@@ -2718,6 +2740,8 @@ metric_rollups_11:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metric_rollups_12:
 - id
 - timestamp
@@ -2795,6 +2819,8 @@ metric_rollups_12:
 - stat_container_group_create_rate
 - stat_container_group_delete_rate
 - stat_container_image_registration_rate
+- stat_vm_create_rate
+- stat_vm_delete_rate
 metrics:
 - id
 - timestamp
