@@ -5418,6 +5418,8 @@ openscap_results:
 - id
 - container_image_id
 - created_at
+- resource_id
+- resource_type
 openscap_rule_results:
 - id
 - openscap_result_id
