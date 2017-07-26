@@ -1029,6 +1029,10 @@ database_backups:
 - name
 - created_at
 - updated_at
+dialog_field_associations:
+- id
+- trigger_id
+- respond_id
 dialog_fields:
 - id
 - name
