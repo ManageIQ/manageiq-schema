@@ -1187,6 +1187,7 @@ entitlements:
 - created_at
 - updated_at
 - filters
+- filter_expression
 event_logs:
 - id
 - name
