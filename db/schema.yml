@@ -699,6 +699,7 @@ container_groups:
 - deleted_on
 - old_ems_id
 - old_container_project_id
+- next_perf_capture_on
 container_groups_container_services:
 - container_service_id
 - container_group_id
@@ -780,6 +781,7 @@ container_nodes:
 - created_on
 - old_ems_id
 - deleted_on
+- next_perf_capture_on
 container_port_configs:
 - id
 - ems_ref
@@ -964,6 +966,7 @@ containers:
 - capabilities_add
 - capabilities_drop
 - command
+- next_perf_capture_on
 custom_attributes:
 - id
 - section
@@ -1153,6 +1156,7 @@ ems_clusters:
 - effective_memory
 - ems_ref
 - type
+- next_perf_capture_on
 ems_folders:
 - id
 - name
@@ -1549,6 +1553,7 @@ hosts:
 - maintenance
 - maintenance_reason
 - physical_server_id
+- next_perf_capture_on
 import_file_uploads:
 - id
 iso_datastores:
@@ -6059,6 +6064,7 @@ storages:
 - master
 - ems_ref
 - storage_domain_type
+- next_perf_capture_on
 storages_vms_and_templates:
 - storage_id
 - vm_or_template_id
@@ -6338,6 +6344,7 @@ vms:
 - memory_hot_add_enabled
 - memory_hot_add_limit
 - memory_hot_add_increment
+- next_perf_capture_on
 volumes:
 - id
 - name
