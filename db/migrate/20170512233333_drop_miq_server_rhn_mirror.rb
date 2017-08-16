@@ -30,8 +30,10 @@ class DropMiqServerRhnMirror < ActiveRecord::Migration[5.0]
         require 'fileutils'
         require 'linux_admin'
 
-        LinuxAdmin::FSTab.instance.entries.delete_if { |e| e.mount_point == "/repo" }
-        LinuxAdmin::FSTab.instance.write!
+        if File.exist?("/etc/fstab")
+          LinuxAdmin::FSTab.instance.entries.delete_if { |e| e.mount_point == "/repo" }
+          LinuxAdmin::FSTab.instance.write!
+        end
 
         FileUtils.rm_f("/etc/httpd/conf.d/manageiq-https-mirror.conf")
         FileUtils.rm_f("/etc/yum.repos.d/manageiq-mirror.repo")
