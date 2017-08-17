@@ -65,7 +65,7 @@ module ManageIQ::Schema::Checker
           Schema validation failed for host #{db_connection_host(connection)}:
 
           Expected schema table order does not match sorted current tables.
-          Use 'rake evm:db:write_schema' to generate the new expected schema when making changes.
+          Use 'rake db:write_schema' to generate the new expected schema when making changes.
         ERROR
       else
         <<-ERROR.gsub!(/^ +/, "")
