@@ -120,17 +120,17 @@ authentications:
 - rhsm_server
 - manager_ref
 - options
+automate_workspaces:
+- id
+- guid
+- output
+- input
 availability_zones:
 - id
 - ems_id
 - name
 - ems_ref
 - type
-automate_workspaces:
-- id
-- guid
-- input
-- output
 binary_blob_parts:
 - id
 - md5
