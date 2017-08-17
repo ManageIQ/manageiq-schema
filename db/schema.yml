@@ -126,6 +126,11 @@ availability_zones:
 - name
 - ems_ref
 - type
+automate_workspaces:
+- id
+- guid
+- input
+- output
 binary_blob_parts:
 - id
 - md5
