@@ -4670,6 +4670,15 @@ middleware_deployments:
 - properties
 - server_group_id
 - type
+middleware_diagnostic_reports:
+- id
+- queued_at
+- requesting_user
+- status
+- error_message
+- middleware_server_id
+- created_at
+- updated_at
 middleware_domains:
 - id
 - name
