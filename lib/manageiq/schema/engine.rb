@@ -8,6 +8,7 @@ module ManageIQ
           config.paths["db/migrate"].expanded.each do |expanded_path|
             app.config.paths["db/migrate"] << expanded_path
           end
+          ActiveRecord::Migrator.migrations_paths = app.config.paths["db/migrate"]
         end
       end
     end
