@@ -5816,6 +5816,13 @@ scan_items:
 - file_mtime
 - prod_default
 - mode
+scan_results:
+- id
+- scan_status
+- scan_result_message
+- scan_type
+- resource_type
+- resource_id
 schema_migrations:
 - version
 security_contexts:
