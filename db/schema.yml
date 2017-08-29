@@ -123,6 +123,8 @@ authentications:
 automate_workspaces:
 - id
 - guid
+- user_id
+- tenant_id
 - output
 - input
 availability_zones:
