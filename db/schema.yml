@@ -4890,10 +4890,11 @@ miq_alerts:
 - updated_on
 - options
 - db
-- expression
+- miq_expression
 - responds_to_events
 - enabled
 - read_only
+- hash_expression
 miq_approvals:
 - id
 - description
