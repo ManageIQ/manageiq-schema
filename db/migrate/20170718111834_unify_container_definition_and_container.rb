@@ -40,60 +40,46 @@ class UnifyContainerDefinitionAndContainer < ActiveRecord::Migration[5.0]
     add_column :containers, :capabilities_drop,  :string
     add_column :containers, :command,            :text
 
-    db_connection = ActiveRecord::Base.connection
-
     say_with_time("Copying over columns from container_definition to container") do
       %w(image image_pull_policy memory cpu_cores container_group_id privileged
          run_as_user run_as_non_root capabilities_add capabilities_drop command).each do |column|
-        subquery = <<-SQL
-          SELECT id, #{column} FROM container_definitions
-        SQL
-
-        db_connection.execute <<-SQL
+        connection.execute <<-SQL
           UPDATE containers SET #{column} = subquery.#{column}
-          FROM (#{subquery}) AS subquery
+          FROM (SELECT id, #{column} FROM container_definitions) AS subquery
           WHERE subquery.id = containers.container_definition_id
         SQL
       end
     end
 
-    say_with_time("switch container_definition_id with container_id for container_port_configs") do
-      subquery = <<-SQL
-        SELECT id, container_definition_id FROM containers
-      SQL
+    subquery_containers = <<-SQL
+      SELECT id, container_definition_id FROM containers
+    SQL
 
-      db_connection.execute <<-SQL
+    say_with_time("switch container_definition_id with container_id for container_port_configs") do
+      connection.execute <<-SQL
         UPDATE container_port_configs
         SET container_definition_id = subquery.id
-        FROM (#{subquery}) AS subquery
+        FROM (#{subquery_containers}) AS subquery
         WHERE subquery.container_definition_id = container_port_configs.container_definition_id
       SQL
     end
 
     say_with_time("switch container_definition_id with container_id for container_port_configs") do
-      subquery = <<-SQL
-        SELECT id, container_definition_id FROM containers
-      SQL
-
-      db_connection.execute <<-SQL
+      connection.execute <<-SQL
         UPDATE container_env_vars SET container_definition_id = subquery.id
-        FROM (#{subquery}) AS subquery
+        FROM (#{subquery_containers}) AS subquery
         WHERE subquery.container_definition_id = container_env_vars.container_definition_id
       SQL
     end
 
     say_with_time("switch resource_id with container_id, resource_type to 'Container' for security_contexts") do
-      subquery = <<-SQL
-        SELECT id, container_definition_id FROM containers
-      SQL
+      container_value = connection.quote('Container')
+      container_definition_value = connection.quote('ContainerDefinition')
 
-      container_value = db_connection.quote('Container')
-      container_definition_value = db_connection.quote('ContainerDefinition')
-
-      db_connection.execute <<-SQL
+      connection.execute <<-SQL
         UPDATE security_contexts
         SET resource_type = #{container_value}, resource_id = subquery.id
-        FROM (#{subquery}) AS subquery
+        FROM (#{subquery_containers}) AS subquery
         WHERE subquery.container_definition_id = security_contexts.resource_id AND security_contexts.resource_type = #{container_definition_value}
       SQL
     end
