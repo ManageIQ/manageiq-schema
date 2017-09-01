@@ -40,9 +40,8 @@ class UnifyContainerDefinitionAndContainer < ActiveRecord::Migration[5.0]
     add_column :containers, :capabilities_drop,  :string
     add_column :containers, :command,            :text
 
-    containers = Arel::Table.new(:containers)
-    definitions = Arel::Table.new(:container_definitions)
     db_connection = ActiveRecord::Base.connection
+
     say_with_time("Copying over columns from container_definition to container") do
       %w(image image_pull_policy memory cpu_cores container_group_id privileged
          run_as_user run_as_non_root capabilities_add capabilities_drop command).each do |column|
