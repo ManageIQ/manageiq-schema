@@ -569,6 +569,13 @@ configuration_tags_configured_systems:
 - configured_system_id
 - configuration_tag_id
 - id
+configuration_templates:
+- ems_id
+- external_id
+- name
+- description
+- user_defined
+- in_use
 configured_systems:
 - id
 - type
