@@ -5602,6 +5602,7 @@ persistent_volume_claims:
 - capacity
 - created_at
 - updated_at
+- container_project_id
 physical_servers:
 - id
 - ems_id
