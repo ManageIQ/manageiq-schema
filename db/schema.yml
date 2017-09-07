@@ -572,7 +572,7 @@ configuration_tags_configured_systems:
 configuration_templates:
 - id
 - ems_id
-- external_id
+- ems_ref
 - name
 - description
 - user_defined
