@@ -1493,6 +1493,7 @@ hardwares:
 - memory_mb_minimum
 - introspected
 - provision_state
+- serial_number
 host_aggregate_hosts:
 - id
 - host_id
