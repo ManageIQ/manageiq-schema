@@ -5998,10 +5998,6 @@ showback_price_plans:
 - updated_at
 showback_rates:
 - id
-- fixed_rate_subunits
-- fixed_rate_currency
-- variable_rate_subunits
-- variable_rate_currency
 - calculation
 - category
 - dimension
@@ -6011,14 +6007,26 @@ showback_rates:
 - showback_price_plan_id
 - created_at
 - updated_at
-- fixed_rate_per_unit
+- measure
+- step_variable
+- uses_single_tier
+- tiers_use_full_value
+showback_tiers:
+- id
+- tier_start_value
+- tier_end_value
+- fixed_rate_subunits
+- fixed_rate_currency
 - fixed_rate_per_time
+- variable_rate_subunits
+- variable_rate_currency
 - variable_rate_per_unit
 - variable_rate_per_time
 - step_value
 - step_time_unit
 - step_time_value
 - step_unit
+- showback_rates_id
 showback_usage_types:
 - id
 - category
