@@ -40,37 +40,48 @@ class UnifyContainerDefinitionAndContainer < ActiveRecord::Migration[5.0]
     add_column :containers, :capabilities_drop,  :string
     add_column :containers, :command,            :text
 
-    containers = Arel::Table.new(:containers)
-    definitions = Arel::Table.new(:container_definitions)
     say_with_time("Copying over columns from container_definition to container") do
       %w(image image_pull_policy memory cpu_cores container_group_id privileged
          run_as_user run_as_non_root capabilities_add capabilities_drop command).each do |column|
-        join_sql = definitions.project(definitions[column.to_sym])
-                              .where(definitions[:id].eq(containers[:container_definition_id])).to_sql
-        Container.update_all("#{column} = (#{join_sql})")
+        connection.execute <<-SQL
+          UPDATE containers SET #{column} = subquery.#{column}
+          FROM (SELECT id, #{column} FROM container_definitions) AS subquery
+          WHERE subquery.id = containers.container_definition_id
+        SQL
       end
     end
 
+    subquery_containers = <<-SQL
+      SELECT id, container_definition_id FROM containers
+    SQL
+
     say_with_time("switch container_definition_id with container_id for container_port_configs") do
-      port_configs = Arel::Table.new(:container_port_configs)
-      join_sql = containers.project(containers[:id])
-                           .where(containers[:container_definition_id].eq(port_configs[:container_definition_id])).to_sql
-      ContainerPortConfig.update_all("container_definition_id = (#{join_sql})")
+      connection.execute <<-SQL
+        UPDATE container_port_configs
+        SET container_definition_id = subquery.id
+        FROM (#{subquery_containers}) AS subquery
+        WHERE subquery.container_definition_id = container_port_configs.container_definition_id
+      SQL
     end
 
     say_with_time("switch container_definition_id with container_id for container_port_configs") do
-      env_vars = Arel::Table.new(:container_env_vars)
-      join_sql = containers.project(containers[:id])
-                           .where(containers[:container_definition_id].eq(env_vars[:container_definition_id])).to_sql
-      ContainerEnvVar.update_all("container_definition_id = (#{join_sql})")
+      connection.execute <<-SQL
+        UPDATE container_env_vars SET container_definition_id = subquery.id
+        FROM (#{subquery_containers}) AS subquery
+        WHERE subquery.container_definition_id = container_env_vars.container_definition_id
+      SQL
     end
 
     say_with_time("switch resource_id with container_id, resource_type to 'Container' for security_contexts") do
-      security_contexts = Arel::Table.new(:security_contexts)
-      join_sql = containers.project(containers[:id])
-                           .where(containers[:container_definition_id].eq(security_contexts[:resource_id])
-                           .and(security_contexts[:resource_type].eq(Arel::Nodes::Quoted.new('ContainerDefinition')))).to_sql
-      SecurityContext.where(:resource_type => 'ContainerDefinition').update_all("resource_type = 'Container', resource_id = (#{join_sql})")
+      container_value = connection.quote('Container')
+      container_definition_value = connection.quote('ContainerDefinition')
+
+      connection.execute <<-SQL
+        UPDATE security_contexts
+        SET resource_type = #{container_value}, resource_id = subquery.id
+        FROM (#{subquery_containers}) AS subquery
+        WHERE subquery.container_definition_id = security_contexts.resource_id AND security_contexts.resource_type = #{container_definition_value}
+      SQL
     end
 
     MiqQueue.where(:method_name => "purge_timer", :class_name => 'ContainerDefinition').destroy_all
