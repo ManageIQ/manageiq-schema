@@ -6026,7 +6026,7 @@ showback_tiers:
 - step_time_unit
 - step_time_value
 - step_unit
-- showback_rates_id
+- showback_rate_id
 showback_usage_types:
 - id
 - category
