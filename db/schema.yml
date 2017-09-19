@@ -1613,6 +1613,7 @@ lans:
 - computed_allow_promiscuous
 - computed_forged_transmits
 - computed_mac_changes
+- parent_id
 ldap_domains:
 - id
 - name
@@ -6105,6 +6106,13 @@ storages_vms_and_templates:
 - storage_id
 - vm_or_template_id
 - id
+subnets:
+- id
+- ems_ref
+- name
+- cidr
+- type
+- lan_id
 switches:
 - id
 - name
