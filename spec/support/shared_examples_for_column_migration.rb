@@ -15,3 +15,35 @@ shared_examples_for "column migration" do |column, klass, data_to_convert|
     expect(column_value).to eq(new_data_field)
   end
 end
+
+# it tests one column is added
+# Example:
+# it_behaves_like "column addition", :status, :MiddlewareDomain
+shared_examples_for 'column addition' do |column, klass|
+  let(:stub) { migration_stub(klass) }
+
+  it "adds column #{column} to #{klass}" do
+    rec = stub.create!
+
+    migrate
+
+    rec.reload
+    expect(rec.reload.respond_to?(column)).to eq true
+  end
+end
+
+# it tests one column is deleted
+# Example:
+# it_behaves_like "column deletion", :status, :MiddlewareDomain
+shared_examples_for 'column deletion' do |column, klass|
+  let(:stub) { migration_stub(klass) }
+
+  it "adds column #{column} to #{klass}" do
+    rec = stub.create!
+
+    migrate
+
+    rec.reload
+    expect(rec.reload.respond_to?(column)).to eq false
+  end
+end
