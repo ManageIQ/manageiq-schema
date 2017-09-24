@@ -5613,6 +5613,8 @@ persistent_volume_claims:
 - created_at
 - updated_at
 - container_project_id
+- requests
+- limits
 physical_servers:
 - id
 - ems_id
