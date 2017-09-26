@@ -4912,6 +4912,7 @@ miq_alerts:
 - enabled
 - read_only
 - hash_expression
+- severity
 miq_approvals:
 - id
 - description
