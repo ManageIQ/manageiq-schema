@@ -18,11 +18,11 @@ namespace :spec do
 
   desc "Prepare all specs"
   task :setup => [:initialize, :setup_db, :setup_released_migrations]
-end
 
-desc "Run all specs"
-RSpec::Core::RakeTask.new(:spec => "spec:initialize") do |t|
-  t.pattern = FileList["spec/**/*_spec.rb"].exclude("spec/migrations/**/*_spec.rb")
+  desc "Run all non-migration specs"
+  RSpec::Core::RakeTask.new(:non_migration => :initialize) do |t|
+    t.pattern = FileList["spec/**/*_spec.rb"].exclude("spec/migrations/**/*_spec.rb")
+  end
 end
 
 class SetupReleasedMigrations
