@@ -1,4 +1,4 @@
-class IssueShorbackTiers < ActiveRecord::Migration[5.0]
+class IssueShowbackTiers < ActiveRecord::Migration[5.0]
   def up
     rename_column    :showback_tiers, :showback_rates_id, :showback_rate_id
     change_column    :showback_tiers, :tier_start_value,  :float
