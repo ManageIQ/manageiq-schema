@@ -640,14 +640,6 @@ container_builds:
 - container_project_id
 - ems_id
 - created_on
-container_component_statuses:
-- id
-- ems_id
-- name
-- condition
-- status
-- message
-- error
 container_conditions:
 - id
 - container_entity_id
