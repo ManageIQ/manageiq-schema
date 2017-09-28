@@ -817,10 +817,10 @@ container_projects:
 container_quota_items:
 - id
 - resource
+- container_quota_id
 - quota_desired
 - quota_enforced
 - quota_observed
-- container_quota_id
 container_quotas:
 - id
 - name
