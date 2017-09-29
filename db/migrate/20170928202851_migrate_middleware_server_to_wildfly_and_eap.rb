@@ -1,5 +1,6 @@
 class MigrateMiddlewareServerToWildflyAndEap < ActiveRecord::Migration[5.0]
-  class MiddlewareServer < ApplicationRecord
+  class MiddlewareServer < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled
   end
 
   def up
