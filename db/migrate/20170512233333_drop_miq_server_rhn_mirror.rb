@@ -11,7 +11,7 @@ class DropMiqServerRhnMirror < ActiveRecord::Migration[5.0]
     say_with_time("Removing RHN Mirror role") do
       role = ServerRole.find_by(:name => "rhn_mirror")
       if role
-        AssignedServerRole.delete_all(:server_role_id => role.id)
+        AssignedServerRole.where(:server_role_id => role.id).delete_all
         role.delete
       end
     end

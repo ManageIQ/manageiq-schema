@@ -103,7 +103,7 @@ class RemoveCimOntapRecords < ActiveRecord::Migration[5.0]
   def up
     say_with_time("Removing roles") do
       ServerRole.where(:name => ROLES).each do |role|
-        AssignedServerRole.delete_all(:server_role_id => role.id)
+        AssignedServerRole.where(:server_role_id => role.id).delete_all
         role.delete
       end
     end
