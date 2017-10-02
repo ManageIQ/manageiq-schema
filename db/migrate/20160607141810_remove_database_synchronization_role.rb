@@ -9,7 +9,7 @@ class RemoveDatabaseSynchronizationRole < ActiveRecord::Migration[5.0]
     say_with_time("Removing database synchronization role") do
       role = ServerRole.find_by(:name => "database_synchronization")
       if role
-        AssignedServerRole.delete_all(:server_role_id => role.id)
+        AssignedServerRole.where(:server_role_id => role.id).delete_all
         role.delete
       end
     end

@@ -10,7 +10,7 @@ class MoveUserRolesToEntitlements < ActiveRecord::Migration[5.0]
 
   def down
     MiqGroup.find_each do |group|
-      Entitlement.delete_all(:miq_group_id => group.id)
+      Entitlement.where(:miq_group_id => group.id).delete_all
     end
   end
 end
