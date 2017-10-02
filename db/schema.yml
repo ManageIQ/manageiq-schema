@@ -891,8 +891,8 @@ container_templates:
 - objects
 - created_at
 - updated_at
-- type
 - object_labels
+- type
 container_volumes:
 - id
 - parent_id
