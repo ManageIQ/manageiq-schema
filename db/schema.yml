@@ -5057,6 +5057,9 @@ miq_queue:
 - handler_type
 - expires_on
 - tracking_label
+- user_id
+- group_id
+- tenant_id
 miq_regions:
 - id
 - region
