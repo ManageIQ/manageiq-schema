@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 70 ending 2017-10-02
+
+### Added
+- Change dialog field description to text field to accomodate larger sizes [(#73)](https://github.com/ManageIQ/manageiq-schema/pull/73)
+- Add an ID to the event that refer to origin system's event [(#70)](https://github.com/ManageIQ/manageiq-schema/pull/70)
+- Adding scan_results table for ScanResult model [(#57)](https://github.com/ManageIQ/manageiq-schema/pull/57)
+- Update orchestration template types [(#55)](https://github.com/ManageIQ/manageiq-schema/pull/55)
+- Add numeric columns to Container Quota Items [(#44)](https://github.com/ManageIQ/manageiq-schema/pull/44)
+
+### Fixed
+- Change rake spec to run all specs and be the default [(#78)](https://github.com/ManageIQ/manageiq-schema/pull/78)
+- Fix migration name typo: s/shorback/showback/ [(#76)](https://github.com/ManageIQ/manageiq-schema/pull/76)
+- Fix db:migrate:reset by setting DatabaseTasks.migrations_paths [(#68)](https://github.com/ManageIQ/manageiq-schema/pull/68)
+
 ## Unreleased as of Sprint 69 ending 2017-09-18
 
 ### Added
