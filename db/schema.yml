@@ -4703,6 +4703,7 @@ middleware_domains:
 - created_at
 - updated_at
 - type
+- status
 middleware_messagings:
 - id
 - name
