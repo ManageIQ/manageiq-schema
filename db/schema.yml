@@ -1011,7 +1011,7 @@ custom_buttons:
 customization_scripts:
 - id
 - name
-- manager_id
+- provisioning_manager_id
 - manager_ref
 - type
 - created_at
