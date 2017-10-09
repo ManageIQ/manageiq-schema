@@ -1,4 +1,4 @@
-describe "all tables" do
+describe "Replication" do
   let(:connection) { ApplicationRecord.connection }
 
   def invalid_primary_key_message(no_pk)
@@ -14,7 +14,7 @@ describe "all tables" do
     EOS
   end
 
-  it "have a primary key called id" do
+  it "all tables have a primary key called id" do
     no_pk = []
     connection.tables.each do |t|
       next if ManageIQ::Schema::Checker::SYSTEM_TABLES.include?(t)

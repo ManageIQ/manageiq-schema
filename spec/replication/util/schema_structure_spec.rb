@@ -1,4 +1,4 @@
-describe "database schema" do
+describe "Replication" do
   def invalid_schema_message(message)
     <<-EOS.gsub!(/^ +/, "")
       #{Rails.configuration.database_configuration[Rails.env]["database"]} is not structured as expected.
@@ -7,7 +7,7 @@ describe "database schema" do
     EOS
   end
 
-  it "is structured as expected" do
+  it "database schema is structured as expected" do
     message = ManageIQ::Schema::Checker.check_schema
 
     expect(message).to be_nil, invalid_schema_message(message)

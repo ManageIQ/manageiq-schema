@@ -1,4 +1,4 @@
-describe "all tables" do
+describe "API" do
   let(:connection) { ApplicationRecord.connection }
 
   def api_invalid_tables_message(invalid_tables, attr)
@@ -11,14 +11,14 @@ The "#{attr}" attribute is reserved for the ManageIQ API.
 EOS
   end
 
-  it "do not have an attribute called href" do
+  it "no table has an attribute named href" do
     href_tables = connection.tables.select do |t|
       !%w(schema_migrations ar_internal_metadata).include?(t) && connection.columns(t).any? { |c| c.name == "href" }
     end
     expect(href_tables.size).to eq(0), api_invalid_tables_message(href_tables, "href")
   end
 
-  it "do not have an attribute called href_slug" do
+  it "no table has an attribute named href_slug" do
     href_slug_tables = connection.tables.select do |t|
       !%w(schema_migrations ar_internal_metadata).include?(t) && connection.columns(t).any? { |c| c.name == "href_slug" }
     end
