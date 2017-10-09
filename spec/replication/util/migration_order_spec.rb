@@ -1,4 +1,4 @@
-describe "migration order" do
+describe "Replication" do
   let(:current_release_migrations) do
     File.read(File.join(__dir__, 'data/released_migrations')).split.map(&:to_i).sort
   end
@@ -31,7 +31,7 @@ newly created ones where all the migrations are run in timestamp order.
 EOS
   end
 
-  it "is correct" do
+  it "migration order is correct" do
     incorrect_migration_time_stamps = []
     new_migrations.each do |m|
       incorrect_migration_time_stamps << m if m < last_released_migration
