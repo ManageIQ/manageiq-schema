@@ -1008,6 +1008,9 @@ customization_scripts:
 - type
 - created_at
 - updated_at
+- description
+- user_defined
+- in_use
 customization_scripts_operating_system_flavors:
 - customization_script_id
 - operating_system_flavor_id
