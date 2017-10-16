@@ -1254,6 +1254,9 @@ event_streams:
 - ems_ref
 - middleware_domain_id
 - middleware_domain_name
+- user_id
+- group_id
+- tenant_id
 ext_management_systems:
 - id
 - name
