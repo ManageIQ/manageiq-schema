@@ -5964,16 +5964,7 @@ shares:
 - allow_tenant_inheritance
 - created_at
 - updated_at
-showback_charges:
-- id
-- cost_subunits
-- cost_currency
-- showback_pool_id
-- showback_event_id
-- created_at
-- updated_at
-- stored_data
-showback_events:
+showback_data_rollups:
 - id
 - data
 - start_time
@@ -5983,7 +5974,19 @@ showback_events:
 - context
 - created_at
 - updated_at
-showback_pools:
+showback_data_views:
+- id
+- cost_subunits
+- cost_currency
+- showback_envelope_id
+- showback_data_rollup_id
+- created_at
+- updated_at
+- data_snapshot
+- context_snapshot
+- start_time
+- end_time
+showback_envelopes:
 - id
 - name
 - description
@@ -5994,6 +5997,14 @@ showback_pools:
 - accumulated_cost_currency
 - resource_type
 - resource_id
+- created_at
+- updated_at
+showback_input_measures:
+- id
+- entity
+- description
+- group
+- fields
 - created_at
 - updated_at
 showback_price_plans:
@@ -6007,16 +6018,16 @@ showback_price_plans:
 showback_rates:
 - id
 - calculation
-- category
-- dimension
+- entity
+- field
 - screener
-- date
+- start_date
 - concept
 - showback_price_plan_id
 - created_at
 - updated_at
-- measure
-- step_variable
+- group
+- tier_input_variable
 - uses_single_tier
 - tiers_use_full_value
 showback_tiers:
@@ -6035,14 +6046,6 @@ showback_tiers:
 - step_time_value
 - step_unit
 - showback_rate_id
-showback_usage_types:
-- id
-- category
-- description
-- measure
-- dimensions
-- created_at
-- updated_at
 snapshots:
 - id
 - uid
