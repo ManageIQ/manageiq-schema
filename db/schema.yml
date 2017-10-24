@@ -5053,6 +5053,7 @@ miq_queue:
 - user_id
 - group_id
 - tenant_id
+- targets
 miq_regions:
 - id
 - region
