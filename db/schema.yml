@@ -4820,6 +4820,7 @@ miq_ae_methods:
 - updated_by
 - updated_by_user_id
 - embedded_methods
+- options
 miq_ae_namespaces:
 - id
 - parent_id
