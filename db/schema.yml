@@ -6134,6 +6134,7 @@ switches:
 - mac_changes
 - switch_uuid
 - shared
+- mtu
 system_consoles:
 - id
 - url_secret
