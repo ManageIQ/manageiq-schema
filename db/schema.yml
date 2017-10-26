@@ -157,15 +157,6 @@ blacklisted_events:
 - enabled
 - created_at
 - updated_at
-blueprints:
-- id
-- name
-- description
-- status
-- version
-- ui_properties
-- created_at
-- updated_at
 bottleneck_events:
 - id
 - timestamp
@@ -1111,7 +1102,6 @@ dialogs:
 - created_at
 - updated_at
 - label
-- blueprint_id
 direct_configuration_profiles_configuration_tags:
 - configuration_profile_id
 - configuration_tag_id
@@ -5930,7 +5920,6 @@ service_templates:
 - service_template_catalog_id
 - long_description
 - tenant_id
-- blueprint_id
 - generic_subtype
 services:
 - id
