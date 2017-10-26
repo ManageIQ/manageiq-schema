@@ -809,6 +809,13 @@ container_quota_items:
 - created_at
 - updated_at
 - deleted_on
+container_quota_scopes:
+- id
+- container_quota_id
+- scope
+- created_at
+- updated_at
+- deleted_on
 container_quotas:
 - id
 - name
