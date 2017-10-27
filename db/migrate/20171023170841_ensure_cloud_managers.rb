@@ -5,7 +5,7 @@ class EnsureCloudManagers < ActiveRecord::Migration[5.0]
 
   class ManageIQ
     class Providers
-      class CloudManager < ActiveRecord::Base
+      class CloudManager < BaseManager
         def ensure_managers
           build_network_manager unless network_manager
           network_manager.name = "#{name} Network Manager"
