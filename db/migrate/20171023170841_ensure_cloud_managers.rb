@@ -1,7 +1,9 @@
 class EnsureCloudManagers < ActiveRecord::Migration[5.0]
+  class ExtManagementSystem < ActiveRecord::Base; end
+  class BaseManager < ExtManagementSystem; end
   class Settings < ActiveRecord::Base; end
 
-  class ManageIQ::Providers::CloudManager < ActiveRecord::Base
+  class CloudManager < ActiveRecord::Base
     def ensure_managers
       build_network_manager unless network_manager
       network_manager.name = "#{name} Network Manager"
@@ -36,6 +38,6 @@ class EnsureCloudManagers < ActiveRecord::Migration[5.0]
   end
 
   def up
-    ManageIQ::Providers::CloudManager.all.each { |x| x.send(:ensure_managers); x.save!; }
+    CloudManager.all.each { |x| x.send(:ensure_managers); x.save!; }
   end
 end
