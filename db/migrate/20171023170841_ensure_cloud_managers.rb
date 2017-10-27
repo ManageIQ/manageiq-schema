@@ -1,7 +1,10 @@
 class EnsureCloudManagers < ActiveRecord::Migration[5.0]
-  class ExtManagementSystem < ActiveRecord::Base; end
+  class ExtManagementSystem < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled # disable STI
+  end
+
   class BaseManager < ExtManagementSystem; end
-  class Settings < ActiveRecord::Base; end
+  class Settings; end
 
   class ManageIQ
     class Providers
