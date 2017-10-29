@@ -33,7 +33,7 @@ describe AddDeletedOnToContainerQuotaAndItems do
       migrate
       item.reload
 
-      expect(item.deleted_on).to eq(nil)
+      expect(item.created_at).to eq(quota.created_on)
       expect(item.updated_at).not_to eq(nil)
     end
 
