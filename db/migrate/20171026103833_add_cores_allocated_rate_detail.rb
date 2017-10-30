@@ -16,7 +16,7 @@ class AddCoresAllocatedRateDetail < ActiveRecord::Migration[5.0]
   end
 
   def up
-    chargeable_field = ChargeableField.find_or_create_by(:metric      => "derived_vm_numvcpus_cores",
+    chargeable_field = ChargeableField.find_or_create_by(:metric      => "derived_vm_numvcpu_cores",
                                                          :description => "Allocated CPU Cores",
                                                          :group       => "cpu_cores",
                                                          :source      => "allocated")
