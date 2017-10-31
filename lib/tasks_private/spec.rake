@@ -26,7 +26,7 @@ namespace :spec do
 end
 
 class SetupReleasedMigrations
-  RELEASED_BRANCH = "fine".freeze
+  RELEASED_BRANCH = "gaprindashvili".freeze
 
   def write_released_migrations
     puts "** Writing #{released_migrations_file}..."
