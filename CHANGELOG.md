@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 72 ending 2017-10-30
+
+### Added
+- Rename Tables and some changes for Showback Models [(#96)](https://github.com/ManageIQ/manageiq-schema/pull/96)
+- Add user_id group_id tenant_id to EventStream. [(#94)](https://github.com/ManageIQ/manageiq-schema/pull/94)
+- Migrate MiddlewareServer to MiddlewareServerWildfly and MiddlewareServerEap [(#81)](https://github.com/ManageIQ/manageiq-schema/pull/81)
+- Add requests and limits to Persistent Volume Claim [(#74)](https://github.com/ManageIQ/manageiq-schema/pull/74)
+
+### Fixed
+- Ensure EMS relationships are established on upgrade. [(#117)](https://github.com/ManageIQ/manageiq-schema/pull/117)
+- Add an 'Allocated cpu cores' chargeback rate detail to existing chargeback rates [(#108)](https://github.com/ManageIQ/manageiq-schema/pull/108)
+- Migrate EmsRefresh.refresh queue args to data [(#107)](https://github.com/ManageIQ/manageiq-schema/pull/107)
+- Convert containers hawkular Endpoints port=nil to port=443 [(#98)](https://github.com/ManageIQ/manageiq-schema/pull/98)
+- Add sub_metric column to chargeback_rate_detail [(#93)](https://github.com/ManageIQ/manageiq-schema/pull/93)
+- Move Openstack refresher settings [(#91)](https://github.com/ManageIQ/manageiq-schema/pull/91)
+- Migrate existing dialog field association data to use new relationship [(#80)](https://github.com/ManageIQ/manageiq-schema/pull/80)
+- single sequence for all metrics sub tables [(#48)](https://github.com/ManageIQ/manageiq-schema/pull/48)
+
 ## Unreleased as of Sprint 71 ending 2017-10-16
 
 ### Added
