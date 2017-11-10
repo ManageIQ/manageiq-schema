@@ -13,3 +13,6 @@ require 'reserve'
 require 'reserved_shared_mixin'
 require 'reserved_migration_mixin'
 require 'reserved_mixin'
+
+require 'pg/pglogical'
+require 'pg/pglogical/active_record_extension'
