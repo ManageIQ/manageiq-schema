@@ -34,7 +34,6 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
   class Hardware < ActiveRecord::Base; end
   class OperatingSystem < ActiveRecord::Base; end
 
-  class ContainerDefinition < ActiveRecord::Base; end
   class Container < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
   end
@@ -69,9 +68,9 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     ContainerCondition         => [:container_entity_id, :container_entity_type, :name],
     SecurityContext            => [:resource_id, :resource_type],
     ComputerSystem             => [:managed_entity_id, :managed_entity_type],
-    ContainerEnvVar            => [:container_definition_id, :name, :value, :field_path],
+    ContainerEnvVar            => [:container_id, :name, :value, :field_path],
     ContainerLimitItem         => [:container_limit_id, :resource, :item_type],
-    ContainerPortConfig        => [:container_definition_id, :ems_ref],
+    ContainerPortConfig        => [:container_id, :ems_ref],
     ContainerQuotaItem         => [:container_quota_id, :resource],
     ContainerServicePortConfig => [:container_service_id, :ems_ref, :protocol],
     ContainerTemplateParameter => [:container_template_id, :name],
@@ -80,7 +79,6 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     Hardware                   => [:vm_or_template_id, :host_id, :computer_system_id],
     OperatingSystem            => [:vm_or_template_id, :host_id, :computer_system_id],
     # Questionable
-    ContainerDefinition        => [:ems_id, :ems_ref],
     Container                  => [:ems_id, :ems_ref]
   }.freeze
 
