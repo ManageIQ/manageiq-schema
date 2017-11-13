@@ -72,7 +72,7 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     ContainerLimitItem         => [:container_limit_id, :resource, :item_type],
     ContainerPortConfig        => [:container_id, :ems_ref],
     ContainerQuotaItem         => [:container_quota_id, :resource],
-    ContainerServicePortConfig => [:container_service_id, :ems_ref, :protocol],
+    ContainerServicePortConfig => [:container_service_id, :name],
     ContainerTemplateParameter => [:container_template_id, :name],
     ContainerVolume            => [:parent_id, :parent_type, :name],
     CustomAttribute            => [:resource_id, :resource_type, :name, :unique_name, :section, :source],

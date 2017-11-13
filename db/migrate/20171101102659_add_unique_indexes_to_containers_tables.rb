@@ -56,7 +56,7 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               [:container_quota_id, :resource],
               :unique => true
     add_index :container_service_port_configs,
-              [:container_service_id, :ems_ref, :protocol], # FIXME(lsmola) I see duplicate ems_refs, because protocol is not part of it
+              [:container_service_id, :name],
               :unique => true,
               :name   => "index_container_service_port_configs_unique_multi_column"
     add_index :container_template_parameters,
