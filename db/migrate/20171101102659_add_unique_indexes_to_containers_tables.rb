@@ -16,9 +16,6 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
     add_index :persistent_volume_claims, [:ems_id, :ems_ref], :unique => true
 
     # Having :ems_id but not ems_ref
-    add_index :container_component_statuses,
-              [:ems_id, :name],
-              :unique => true
     add_index :container_images,
               [:ems_id, :image_ref],
               :unique => true,
