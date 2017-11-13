@@ -12,6 +12,7 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
     add_index :container_routes,         [:ems_id, :ems_ref], :unique => true
     add_index :container_services,       [:ems_id, :ems_ref], :unique => true
     add_index :container_templates,      [:ems_id, :ems_ref], :unique => true
+    add_index :containers,               [:ems_id, :ems_ref], :unique => true
     add_index :persistent_volume_claims, [:ems_id, :ems_ref], :unique => true
 
     # Having :ems_id but not ems_ref
@@ -40,7 +41,7 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               :unique => true,
               :name   => "index_computer_systems_unique_multi_column"
     add_index :container_env_vars,
-              [:container_definition_id, :name, :value, :field_path],
+              [:container_id, :name, :value, :field_path],
               :unique => true,
               :name   => "index_container_env_vars_unique_multi_column"
     add_index :container_limit_items,
@@ -48,7 +49,7 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               :unique => true,
               :name   => "index_container_limit_items_unique_multi_column"
     add_index :container_port_configs,
-              [:container_definition_id, :ems_ref],
+              [:container_id, :ems_ref],
               :unique => true,
               :name   => "index_container_port_configs_unique_multi_column"
     add_index :container_quota_items,
@@ -77,11 +78,5 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               [:vm_or_template_id, :host_id, :computer_system_id],
               :unique => true,
               :name   => "index_operating_systems_unique_multi_column"
-
-    # FIXME(lsmola) questionable, these were modeled as nested, but they have :ems_id & :ems_ref
-    # Is ems_ref unique? we were saving these under container_group
-    add_index :container_definitions, [:ems_id, :ems_ref], :unique => true
-    # Is ems_ref unique? we were saving these under container_definition
-    add_index :containers,            [:ems_id, :ems_ref], :unique => true
   end
 end
