@@ -44,7 +44,7 @@ describe CleanUpDuplicatesInContainersTables do
   def analyze(model)
     original_values = {}
     duplicate_values = {}
-    model.all.each do |record|
+    model.order("id DESC").all.each do |record|
       index = record.attributes.symbolize_keys.slice(*model_unique_keys(model))
       if original_values[index]
         duplicate_values[index] << record.id
@@ -64,9 +64,9 @@ describe CleanUpDuplicatesInContainersTables do
     expect(original_values.count).to eq(original_values_count(model))
     expect(duplicate_values.values.flatten.count).to eq(duplicate_values_count(model))
 
-    # Check that original values ids are the min or all duplicated ids
+    # Check that original values ids are the max or all duplicated ids
     original_values.each do |key, value|
-      expect((duplicate_values[key] << value).min).to eq value
+      expect((duplicate_values[key] << value).max).to eq value
     end
   end
 
