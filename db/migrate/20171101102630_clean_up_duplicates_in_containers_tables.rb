@@ -25,6 +25,7 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
   class ContainerEnvVar < ActiveRecord::Base; end
   class ContainerLimitItem < ActiveRecord::Base; end
   class ContainerPortConfig < ActiveRecord::Base; end
+  class ContainerQuotaScope < ActiveRecord::Base; end
   class ContainerQuotaItem < ActiveRecord::Base; end
   class ContainerServicePortConfig < ActiveRecord::Base; end
   class ContainerTemplateParameter < ActiveRecord::Base; end
@@ -58,6 +59,7 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     ContainerRoute             => [:ems_id, :ems_ref],
     ContainerService           => [:ems_id, :ems_ref],
     ContainerTemplate          => [:ems_id, :ems_ref],
+    Container                  => [:ems_id, :ems_ref],
     PersistentVolumeClaim      => [:ems_id, :ems_ref],
     # Having :ems_id but not ems_ref
     ContainerImage             => [:ems_id, :image_ref],
@@ -69,6 +71,7 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     ContainerEnvVar            => [:container_id, :name, :value, :field_path],
     ContainerLimitItem         => [:container_limit_id, :resource, :item_type],
     ContainerPortConfig        => [:container_id, :ems_ref],
+    ContainerQuotaScope        => [:container_quota_id, :scope],
     ContainerQuotaItem         => [:container_quota_id, :resource],
     ContainerServicePortConfig => [:container_service_id, :name],
     ContainerTemplateParameter => [:container_template_id, :name],
@@ -76,8 +79,6 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     CustomAttribute            => [:resource_id, :resource_type, :name, :unique_name, :section, :source],
     Hardware                   => [:vm_or_template_id, :host_id, :computer_system_id],
     OperatingSystem            => [:vm_or_template_id, :host_id, :computer_system_id],
-    # Questionable
-    Container                  => [:ems_id, :ems_ref]
   }.freeze
 
   def up

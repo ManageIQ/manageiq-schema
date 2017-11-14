@@ -52,6 +52,9 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
     add_index :container_quota_items,
               [:container_quota_id, :resource],
               :unique => true
+    add_index :container_quota_scopes,
+              [:container_quota_id, :scope],
+              :unique => true
     add_index :container_service_port_configs,
               [:container_service_id, :name],
               :unique => true,
