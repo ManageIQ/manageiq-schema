@@ -38,12 +38,12 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     self.inheritance_column = :_type_disabled
   end
 
-  def duplicate_data_query_returning_min_id(model, unique_index_columns)
-    model.group(unique_index_columns).select("min(id)")
+  def duplicate_data_query_returning_max_id(model, unique_index_columns)
+    model.group(unique_index_columns).select("max(id)")
   end
 
   def cleanup_duplicate_data_delete_all(model, unique_index_columns)
-    model.where.not(:id => duplicate_data_query_returning_min_id(model, unique_index_columns)).delete_all
+    model.where.not(:id => duplicate_data_query_returning_max_id(model, unique_index_columns)).delete_all
   end
 
   UNIQUE_INDEXES_FOR_MODELS = {
