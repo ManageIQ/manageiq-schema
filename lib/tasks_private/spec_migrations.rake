@@ -48,7 +48,7 @@ namespace :spec do
 
       cmd = "bundle exec rake #{rake_command}"
       cmd << " --trace" if Rake.application.options.trace
-      _pid, status = Bundler.with_clean_env do
+      _pid, status = Bundler.with_original_env do
         Process.wait2(Kernel.spawn(env, cmd))
       end
       exit(status.exitstatus) if status.exitstatus != 0
