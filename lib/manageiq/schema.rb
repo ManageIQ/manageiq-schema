@@ -5,7 +5,6 @@ require 'activerecord-id_regions'
 require 'gems/pending/util/miq-password'
 require 'more_core_extensions/all' # TODO: Move this into specific migrations that need it
 
-require "manageiq/schema/checker"
 require 'migration_helper'
 require 'migration_stub_helper'
 
@@ -16,3 +15,9 @@ require 'reserved_mixin'
 
 require 'pg/pglogical'
 require 'pg/pglogical/active_record_extension'
+
+module ManageIQ
+  module Schema
+    SYSTEM_TABLES = %w(ar_internal_metadata schema_migrations repl_events repl_monitor repl_nodes).freeze
+  end
+end
