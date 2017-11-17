@@ -13,8 +13,6 @@ class NamespaceEmsOpenstackAvailabilityZonesNull < ActiveRecord::Migration[4.2]
 
     return if previously_migrated_as?("20151435234622")
 
-    say_with_time "Rename class references for OpenStack AZs" do
-      rename_class_references(NAME_MAP)
-    end
+    rename_class_references(NAME_MAP)
   end
 end

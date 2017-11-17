@@ -37,9 +37,7 @@ class RemoveAtomicContainerProviders < ActiveRecord::Migration[5.0]
   class MiqQueue < ActiveRecord::Base; end
 
   def up
-    say_with_time "Rename class references for Atomic and AtomicEnterprise" do
-      rename_class_references(NAME_MAP)
-    end
+    rename_class_references(NAME_MAP)
 
     say_with_time "Rename Atomic to Openshift in Authentication:name" do
       Authentication.update_all("name = replace(name, 'ManageIQ::Providers::Atomic', 'ManageIQ::Providers::Openshift')")
