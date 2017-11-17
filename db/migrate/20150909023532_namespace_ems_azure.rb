@@ -12,8 +12,6 @@ class NamespaceEmsAzure < ActiveRecord::Migration[4.2]
   )]
 
   def change
-    say_with_time "Renaming class references for Azure namespace" do
-      rename_class_references(NAME_MAP)
-    end
+    rename_class_references(NAME_MAP)
   end
 end
