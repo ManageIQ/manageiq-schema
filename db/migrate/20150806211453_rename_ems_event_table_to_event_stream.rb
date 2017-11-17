@@ -2,7 +2,7 @@ class RenameEmsEventTableToEventStream < ActiveRecord::Migration[4.2]
   disable_ddl_transaction!
   include MigrationHelper
 
-  BATCH_SIZE = 1000
+  BATCH_SIZE = 25_000
 
   class EventStream < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
