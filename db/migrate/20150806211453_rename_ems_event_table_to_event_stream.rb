@@ -2,6 +2,8 @@ class RenameEmsEventTableToEventStream < ActiveRecord::Migration[4.2]
   disable_ddl_transaction!
   include MigrationHelper
 
+  BATCH_SIZE = 1000
+
   class EventStream < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
   end
@@ -14,11 +16,12 @@ class RenameEmsEventTableToEventStream < ActiveRecord::Migration[4.2]
     add_column :event_streams, :type, :string
     say_with_time("Updating Type in EventStreams") do
       base_relation = EventStream.where(:type => nil)
-      say "#{base_relation.size} records with batch size 1000", :subitem
+      say_batch_started(base_relation.size)
+
       loop do
-        count = base_relation.limit(1000).update_all(:type => 'EmsEvent')
-        print "."
+        count = base_relation.limit(BATCH_SIZE).update_all(:type => 'EmsEvent')
         break if count == 0
+        say_batch_processed(count)
       end
     end
 
