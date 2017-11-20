@@ -25,16 +25,16 @@ class AddIdPrimaryKeyToJoinTables < ActiveRecord::Migration[5.0]
       delete_remote_region_rows(t) if on_replication_target?
 
       say_with_time("Add primary key \"id\" to #{t}") do
-        execute <<-SQL
+        connection.execute <<-SQL
           CREATE SEQUENCE #{sequence_name(t)} START #{seq_start_value}
         SQL
 
-        execute <<-SQL
+        connection.execute <<-SQL
           ALTER TABLE #{t} ADD COLUMN id BIGINT PRIMARY KEY
           DEFAULT NEXTVAL('#{sequence_name(t)}')
         SQL
 
-        execute <<-SQL
+        connection.execute <<-SQL
           ALTER SEQUENCE #{sequence_name(t)} OWNED BY #{t}.id
         SQL
       end
