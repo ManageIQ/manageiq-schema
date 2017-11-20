@@ -129,21 +129,28 @@ module MigrationHelper
       condition_list = mapping.keys.map { |s| connection.quote(s) }.join(',')
       when_clauses = mapping.map { |before, after| "WHEN #{connection.quote before} THEN #{connection.quote after}" }.join(' ')
 
-      type_columns_query = <<-SQL
-        SELECT pg_class.oid::regclass::text, quote_ident(attname)
-        FROM pg_class JOIN pg_attribute ON pg_class.oid = attrelid
-        WHERE relkind = 'r'
-          AND (attname = 'type' OR attname LIKE '%\\_type')
-          AND atttypid IN ('text'::regtype, 'varchar'::regtype)
-        ORDER BY relname, attname
-      SQL
+      say "Renaming class references:\n#{mapping.pretty_inspect}"
 
-      select_rows(type_columns_query).each do |quoted_table, quoted_column|
-        execute <<-SQL
-          UPDATE #{quoted_table}
-          SET #{quoted_column} = CASE #{quoted_column} #{when_clauses} END
-          WHERE #{quoted_column} IN (#{condition_list})
-        SQL
+      rows = say_with_time("Determining tables and columns for update") do
+        connection.select_rows(<<-SQL
+          SELECT pg_class.oid::regclass::text, quote_ident(attname)
+          FROM pg_class JOIN pg_attribute ON pg_class.oid = attrelid
+          WHERE relkind = 'r'
+            AND (attname = 'type' OR attname LIKE '%\\_type')
+            AND atttypid IN ('text'::regtype, 'varchar'::regtype)
+          ORDER BY relname, attname
+          SQL
+        )
+      end
+
+      rows.each do |quoted_table, quoted_column|
+        say_with_time("Renaming class reference in #{quoted_table}.#{quoted_column}") do
+          connection.execute <<-SQL
+            UPDATE #{quoted_table}
+            SET #{quoted_column} = CASE #{quoted_column} #{when_clauses} END
+            WHERE #{quoted_column} IN (#{condition_list})
+          SQL
+        end
       end
     end
   end
