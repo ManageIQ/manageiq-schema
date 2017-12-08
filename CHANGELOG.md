@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 74 ending 2017-11-27
+
+### Added
+- Update ResourceGroup type for Azure [(#131)](https://github.com/ManageIQ/manageiq-schema/pull/131)
+
+### Fixed
+- Fix migration column caching. [(#136)](https://github.com/ManageIQ/manageiq-schema/pull/136)
+- Require the activerecord extension from the pg-pglogical gem [(#126)](https://github.com/ManageIQ/manageiq-schema/pull/126)
+- Remove the limit from string columns in all tables [(#125)](https://github.com/ManageIQ/manageiq-schema/pull/125)
+- Downcase ems_ref for Azure resource groups [(#123)](https://github.com/ManageIQ/manageiq-schema/pull/123)
+- Migrate Zone NTP settings to SettingsChanges [(#122)](https://github.com/ManageIQ/manageiq-schema/pull/122)
+
 ## Unreleased as of Sprint 73 ending 2017-11-13
 
 ### Fixed
