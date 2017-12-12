@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Gaprindashvili RC
+
+### Added
+- Add unique_set_size for servers and workers [(#139)](https://github.com/ManageIQ/manageiq-schema/pull/139)
+
 ## Gaprindashvili Beta2
 
 ### Added
