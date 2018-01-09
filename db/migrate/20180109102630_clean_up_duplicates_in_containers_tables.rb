@@ -38,12 +38,15 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     self.inheritance_column = :_type_disabled
   end
 
-  def duplicate_data_query_returning_max_id(model, unique_index_columns)
-    model.group(unique_index_columns).select("max(id)")
-  end
-
   def cleanup_duplicate_data_delete_all(model, unique_index_columns)
-    model.where.not(:id => duplicate_data_query_returning_max_id(model, unique_index_columns)).delete_all
+    # 'ORDER BY id DESC' keeps the highest `id`. `ORDER BY id ASC` (more common case) would keep the lowest `id`.
+    connection.execute <<-SQL
+      DELETE FROM #{model.table_name}
+        WHERE id IN (SELECT id
+                      FROM (SELECT id, ROW_NUMBER() OVER (partition BY #{unique_index_columns.join(",")} ORDER BY id DESC) AS rnum
+                             FROM #{model.table_name}) t
+                      WHERE t.rnum > 1);
+    SQL
   end
 
   UNIQUE_INDEXES_FOR_MODELS = {
