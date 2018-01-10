@@ -135,7 +135,7 @@ describe CleanUpDuplicatesInContainersTables do
       )
     end
 
-    described_class::UNIQUE_INDEXES_FOR_MODELS.keys.each do |model|
+    described_class::UNIQUE_INDEXES_FOR_MODELS.each_key do |model|
       context "with model #{model}" do
         it "checks that the duplicate values are cleaned up" do
           create_test_data(model)
