@@ -21,6 +21,7 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
 
   class ContainerCondition < ApplicationRecord; end
   class SecurityContext < ApplicationRecord; end
+  class Tagging < ApplicationRecord; end
   class ComputerSystem < ApplicationRecord; end
   class ContainerEnvVar < ApplicationRecord; end
   class ContainerLimitItem < ApplicationRecord; end
@@ -71,15 +72,16 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     # Nested tables, not having :ems_id and the foreign_key is a part of the unique index
     ContainerCondition         => %i(container_entity_id container_entity_type name),
     SecurityContext            => %i(resource_id resource_type),
+    Tagging                    => %i(taggable_id taggable_type tag_id),
     ComputerSystem             => %i(managed_entity_id managed_entity_type),
     ContainerEnvVar            => %i(container_id name value field_path),
     ContainerLimitItem         => %i(container_limit_id resource item_type),
     ContainerPortConfig        => %i(container_id ems_ref),
-    ContainerQuotaScope        => %i(container_quota_id scope),
     ContainerQuotaItem         => %i(container_quota_id resource),
+    ContainerQuotaScope        => %i(container_quota_id scope),
     ContainerServicePortConfig => %i(container_service_id name),
     ContainerTemplateParameter => %i(container_template_id name),
-    ContainerVolume            => %i(parent_id parent_type name),
+    ContainerVolume            => %i(parent_id parent_type ems_ref name),
     CustomAttribute            => %i(resource_id resource_type name unique_name section source),
     Hardware                   => %i(vm_or_template_id host_id computer_system_id),
     OperatingSystem            => %i(vm_or_template_id host_id computer_system_id),

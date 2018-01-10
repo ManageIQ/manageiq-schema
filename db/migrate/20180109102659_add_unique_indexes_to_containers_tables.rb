@@ -33,6 +33,10 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               %i(resource_id resource_type),
               :unique => true,
               :name   => "index_security_contexts_unique_multi_column"
+    add_index :taggings,
+              %i(taggable_id taggable_type tag_id),
+              :unique => true,
+              :name   => "index_taggings_unique_multi_column"
     add_index :computer_systems,
               %i(managed_entity_id managed_entity_type),
               :unique => true,
@@ -64,8 +68,8 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               :unique => true,
               :name   => "index_container_template_parameters_unique_multi_column"
     add_index :container_volumes,
-              %i(parent_id parent_type name),
-              :unique => true # FIXME(lsmola) has unused :ems_ref
+              %i(parent_id parent_type ems_ref name),
+              :unique => true
     add_index :custom_attributes,
               %i(resource_id resource_type name unique_name section source),
               :unique => true,
