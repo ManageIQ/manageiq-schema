@@ -1,2 +1,2 @@
-# GlobalVars:
-#   AllowedVariables:
+Rails/ApplicationRecord:
+  Enabled: false
