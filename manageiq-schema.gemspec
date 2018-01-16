@@ -23,8 +23,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency "manageiq-gems-pending"  # This is just for MiqPassword for now
 
+  s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
+  s.add_development_dependency "rubocop"
   s.add_development_dependency "simplecov"
 end
