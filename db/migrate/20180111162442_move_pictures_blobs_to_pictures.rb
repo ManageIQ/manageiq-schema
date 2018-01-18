@@ -18,7 +18,7 @@ class MovePicturesBlobsToPictures < ActiveRecord::Migration[5.0]
 
     say_with_time("Moving picture content from BinaryBlobs to the pictures table") do
       BinaryBlob.in_my_region.includes(:binary_blob_parts).where(:resource_type => "Picture").find_each do |blob|
-        Picture.update(blob.resource_id, :content => blob.data, :extension => blob.data_type, :md5 => blob.md5)
+        Picture.update(blob.resource_id, :content => blob.data, :extension => blob.data_type, :md5 => blob.md5) if blob.resource_id
         blob.destroy
       end
     end
