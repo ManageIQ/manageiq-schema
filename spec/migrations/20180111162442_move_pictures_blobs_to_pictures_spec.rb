@@ -6,8 +6,32 @@ describe MovePicturesBlobsToPictures do
   let(:picture_stub)          { migration_stub :Picture }
 
   migration_context :up do
-    it 'Destroys picture blobs without a picture' do
+    it 'Destroys picture blobs with an invalid picture id' do
+      picture = picture_stub.create!
       blob    = binary_blob_stub.create!(
+        :data_type     => "png",
+        :md5           => "ce114e4501d2f4e2dcea3e17b546f339",
+        :part_size     => 1.megabyte,
+        :resource_id   => picture.id + 42,
+        :resource_type => "Picture",
+        :size          => 14,
+      )
+      binary_blob_part_stub.create!(
+        :binary_blob_id => blob.id,
+        :data           => "This is a test",
+        :md5            => "ce114e4501d2f4e2dcea3e17b546f339",
+        :size           => 14,
+      )
+
+      migrate
+
+      expect(picture_stub.count).to eq(1)
+      expect(binary_blob_stub.count).to eq(0)
+      expect(binary_blob_part_stub.count).to eq(0)
+    end
+
+    it 'Destroys picture blobs with a nil picture id' do
+      blob = binary_blob_stub.create!(
         :data_type     => "png",
         :md5           => "ce114e4501d2f4e2dcea3e17b546f339",
         :part_size     => 1.megabyte,
