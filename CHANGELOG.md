@@ -5,27 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili RC
+## Gaprindashvili-1
 
 ### Added
 - Add unique_set_size for servers and workers [(#139)](https://github.com/ManageIQ/manageiq-schema/pull/139)
-
-## Gaprindashvili Beta2
-
-### Added
 - Migrate Zone NTP settings to SettingsChanges [(#122)](https://github.com/ManageIQ/manageiq-schema/pull/122)
 - Update ResourceGroup type for Azure [(#131)](https://github.com/ManageIQ/manageiq-schema/pull/131)
-
-### Fixed
-- Move the db:check_schema task to the public tasks.rake file [(#124)](https://github.com/ManageIQ/manageiq-schema/pull/124)
-- Require the activerecord extension from the pg-pglogical gem [(#126)](https://github.com/ManageIQ/manageiq-schema/pull/126)
-- Remove the limit from string columns in all tables [(#125)](https://github.com/ManageIQ/manageiq-schema/pull/125)
-- Downcase ems_ref for Azure resource groups [(#123)](https://github.com/ManageIQ/manageiq-schema/pull/123)
-- Fix migration column caching. [(#136)](https://github.com/ManageIQ/manageiq-schema/pull/136)
-
-## Gaprindashvili Beta1
-
-### Added
 - Add user_id group_id tenant_id to MiqQueue [(#83)](https://github.com/ManageIQ/manageiq-schema/pull/83)
 - Add severity column to miq_alerts table [(#77)](https://github.com/ManageIQ/manageiq-schema/pull/77)
 - Change the table used for LXCA config patterns [(#75)](https://github.com/ManageIQ/manageiq-schema/pull/75)
@@ -52,6 +37,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Add options to ems [(#23)](https://github.com/ManageIQ/manageiq-schema/pull/23)
 
 ### Fixed
+- Move the db:check_schema task to the public tasks.rake file [(#124)](https://github.com/ManageIQ/manageiq-schema/pull/124)
+- Require the activerecord extension from the pg-pglogical gem [(#126)](https://github.com/ManageIQ/manageiq-schema/pull/126)
+- Remove the limit from string columns in all tables [(#125)](https://github.com/ManageIQ/manageiq-schema/pull/125)
+- Downcase ems_ref for Azure resource groups [(#123)](https://github.com/ManageIQ/manageiq-schema/pull/123)
+- Fix migration column caching. [(#136)](https://github.com/ManageIQ/manageiq-schema/pull/136)
 - Add columns for mw domain entities in event streams table [(#86)](https://github.com/ManageIQ/manageiq-schema/pull/86)
 - Rename the provisioning_manager_id column in the customization_scripts table [(#85)](https://github.com/ManageIQ/manageiq-schema/pull/85)
 - Change rake spec to run all specs and be the default [(#78)](https://github.com/ManageIQ/manageiq-schema/pull/78)
