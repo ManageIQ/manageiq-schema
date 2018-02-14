@@ -82,7 +82,7 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     ContainerServicePortConfig => %i(container_service_id name),
     ContainerTemplateParameter => %i(container_template_id name),
     ContainerVolume            => %i(parent_id parent_type ems_ref name),
-    CustomAttribute            => %i(resource_id resource_type name unique_name section source),
+    CustomAttribute            => %i(resource_id resource_type name section source),
     Hardware                   => %i(vm_or_template_id host_id computer_system_id),
     OperatingSystem            => %i(vm_or_template_id host_id computer_system_id),
   }.freeze
