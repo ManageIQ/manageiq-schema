@@ -73,9 +73,9 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               :unique => true,
               :name   => "index_container_volumes_unique_multi_column"
     add_index :custom_attributes,
-              %i(resource_id resource_type name unique_name section source),
+              %i(resource_id resource_type name section source),
               :unique => true,
-              :name   => "index_custom_attributes_parameters_unique_multi_column"
+              :name   => "index_custom_attributes_parameters_unique_without_unique_name"
 
     remove_index :hardwares, :vm_or_template_id
     add_index :hardwares,
