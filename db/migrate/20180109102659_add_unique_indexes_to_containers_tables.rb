@@ -69,9 +69,14 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               :unique => true,
               :name   => "index_container_template_parameters_unique_multi_column"
     add_index :container_volumes,
-              %i(parent_id parent_type ems_ref name),
+              %i(parent_id parent_type name ems_ref),
               :unique => true,
-              :name   => "index_container_volumes_unique_multi_column"
+              :name   => "index_container_volumes_unique_without_name"
+    add_index :container_volumes,
+              %i(parent_id parent_type name),
+              :where  => "ems_ref IS NULL",
+              :unique => true,
+              :name   => "index_container_volumes_unique_without_ems_ref"
     add_index :custom_attributes,
               %i(resource_id resource_type name section source),
               :unique => true,
