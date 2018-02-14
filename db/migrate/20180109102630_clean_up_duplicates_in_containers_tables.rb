@@ -77,7 +77,7 @@ class CleanUpDuplicatesInContainersTables < ActiveRecord::Migration[5.0]
     ContainerEnvVar            => %i(container_id name value field_path),
     ContainerLimitItem         => %i(container_limit_id resource item_type),
     ContainerPortConfig        => %i(container_id ems_ref),
-    ContainerQuotaItem         => %i(container_quota_id resource),
+    ContainerQuotaItem         => %i(container_quota_id resource quota_desired quota_enforced quota_observed),
     ContainerQuotaScope        => %i(container_quota_id scope),
     ContainerServicePortConfig => %i(container_service_id name),
     ContainerTemplateParameter => %i(container_template_id name),
