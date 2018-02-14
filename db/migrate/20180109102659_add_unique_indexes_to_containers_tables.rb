@@ -75,13 +75,47 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               %i(resource_id resource_type name unique_name section source),
               :unique => true,
               :name   => "index_custom_attributes_parameters_unique_multi_column"
+
+    remove_index :hardwares, :vm_or_template_id
     add_index :hardwares,
-              %i(vm_or_template_id host_id computer_system_id),
+              %i(vm_or_template_id),
+              :where  => "host_id IS NULL AND computer_system_id IS NULL",
               :unique => true,
-              :name   => "index_hardwares_on_unique_multi_column"
+              :name   => "index_hardwares_on_vm_or_template_id"
+
+    remove_index :hardwares, :host_id
+    add_index :hardwares,
+              %i(host_id),
+              :where  => "vm_or_template_id IS NULL AND computer_system_id IS NULL",
+              :unique => true,
+              :name   => "index_hardwares_on_host_id"
+
+    remove_index :hardwares, :computer_system_id
+    add_index :hardwares,
+              %i(computer_system_id),
+              :where  => "vm_or_template_id IS NULL AND host_id IS NULL",
+              :unique => true,
+              :name   => "index_hardwares_on_computer_system_id_"
+
+    remove_index :operating_systems, :vm_or_template_id
     add_index :operating_systems,
-              %i(vm_or_template_id host_id computer_system_id),
+              %i(vm_or_template_id),
+              :where  => "host_id IS NULL AND computer_system_id IS NULL",
               :unique => true,
-              :name   => "index_operating_systems_unique_multi_column"
+              :name   => "index_operating_systems_on_vm_or_template_id"
+
+    remove_index :operating_systems, :host_id
+    add_index :operating_systems,
+              %i(host_id),
+              :where  => "vm_or_template_id IS NULL AND computer_system_id IS NULL",
+              :unique => true,
+              :name   => "index_operating_systems_on_host_id"
+
+    remove_index :operating_systems, :computer_system_id
+    add_index :operating_systems,
+              %i(computer_system_id),
+              :where  => "vm_or_template_id IS NULL AND host_id IS NULL",
+              :unique => true,
+              :name   => "index_operating_systems_on_computer_system_id_"
   end
 end
