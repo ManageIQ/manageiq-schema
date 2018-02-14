@@ -54,7 +54,8 @@ class AddUniqueIndexesToContainersTables < ActiveRecord::Migration[5.0]
               :unique => true,
               :name   => "index_container_port_configs_unique_multi_column"
     add_index :container_quota_items,
-              %i(container_quota_id resource),
+              %i(container_quota_id resource quota_desired quota_enforced quota_observed),
+              :where  => "deleted_on IS NULL",
               :unique => true
     add_index :container_quota_scopes,
               %i(container_quota_id scope),
