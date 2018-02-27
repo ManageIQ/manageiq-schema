@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 80 ending 2018-02-26
+
+### Added
+- Add last_updated_on to configuration_script_sources [(#172)](https://github.com/ManageIQ/manageiq-schema/pull/172)
+- Add ems_ref column to physical_racks table [(#170)](https://github.com/ManageIQ/manageiq-schema/pull/170)
+- Add hostname to Vm [(#168)](https://github.com/ManageIQ/manageiq-schema/pull/168)
+- create a physical rack table [(#156)](https://github.com/ManageIQ/manageiq-schema/pull/156)
+
+### Fixed
+- nil out invalid hostnames on MiqServer records [(#164)](https://github.com/ManageIQ/manageiq-schema/pull/164)
+
 ## Gaprindashvili-1 - Released 2018-01-31
 
 ### Added
@@ -62,28 +73,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Delete the dangling blob when there is a blob without a picture [(#158)](https://github.com/ManageIQ/manageiq-schema/pull/158)
 - Change container_quota_items float columns to decimals [(#151)](https://github.com/ManageIQ/manageiq-schema/pull/151)
 - Move Openstack refresh settings under the root where they belong [(#146)](https://github.com/ManageIQ/manageiq-schema/pull/146)
-
-## Unreleased as of Sprint 75 ending 2017-12-11
-
-### Added
-- Add unique_set_size for servers and workers [(#139)](https://github.com/ManageIQ/manageiq-schema/pull/139)
-
-## Unreleased as of Sprint 74 ending 2017-11-27
-
-### Added
-- Update ResourceGroup type for Azure [(#131)](https://github.com/ManageIQ/manageiq-schema/pull/131)
-
-### Fixed
-- Fix migration column caching. [(#136)](https://github.com/ManageIQ/manageiq-schema/pull/136)
-- Require the activerecord extension from the pg-pglogical gem [(#126)](https://github.com/ManageIQ/manageiq-schema/pull/126)
-- Remove the limit from string columns in all tables [(#125)](https://github.com/ManageIQ/manageiq-schema/pull/125)
-- Downcase ems_ref for Azure resource groups [(#123)](https://github.com/ManageIQ/manageiq-schema/pull/123)
-- Migrate Zone NTP settings to SettingsChanges [(#122)](https://github.com/ManageIQ/manageiq-schema/pull/122)
-
-## Unreleased as of Sprint 73 ending 2017-11-13
-
-### Fixed
-- Move the db:check_schema task to the public tasks.rake file [(#124)](https://github.com/ManageIQ/manageiq-schema/pull/124)
 
 ## Unreleased as of Sprint 72 ending 2017-10-30
 
