@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 81 ending 2018-03-12
+
+### Fixed
+- Move SchemaMigration model from ManageIQ to ManageIQ::Schema plugin [(#175)](https://github.com/ManageIQ/manageiq-schema/pull/175)
+
 ## Unreleased as of Sprint 80 ending 2018-02-26
 
 ### Added
