@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 83 ending 2018-04-09
+
+### Added
+- Add compliance information [(#169)](https://github.com/ManageIQ/manageiq-schema/pull/169)
+
+### Fixed
+- Set the switch types for VMware switches [(#180)](https://github.com/ManageIQ/manageiq-schema/pull/180)
+
 ## Unreleased as of Sprint 82 ending 2018-03-26
 
 ### Added
