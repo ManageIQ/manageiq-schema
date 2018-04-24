@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 84 ending 2018-04-23
+
+### Added
+- Create a Physical Chassis table [(#183)](https://github.com/ManageIQ/manageiq-schema/pull/183)
+- Updating details for physical switches [(#182)](https://github.com/ManageIQ/manageiq-schema/pull/182)
+
+### Fixed
+- Update provider_region to nil for Google provider [(#184)](https://github.com/ManageIQ/manageiq-schema/pull/184)
+
 ## Unreleased as of Sprint 83 ending 2018-04-09
 
 ### Added
