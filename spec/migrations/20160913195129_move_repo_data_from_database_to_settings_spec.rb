@@ -33,6 +33,23 @@ describe MoveRepoDataFromDatabaseToSettings do
       ).first
       expect(setting_change.value).to eq(repo_list)
     end
+
+    it "handles nil update_repo_name" do
+      database_attrs = {
+        :session_secret_token => SecureRandom.hex(64),
+        :csrf_secret_token    => SecureRandom.hex(64),
+      }
+      database_stub.create!(database_attrs)
+
+      migrate
+
+      setting_change = settings_stub.where(
+        :key           => described_class::SETTING_KEY,
+        :resource_id   => region.id,
+        :resource_type => "MiqRegion"
+      )
+      expect(setting_change.count).to eq(0)
+    end
   end
 
   migration_context :down do
