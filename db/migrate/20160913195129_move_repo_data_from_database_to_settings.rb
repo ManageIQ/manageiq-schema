@@ -9,7 +9,7 @@ class MoveRepoDataFromDatabaseToSettings < ActiveRecord::Migration[5.0]
 
   def up
     db = MiqDatabase.first
-    return unless db && my_region
+    return unless db.try(:update_repo_name) && my_region
 
     say_with_time("Moving repo information from miq_databases to Settings") do
       repos = db.update_repo_name.split
