@@ -5,6 +5,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 84 ending 2018-04-23
+
+### Added
+- Create a Physical Chassis table [(#183)](https://github.com/ManageIQ/manageiq-schema/pull/183)
+- Updating details for physical switches [(#182)](https://github.com/ManageIQ/manageiq-schema/pull/182)
+
+### Fixed
+- Update provider_region to nil for Google provider [(#184)](https://github.com/ManageIQ/manageiq-schema/pull/184)
+
+## Unreleased as of Sprint 83 ending 2018-04-09
+
+### Added
+- Add compliance information [(#169)](https://github.com/ManageIQ/manageiq-schema/pull/169)
+
+### Fixed
+- Set the switch types for VMware switches [(#180)](https://github.com/ManageIQ/manageiq-schema/pull/180)
+
+## Unreleased as of Sprint 82 ending 2018-03-26
+
+### Added
+- Add vm_ems_ref to event_streams [(#176)](https://github.com/ManageIQ/manageiq-schema/pull/176)
+- Add miq_task_id column to miq_queue table [(#167)](https://github.com/ManageIQ/manageiq-schema/pull/167)
+- Add lan info to a guest_device (port) [(#165)](https://github.com/ManageIQ/manageiq-schema/pull/165)
+- Updating switches data [(#160)](https://github.com/ManageIQ/manageiq-schema/pull/160)
+
+### Fixed
+- Adding product details columns to asset_details table [(#181)](https://github.com/ManageIQ/manageiq-schema/pull/181)
+- Remove the limits from the tables in sorted order [(#179)](https://github.com/ManageIQ/manageiq-schema/pull/179)
+
+### Removed
+- Remove all instances of ManageIQ::Providers::Hawkular::MiddlewareManager from ext_management_systems [(#161)](https://github.com/ManageIQ/manageiq-schema/pull/161)
+
+## Unreleased as of Sprint 81 ending 2018-03-12
+
+### Fixed
+- Move SchemaMigration model from ManageIQ to ManageIQ::Schema plugin [(#175)](https://github.com/ManageIQ/manageiq-schema/pull/175)
+
 ## Unreleased as of Sprint 80 ending 2018-02-26
 
 ### Added
