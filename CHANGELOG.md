@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 85 ending 2018-05-07
+
+### Added
+- Creating physical_network_ports table [(#185)](https://github.com/ManageIQ/manageiq-schema/pull/185)
+
+### Fixed
+- Azure backslash to forward slash [(#192)](https://github.com/ManageIQ/manageiq-schema/pull/192)
+- Nil MiqDatabase#update_repo_name [(#191)](https://github.com/ManageIQ/manageiq-schema/pull/191)
+
+### Removed
+- Remove all VMware MKS console-related records from SettingSchanges [(#166)](https://github.com/ManageIQ/manageiq-schema/pull/166)
+
 ## Unreleased as of Sprint 84 ending 2018-04-23
 
 ### Added
