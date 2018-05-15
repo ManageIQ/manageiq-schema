@@ -9,6 +9,9 @@ class CreateTaskForEachJobAndTransferAttributes < ActiveRecord::Migration[5.0]
   end
 
   def up
+    say_with_time("Deleting finished jobs older than 7 days") do
+      Job.where("updated_on < ?", Time.now.utc - 7.days).where("state = 'finished'").delete_all
+    end
     say_with_time("Creating tasks associated with jobs") do
       Job.find_each do |job|
         job.create_miq_task(:status        => job.status.try(:capitalize),
