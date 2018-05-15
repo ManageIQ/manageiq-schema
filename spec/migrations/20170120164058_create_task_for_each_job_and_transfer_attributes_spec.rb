@@ -15,6 +15,16 @@ describe CreateTaskForEachJobAndTransferAttributes do
       expect(jobs_stub.count).to eq 1
     end
 
+    it "deletes finished tasks older than 7 days" do
+      miq_tasks_stub.create!(:name => "Test Task1", :state => "Finished", :updated_on => Time.now.utc - 6.days)
+      miq_tasks_stub.create!(:name => "Test Task2", :state => "Finished", :updated_on => Time.now.utc - 8.days)
+      miq_tasks_stub.create!(:name => "Test Task2", :state => "Finished", :updated_on => Time.now.utc - 1.month)
+
+      migrate
+
+      expect(miq_tasks_stub.count).to eq 1
+    end
+
     it "creates associated task for each job and assigns to task the same name" do
       jobs_stub.create!(:name => "Hello Test Job", :status => "Some test status", :miq_task_id => nil)
       jobs_stub.create!(:name => "Hello Test Job2", :state => "Some state", :miq_task_id => nil)
