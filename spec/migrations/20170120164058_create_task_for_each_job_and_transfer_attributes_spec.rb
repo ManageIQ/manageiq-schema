@@ -5,6 +5,16 @@ describe CreateTaskForEachJobAndTransferAttributes do
   let(:jobs_stub) { migration_stub(:Job) }
 
   migration_context :up do
+    it "deletes finished job older than 7 days" do
+      jobs_stub.create!(:name => "Test Job1", :state => "finished", :updated_on => Time.now.utc - 6.days)
+      jobs_stub.create!(:name => "Test Job2", :state => "finished", :updated_on => Time.now.utc - 8.days)
+      jobs_stub.create!(:name => "Test Job3", :state => "finished", :updated_on => Time.now.utc - 1.month)
+
+      migrate
+
+      expect(jobs_stub.count).to eq 1
+    end
+
     it "creates associated task for each job and assigns to task the same name" do
       jobs_stub.create!(:name => "Hello Test Job", :status => "Some test status", :miq_task_id => nil)
       jobs_stub.create!(:name => "Hello Test Job2", :state => "Some state", :miq_task_id => nil)
