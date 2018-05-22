@@ -8,13 +8,28 @@ class CreateTaskForEachJobAndTransferAttributes < ActiveRecord::Migration[5.0]
     has_one :job, :class_name => 'CreateTaskForEachJobAndTransferAttributes::Job'
   end
 
+  class LogFile < ActiveRecord::Base
+  end
+
+  class BinaryBlob < ActiveRecord::Base
+  end
+
   def up
     say_with_time("Deleting finished jobs older than 7 days") do
-      Job.where("updated_on < ?", Time.now.utc - 7.days).where("state = 'finished'").delete_all
+      Job.where("updated_on < ?", 7.days.ago.utc).where("state = 'finished'").delete_all
     end
+
+    say_with_time("Deleting logs linked to finished tasks older than 7 days") do
+      LogFile.where(:miq_task_id => MiqTask.where("updated_on < ?", 7.days.ago.utc).select(:id)).delete_all
+    end
+    say_with_time("Deleting BinaryBlobs linked to finished tasks older than 7 days") do
+      BinaryBlob.where(:resource_type => 'MiqTask', :resource_id => MiqTask.where("updated_on < ?", 7.days.ago.utc).select(:id)).delete_all
+    end
+
     say_with_time("Deleting finished tasks older than 7 days") do
-      MiqTask.where("updated_on < ?", Time.now.utc - 7.days).where("state = 'Finished'").delete_all
+      MiqTask.where("updated_on < ?", 7.days.ago.utc).where("state = 'Finished'").delete_all
     end
+
     say_with_time("Creating tasks associated with jobs") do
       Job.find_each do |job|
         job.create_miq_task(:status        => job.status.try(:capitalize),
