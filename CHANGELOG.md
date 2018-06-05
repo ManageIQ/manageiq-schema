@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Unreleased as of Sprint 87 ending 2018-06-04
+
+### Added
+- Add deleted_on to ServiceTemplate for archival [(#207)](https://github.com/ManageIQ/manageiq-schema/pull/207)
+- Creating Physical Storage table [(#196)](https://github.com/ManageIQ/manageiq-schema/pull/196)
 
 ## Gaprindashvili-3 released 2018-05-15
 
