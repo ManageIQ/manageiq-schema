@@ -36,80 +36,89 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
     end
 
     context "with an API connection in a container" do
+      let(:uri_stub) { double("URI") }
+      let(:secret_json) do
+        {
+          "kind"       => "Secret",
+          "apiVersion" => "v1",
+          "metadata"   => {
+            "name"      => "ansible-secrets",
+            "namespace" => namespace,
+            "labels"    => {
+              "app"      => "manageiq",
+              "template" => "manageiq"
+            },
+          },
+          "data"       => {
+            "admin-password"  => "YWRtaW5wYXNzd29yZA==",
+            "rabbit-password" => "cmFiYml0cGFzc3dvcmQ=",
+            "secret-key"      => "c2VjcmV0a2V5"
+          },
+          "type"       => "Opaque"
+        }.to_json
+      end
+
       before do
         stub_const("MoveAnsibleContainerSecretsIntoDatabase::TOKEN_FILE", token_path)
         stub_const("MoveAnsibleContainerSecretsIntoDatabase::CA_CERT_FILE", cert_path)
+        expect(URI::HTTPS).to receive(:build).with(
+          :host => kube_host,
+          :port => kube_port,
+          :path => "/api/v1/namespaces/#{namespace}/secrets/ansible-secrets"
+        ).and_return(uri_stub)
       end
 
-      let(:kube_connection) { subject.send(:kube_connection) }
-      let(:oc_connection) { subject.send(:oc_connection) }
+      it "doesn't add any authentications if the secret is not found" do
+        require 'open-uri'
+        error = OpenURI::HTTPError.new("404 Not Found", nil)
+        expect(uri_stub).to receive(:open).and_raise(error)
 
-      it "creates the correct kube connection" do
-        expect(kube_connection.api_endpoint.to_s).to eq("https://kube.example.com:8443/api")
-        expect(kube_connection.auth_options[:bearer_token_file]).to eq(token_path)
-        expect(kube_connection.ssl_options[:verify_ssl]).to eq(1)
+        migrate
+
+        expect(database_authentications.count).to eq(0)
       end
 
-      it "creates the correct oc connection" do
-        expect(oc_connection.api_endpoint.to_s).to eq("https://kube.example.com:8443/oapi")
-        expect(oc_connection.auth_options[:bearer_token_file]).to eq(token_path)
-        expect(oc_connection.ssl_options[:verify_ssl]).to eq(1)
+      it "creates new authentications for the secret values" do
+        expect_request
+        migrate
+
+        expect(database_authentications.count).to eq(4)
+        expect(ansible_secret_key).to eq("secretkey")
+        expect(ansible_rabbitmq_password).to eq("rabbitpassword")
+        expect(ansible_database_password).to eq(ApplicationRecord.configurations[Rails.env]["password"])
       end
 
-      context "with stub connection" do
-        let(:connection_stub) { double("KubeConnection") }
-        let(:secret) do
-          OpenStruct.new(:data => {
-            :"admin-password" => "YWRtaW5wYXNzd29yZA==",
-            :"rabbit-password" => "cmFiYml0cGFzc3dvcmQ=",
-            :"secret-key" => "c2VjcmV0a2V5"
-          })
-        end
+      it "updates authentications with the secret values" do
+        expect_request
+        authentication_stub.create!(
+          :name          => "Ansible Secret Key",
+          :authtype      => "ansible_secret_key",
+          :type          => "AuthToken",
+          :auth_key      => MiqPassword.encrypt("notthekey"),
+          :resource_id   => db_id,
+          :resource_type => "MiqDatabase"
+        )
+        expect(ansible_secret_key).to eq("notthekey")
 
-        before do
-          allow(Kubeclient::Client).to receive(:new).and_return(connection_stub)
-          expect_objects_deleted
-        end
+        migrate
 
-        it "doesn't add any authentications if the secret is not found" do
-          error = KubeException.new(404, "secret not found", "")
-          expect(connection_stub).to receive(:get_secret).and_raise(error)
-
-          migrate
-
-          expect(database_authentications.count).to eq(0)
-        end
-
-        it "creates new authentications for the secret values" do
-          expect(connection_stub).to receive(:get_secret).with("ansible-secrets", namespace).and_return(secret)
-          migrate
-
-          expect(database_authentications.count).to eq(3)
-          expect(ansible_secret_key).to eq("secretkey")
-          expect(ansible_rabbitmq_password).to eq("rabbitpassword")
-          expect(ansible_database_password).to eq(ApplicationRecord.configurations[Rails.env]["password"])
-        end
-
-        it "updates authentications with the secret values" do
-          expect(connection_stub).to receive(:get_secret).with("ansible-secrets", namespace).and_return(secret)
-          authentication_stub.create!(
-            :name          => "Ansible Secret Key",
-            :authtype      => "ansible_secret_key",
-            :type          => "AuthToken",
-            :auth_key      => MiqPassword.encrypt("notthekey"),
-            :resource_id   => db_id,
-            :resource_type => "MiqDatabase"
-          )
-          expect(ansible_secret_key).to eq("notthekey")
-
-          migrate
-
-          expect(ansible_secret_key).to eq("secretkey")
-          expect(ansible_rabbitmq_password).to eq("rabbitpassword")
-          expect(ansible_database_password).to eq(ApplicationRecord.configurations[Rails.env]["password"])
-        end
+        expect(ansible_secret_key).to eq("secretkey")
+        expect(ansible_rabbitmq_password).to eq("rabbitpassword")
+        expect(ansible_admin_password).to eq("adminpassword")
+        expect(ansible_database_password).to eq(ApplicationRecord.configurations[Rails.env]["password"])
       end
     end
+  end
+
+  def expect_request
+    expect(File).to receive(:read).with(token_path).and_return("totally-a-token")
+    response = double("RequestIO", :read => secret_json)
+    expect(uri_stub).to receive(:open).with(
+      'Accept'         => "application/json",
+      'Authorization'  => "Bearer totally-a-token",
+      :ssl_ca_cert     => cert_path,
+      :ssl_verify_mode => OpenSSL::SSL::VERIFY_PEER
+    ).and_yield(response)
   end
 
   def database_authentications
@@ -137,6 +146,17 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
     MiqPassword.decrypt(auths.first.password)
   end
 
+  def ansible_admin_password
+    auths = database_authentications.where(
+      :name     => "Ansible Admin Authentication",
+      :authtype => "ansible_admin_password",
+      :userid   => "admin",
+      :type     => "AuthUseridPassword"
+    )
+    expect(auths.count).to eq(1)
+    MiqPassword.decrypt(auths.first.password)
+  end
+
   def ansible_database_password
     auths = database_authentications.where(
       :name     => "Ansible Database Authentication",
@@ -146,22 +166,5 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
     )
     expect(auths.count).to eq(1)
     MiqPassword.decrypt(auths.first.password)
-  end
-
-  def expect_objects_deleted
-    # deletes deployment and repliction controller
-    expect(connection_stub).to receive(:get_replication_controllers).with(
-      :label_selector => "openshift.io/deployment-config.name=ansible",
-      :namespace      => namespace
-    ).and_return([double(:metadata => double(:name => "testrepcontroller"))])
-    expect(connection_stub).to receive(:patch_deployment_config).with("ansible", {:spec => {:replicas => 0}}, namespace)
-    expect(connection_stub).to receive(:delete_deployment_config).with("ansible", namespace)
-    expect(connection_stub).to receive(:delete_replication_controller).with("testrepcontroller", namespace)
-
-    # deletes service
-    expect(connection_stub).to receive(:delete_service).with("ansible", namespace)
-
-    # deletes secret
-    expect(connection_stub).to receive(:delete_secret).with("ansible-secrets", namespace)
   end
 end
