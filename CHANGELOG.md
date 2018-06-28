@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 88 ending 2018-06-18
+
+### Fixed
+- Clean Azure image names [(#198)](https://github.com/ManageIQ/manageiq-schema/pull/198)
+
+## Unreleased as of Sprint 87 ending 2018-06-04
+
+### Added
+- Add deleted_on to ServiceTemplate for archival [(#207)](https://github.com/ManageIQ/manageiq-schema/pull/207)
+- Creating Physical Storage table [(#196)](https://github.com/ManageIQ/manageiq-schema/pull/196)
+
+## Gaprindashvili-3 released 2018-05-15
+
+### Fixed
+- Move SchemaMigration model from ManageIQ to ManageIQ::Schema plugin [(#175)](https://github.com/ManageIQ/manageiq-schema/pull/175)
+- Remove the limits from the tables in sorted order [(#179)](https://github.com/ManageIQ/manageiq-schema/pull/179)
+
+## Unreleased as of Sprint 85 ending 2018-05-07
+
+### Added
+- Creating physical_network_ports table [(#185)](https://github.com/ManageIQ/manageiq-schema/pull/185)
+
+### Fixed
+- Azure backslash to forward slash [(#192)](https://github.com/ManageIQ/manageiq-schema/pull/192)
+- Nil MiqDatabase#update_repo_name [(#191)](https://github.com/ManageIQ/manageiq-schema/pull/191)
+
+### Removed
+- Remove all VMware MKS console-related records from SettingSchanges [(#166)](https://github.com/ManageIQ/manageiq-schema/pull/166)
+
 ## Unreleased as of Sprint 84 ending 2018-04-23
 
 ### Added
@@ -32,15 +61,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Adding product details columns to asset_details table [(#181)](https://github.com/ManageIQ/manageiq-schema/pull/181)
-- Remove the limits from the tables in sorted order [(#179)](https://github.com/ManageIQ/manageiq-schema/pull/179)
 
 ### Removed
 - Remove all instances of ManageIQ::Providers::Hawkular::MiddlewareManager from ext_management_systems [(#161)](https://github.com/ManageIQ/manageiq-schema/pull/161)
-
-## Unreleased as of Sprint 81 ending 2018-03-12
-
-### Fixed
-- Move SchemaMigration model from ManageIQ to ManageIQ::Schema plugin [(#175)](https://github.com/ManageIQ/manageiq-schema/pull/175)
 
 ## Unreleased as of Sprint 80 ending 2018-02-26
 
