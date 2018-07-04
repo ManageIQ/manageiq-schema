@@ -4,7 +4,7 @@ describe MakeMaintenanceZoneRecord do
   let(:zone_stub) { migration_stub(:Zone) }
 
   migration_context :up do
-    it "Adds MaintenanceZone" do
+    it "adds MaintenanceZone" do
       migrate
 
       expect(zone_stub.where(:name => 'maintenance').where(:visible => false).count).to eq(1)
