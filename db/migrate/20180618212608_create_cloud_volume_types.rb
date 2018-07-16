@@ -7,7 +7,7 @@ class CreateCloudVolumeTypes < ActiveRecord::Migration[5.0]
       t.string :backend_name
       t.string :ems_ref
       t.bigint :ems_id
-      t.boolean :is_public
+      t.boolean :public
 
       t.timestamps
     end
