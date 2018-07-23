@@ -3,6 +3,7 @@ class AddInternalToServiceTemplate < ActiveRecord::Migration[5.0]
     self.inheritance_column = :_type_disabled
 
     include ReservedMigrationMixin
+    include MigrationStubHelper
   end
 
   def up
