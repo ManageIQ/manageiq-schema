@@ -25,7 +25,7 @@ describe AddInternalToServiceTemplate do
 
   migration_context :down do
     it "migrate internal in ServiceTemplate to reserve table" do
-      st = service_template_stub.create!(:type => 'ServiceTemplateTransformationPlan')
+      st = service_template_stub.create!(:type => 'ServiceTemplateTransformationPlan', :internal => true)
 
       migrate
 
