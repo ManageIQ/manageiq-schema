@@ -17,9 +17,13 @@ describe AddInternalToServiceTemplate do
 
       migrate
 
-      expect(st.reload.internal).to be_truthy
+      st.reload
+      expect(reserve_stub.count).to eq(0)
+      expect(st.internal).to be_truthy
     end
+  end
 
+  migration_context :down do
     it "migrate internal in ServiceTemplate to reserve table" do
       st = service_template_stub.create!(:type => 'ServiceTemplateTransformationPlan')
 
