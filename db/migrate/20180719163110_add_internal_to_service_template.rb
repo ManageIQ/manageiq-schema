@@ -14,6 +14,10 @@ class AddInternalToServiceTemplate < ActiveRecord::Migration[5.0]
         st.reserved_hash_migrate(:internal)
       end
     end
+
+    say_with_time("Set ServiceTemplate internal") do
+      ServiceTemplate.where(:type => "ServiceTemplateTransformationPlan").update_all(:internal => true)
+    end
   end
 
   def down
