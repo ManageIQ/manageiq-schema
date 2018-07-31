@@ -1,7 +1,6 @@
 class MakeMaintenanceZoneRecord < ActiveRecord::Migration[5.0]
   class Zone < ActiveRecord::Base
     validates_presence_of   :name
-    validates_uniqueness_of :name
 
     MAINTENANCE_ZONE_NAME = "__maintenance__".freeze
   end
