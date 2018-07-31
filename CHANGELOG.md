@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 91 ending 2018-07-30
+
+### Added
+- Adding Location LED name to asset_details table [(#231)](https://github.com/ManageIQ/manageiq-schema/pull/231)
+- Add physical_switch_id and physical_chassis_id column to event stream table [(#229)](https://github.com/ManageIQ/manageiq-schema/pull/229)
+- Enable PhysicalStorage inside PhysicalChassis [(#224)](https://github.com/ManageIQ/manageiq-schema/pull/224)
+- Create table for Cloud Volume Types [(#223)](https://github.com/ManageIQ/manageiq-schema/pull/223)
+- Allow FloatingIp to relate directly to NetworkRouter [(#217)](https://github.com/ManageIQ/manageiq-schema/pull/217)
+
+### Removed
+- Remove Settings.product.transformation [(#236)](https://github.com/ManageIQ/manageiq-schema/pull/236)
+
 ## Unreleased as of Sprint 89 ending 2018-07-02
 
 ### Added
