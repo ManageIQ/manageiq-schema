@@ -1,6 +1,6 @@
 require_migration
 
-describe MakeMaintenanceZoneRecord do
+describe RenameUserMaintenanceZoneRecord do
   let(:zone_stub) { migration_stub(:Zone) }
 
   let(:remote_region_start) do
@@ -9,16 +9,6 @@ describe MakeMaintenanceZoneRecord do
   end
 
   migration_context :up do
-    before(:each) do
-      zone_stub.delete_all
-    end
-
-    it "adds MaintenanceZone" do
-      migrate
-
-      expect(zone_stub.where(:name => zone_stub::MAINTENANCE_ZONE_NAME).where(:visible => false).count).to eq(1)
-    end
-
     it "renames original maintenance zone" do
       orig = zone_stub.create!(:name => zone_stub::MAINTENANCE_ZONE_NAME)
 
@@ -42,10 +32,6 @@ describe MakeMaintenanceZoneRecord do
   end
 
   migration_context :down do
-    before(:each) do
-      zone_stub.delete_all
-    end
-
     it "removes MaintenanceZone" do
       zone_stub.create!(:name        => zone_stub::MAINTENANCE_ZONE_NAME,
                         :description => 'Maintenance Zone',

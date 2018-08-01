@@ -1,4 +1,4 @@
-class MakeMaintenanceZoneRecord < ActiveRecord::Migration[5.0]
+class RenameUserMaintenanceZoneRecord < ActiveRecord::Migration[5.0]
   class Zone < ActiveRecord::Base
     include ActiveRecord::IdRegions
 
@@ -8,19 +8,17 @@ class MakeMaintenanceZoneRecord < ActiveRecord::Migration[5.0]
   end
 
   def up
-    say_with_time("Creating Maintenance Zone") do
+    say_with_time("Renaming user-defined Maintenance Zone") do
       zone = Zone.in_my_region.where(:name => Zone::MAINTENANCE_ZONE_NAME).first
       if zone.present?
         zone.name = "#{zone.name}_0"
         zone.save
       end
-
-      Zone.create_with(:description => "Maintenance Zone", :visible => false).find_or_create_by!(:name => Zone::MAINTENANCE_ZONE_NAME)
     end
   end
 
   def down
-    say_with_time("Deleting Maintenance Zone") do
+    say_with_time("Renaming user-defined Maintenance Zone") do
       Zone.in_my_region.where(:name => Zone::MAINTENANCE_ZONE_NAME).where(:visible => false).destroy_all
 
       orig = Zone.in_my_region.where(:name => "#{Zone::MAINTENANCE_ZONE_NAME}_0").first
