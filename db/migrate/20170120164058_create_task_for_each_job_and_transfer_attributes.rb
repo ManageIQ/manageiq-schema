@@ -15,19 +15,20 @@ class CreateTaskForEachJobAndTransferAttributes < ActiveRecord::Migration[5.0]
   end
 
   def up
+    purge_date = 7.days.ago.utc
     say_with_time("Deleting finished jobs older than 7 days") do
-      Job.where("updated_on < ?", 7.days.ago.utc).where("state = 'finished'").delete_all
+      Job.where("updated_on < ?", purge_date).where("state = 'finished'").delete_all
     end
 
+    old_finished_tasks = MiqTask.where("updated_on < ?", purge_date).where("state = 'Finished'")
     say_with_time("Deleting logs linked to finished tasks older than 7 days") do
-      LogFile.where(:miq_task_id => MiqTask.where("updated_on < ?", 7.days.ago.utc).select(:id)).delete_all
+      LogFile.where(:miq_task_id => old_finished_tasks.select(:id)).delete_all
     end
     say_with_time("Deleting BinaryBlobs linked to finished tasks older than 7 days") do
-      BinaryBlob.where(:resource_type => 'MiqTask', :resource_id => MiqTask.where("updated_on < ?", 7.days.ago.utc).select(:id)).delete_all
+      BinaryBlob.where(:resource_type => 'MiqTask', :resource_id => old_finished_tasks.select(:id)).delete_all
     end
-
     say_with_time("Deleting finished tasks older than 7 days") do
-      MiqTask.where("updated_on < ?", 7.days.ago.utc).where("state = 'Finished'").delete_all
+      old_finished_tasks.delete_all
     end
 
     say_with_time("Creating tasks associated with jobs") do
