@@ -15,6 +15,22 @@ module Spec
 
             it("with empty tables") { migrate }
 
+            it "STI is disabled for all involved ActiveRecord::Base descendants" do
+              classes = described_class.constants.collect do |symbol|
+                const = described_class.const_get(symbol)
+                const if const.kind_of?(Class) && const < ActiveRecord::Base
+              end.compact
+
+              classes_with_type_column_before = classes.select { |klass| DatabaseHelper.table_has_type_column?(klass.table_name) }
+
+              migrate
+
+              classes_with_type_column_after = classes.select { |klass| DatabaseHelper.table_has_type_column?(klass.table_name) }
+              (classes_with_type_column_before | classes_with_type_column_after).each do |klass|
+                expect(klass.inheritance_column.to_s).to eq("_type_disabled"), "The line `self.inheritance_column = :_type_disabled` is missing from the definition of: #{klass.name}"
+              end
+            end
+
             instance_eval(&block)
           end
         end
