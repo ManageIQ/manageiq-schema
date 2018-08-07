@@ -16,14 +16,15 @@ class AddCoresAllocatedRateDetail < ActiveRecord::Migration[5.0]
   end
 
   def up
+    rate_detail_template = ChargebackRateDetail.where(:description => "Allocated CPU Count").first
+    return if rate_detail_template.nil? # No rates that need this detail.
+    rate_detail_template = rate_detail_template.dup
+
     chargeable_field = ChargeableField.find_or_create_by(:metric      => "derived_vm_numvcpu_cores",
                                                          :description => "Allocated CPU Cores",
                                                          :group       => "cpu_cores",
                                                          :source      => "allocated")
 
-    rate_detail_template = ChargebackRateDetail.where(:description => "Allocated CPU Count").first
-    return if rate_detail_template.nil? # No rates that need this detail.
-    rate_detail_template = rate_detail_template.dup
     rate_detail_template.chargeable_field = chargeable_field
     rate_detail_template.description = "Allocated CPU Cores"
     rate_detail_template.per_unit = "cpu core"
