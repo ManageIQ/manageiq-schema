@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 91 ending 2018-07-30
+
+### Added
+- Adding Location LED name to asset_details table [(#231)](https://github.com/ManageIQ/manageiq-schema/pull/231)
+- Add physical_switch_id and physical_chassis_id column to event stream table [(#229)](https://github.com/ManageIQ/manageiq-schema/pull/229)
+- Enable PhysicalStorage inside PhysicalChassis [(#224)](https://github.com/ManageIQ/manageiq-schema/pull/224)
+- Create table for Cloud Volume Types [(#223)](https://github.com/ManageIQ/manageiq-schema/pull/223)
+- Allow FloatingIp to relate directly to NetworkRouter [(#217)](https://github.com/ManageIQ/manageiq-schema/pull/217)
+
+### Removed
+- Remove Settings.product.transformation [(#236)](https://github.com/ManageIQ/manageiq-schema/pull/236)
+
+## Unreleased as of Sprint 89 ending 2018-07-02
+
+### Added
+- Add ems_ref to lans to help with unique listing [(#226)](https://github.com/ManageIQ/manageiq-schema/pull/226)
+- Add Firmware Type to Hardwares [(#221)](https://github.com/ManageIQ/manageiq-schema/pull/221)
+- Add a Status column to Storages [(#220)](https://github.com/ManageIQ/manageiq-schema/pull/220)
+- Add two columns title and cves to OpenscapRuleResults table [(#214)](https://github.com/ManageIQ/manageiq-schema/pull/214)
+- Adding column on physical_network_ports table to connect other ports [(#208)](https://github.com/ManageIQ/manageiq-schema/pull/208)
+- Add index on STI type columns [(#190)](https://github.com/ManageIQ/manageiq-schema/pull/190)
+- Add configuration_script_sources.last_update_error [(#187)](https://github.com/ManageIQ/manageiq-schema/pull/187)
+
+### Fixed
+- Fix the quadicon settings migration for users without quadicon settings [(#225)](https://github.com/ManageIQ/manageiq-schema/pull/225)
+- Convert user quadicon settings from the old format to the new one [(#213)](https://github.com/ManageIQ/manageiq-schema/pull/213)
+
 ## Unreleased as of Sprint 88 ending 2018-06-18
 
 ### Fixed
