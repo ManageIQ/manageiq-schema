@@ -88,7 +88,9 @@ RSpec.describe CorrectUserCreatedRoleFeatureSets do
       )
       user_role = user_role_stub.create!(:miq_product_features => [], :read_only => false)
 
-      expect { migrate }.not_to change { user_role.reload.miq_product_features }
+      migrate
+
+      expect(user_role.reload.miq_product_features).to be_empty
     end
 
     it "leaves read only user roles alone" do
@@ -112,7 +114,11 @@ RSpec.describe CorrectUserCreatedRoleFeatureSets do
       )
       user_role = user_role_stub.create!(:miq_product_features => [vm_infra_explorer], :read_only => true)
 
-      expect { migrate }.not_to change { user_role.reload.miq_product_features }
+      migrate
+      user_role.reload
+
+      expect(user_role.miq_product_features.size).to eq(1)
+      expect(user_role.miq_product_features[0].id).to eq(vm_infra_explorer.id)
     end
   end
 end
