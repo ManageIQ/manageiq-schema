@@ -7,6 +7,7 @@ class UseDeletedOnInContainersTables < ActiveRecord::Migration[5.0]
   end
 
   class ContainerImage < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled
   end
 
   class ContainerProject < ActiveRecord::Base

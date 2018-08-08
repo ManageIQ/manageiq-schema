@@ -1,5 +1,7 @@
 class AddInitiatorToService < ActiveRecord::Migration[5.0]
-  class Service < ActiveRecord::Base; end
+  class Service < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled
+  end
 
   def up
     add_column :services, :initiator, :string, :comment => "Entity that initiated the service creation"
