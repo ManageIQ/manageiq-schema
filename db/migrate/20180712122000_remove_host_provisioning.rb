@@ -2,13 +2,13 @@ class RemoveHostProvisioning < ActiveRecord::Migration[5.0]
   class MiqApproval < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
 
-    belongs_to :miq_request, :class_name => `RemoveHostProvisioning::MiqRequest`
+    belongs_to :miq_request, :class_name => 'RemoveHostProvisioning::MiqRequest'
   end
 
   class MiqRequest < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
 
-    has_many :miq_approvals, :dependent => :destroy, :class_name => `RemoveHostProvisioning::MiqApproval`
+    has_many :miq_approvals, :dependent => :destroy, :class_name => 'RemoveHostProvisioning::MiqApproval'
   end
 
   class MiqRequestTask < ActiveRecord::Base
