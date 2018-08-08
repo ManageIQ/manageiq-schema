@@ -22,7 +22,10 @@ class RemoveOpenshiftEnterpriseProvider < ActiveRecord::Migration[5.0]
     self.inheritance_column = :_type_disabled
   end
 
-  class Authentication < ActiveRecord::Base; end
+  class Authentication < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled
+  end
+
   class MiqQueue < ActiveRecord::Base; end
 
   def up
