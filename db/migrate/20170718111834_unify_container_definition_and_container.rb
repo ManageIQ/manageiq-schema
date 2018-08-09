@@ -7,6 +7,7 @@ class UnifyContainerDefinitionAndContainer < ActiveRecord::Migration[5.0]
   end
 
   class Container < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled
     belongs_to :container_definition, :class_name => 'UnifyContainerDefinitionAndContainer::ContainerDefinition'
   end
 

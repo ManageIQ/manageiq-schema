@@ -1,5 +1,7 @@
 class DowncaseResourceGroupEmsRefForAzure < ActiveRecord::Migration[5.0]
-  class ResourceGroup < ActiveRecord::Base; end
+  class ResourceGroup < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled
+  end
 
   def up
     say_with_time("Downcase ems_ref for Azure resource groups") do

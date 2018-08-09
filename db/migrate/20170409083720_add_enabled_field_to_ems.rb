@@ -1,5 +1,7 @@
 class AddEnabledFieldToEms < ActiveRecord::Migration[5.0]
-  class ExtManagementSystem < ActiveRecord::Base; end
+  class ExtManagementSystem < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled
+  end
 
   def change
     add_column :ext_management_systems, :enabled, :boolean
