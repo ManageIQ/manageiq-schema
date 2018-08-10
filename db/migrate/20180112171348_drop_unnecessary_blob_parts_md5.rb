@@ -14,8 +14,10 @@ class DropUnnecessaryBlobPartsMd5 < ActiveRecord::Migration[5.0]
 
     say_with_time("Calculating md5 and size of all BinaryBlobParts") do
       require 'digest'
-      puts "XXXXXXX BINARY BLOB PART COLUMNS #{BinaryBlobPart.column_names.sort}"
+
+      puts "XXXXXXX BINARY BLOB PART COLUMNS #{BinaryBlobPart.count} #{$in_this_test.inspect}"
       BinaryBlobPart.in_my_region.find_each do |part|
+        puts "XXXXX FOUND #{part.inspect}"
         part.update_attributes!(:md5 => Digest::MD5.hexdigest(part.data), :size => part.data.bytesize)
       end
     end
