@@ -15,7 +15,7 @@ before_install: bin/setup
 before_script: bundle exec rake spec:setup
 after_script: bundle exec codeclimate-test-reporter
 after_failure:
-- cat ${TRAVIS_BUILD_DIR}/spec/manageiq/log/*.log
+- cat ${TRAVIS_BUILD_DIR}/spec/dummy/log/test.log
 notifications:
   webhooks:
     urls:
