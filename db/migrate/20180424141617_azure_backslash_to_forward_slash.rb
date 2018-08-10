@@ -67,7 +67,7 @@ class AzureBackslashToForwardSlash < ActiveRecord::Migration[5.0]
     end
 
     say_with_time("Updating Azure event stream ems_ref") do
-      EventStream.where(:source => "AZURE").update_all("vm_ems_ref = replace(vm_ems_ref, '\\', '/')")
+      EventStream.where(:source => "AZURE").where.not(:vm_ems_ref => nil).update_all("vm_ems_ref = replace(vm_ems_ref, '\\', '/')")
     end
   end
 end
