@@ -16,7 +16,7 @@ class DropUnnecessaryBlobPartsMd5 < ActiveRecord::Migration[5.0]
       require 'digest'
       puts "XXXXXXX BINARY BLOB PART COLUMNS #{BinaryBlobPart.column_names.sort}"
       BinaryBlobPart.in_my_region.find_each do |part|
-        part.update_attributes(:md5 => Digest::MD5.hexdigest(part.data), :size => part.data.bytesize)
+        part.update_attributes!(:md5 => Digest::MD5.hexdigest(part.data), :size => part.data.bytesize)
       end
     end
   end
