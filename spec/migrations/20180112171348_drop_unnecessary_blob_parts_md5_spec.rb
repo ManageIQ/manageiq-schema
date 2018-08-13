@@ -6,6 +6,7 @@ describe DropUnnecessaryBlobPartsMd5 do
   migration_context :down do
     it "restores the md5 sum and size of all records" do
       record = binary_blob_part_stub.create!(:data => "A test string")
+      # puts "ID #{record.id} BBPOID: #{binary_blob_part_stub.object_id} REGION: #{binary_blob_part_stub.my_region_number}"
 $in_this_test = true
 
       migrate
