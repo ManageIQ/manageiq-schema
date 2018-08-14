@@ -8,6 +8,7 @@ class AddConversionHostTable < ActiveRecord::Migration[5.0]
       t.bigint  :resource_id
       t.string  :version
       t.integer :max_concurrent_tasks
+      t.text    :capabilities
       t.timestamps
       t.index %w(resource_id resource_type)
     end
