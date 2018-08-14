@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 92 ending 2018-08-13
+
+### Added
+- Enable S3 DB Backups [(#227)](https://github.com/ManageIQ/manageiq-schema/pull/227)
+
+### Fixed
+- Change backtick to single quote [(#246)](https://github.com/ManageIQ/manageiq-schema/pull/246)
+- Add internal column to ServiceTemplate table [(#238)](https://github.com/ManageIQ/manageiq-schema/pull/238)
+
 ## Unreleased as of Sprint 91 ending 2018-07-30
 
 ### Added
