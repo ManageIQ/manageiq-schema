@@ -7,7 +7,8 @@ class AddConversionHostTable < ActiveRecord::Migration[5.0]
       t.references :resource, :type => :bigint, :polymorphic => true
       t.string     :version
       t.integer    :max_concurrent_tasks
-      t.text       :capabilities
+      t.boolean    :vddk_transport_supported
+      t.boolean    :ssh_transport_supported
       t.timestamps
       t.index %w(resource_id resource_type)
     end
