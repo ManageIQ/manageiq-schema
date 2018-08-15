@@ -14,3 +14,4 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 
 gem "manageiq-gems-pending", :git => "https://github.com/ManageIQ/manageiq-gems-pending", :branch => "master"
+gem "activerecord-id_regions", :git => "https://github.com/bdunne/activerecord-id_regions", :branch => "bd"
