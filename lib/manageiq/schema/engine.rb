@@ -12,6 +12,10 @@ module ManageIQ
           ActiveRecord::Tasks::DatabaseTasks.migrations_paths = app.config.paths["db/migrate"].to_a
         end
       end
+
+      def self.plugin_name
+        _('Schema')
+      end
     end
   end
 end
