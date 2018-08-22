@@ -3,7 +3,7 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
     create_table :container_service_classes, :id => :bigserial, :force => :cascade do |t|
       t.string :name
       t.string :ems_ref
-      t.integer :resource_version
+      t.string :resource_version
       t.text :description
 
       t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
@@ -19,7 +19,7 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
     create_table :container_service_plans, :id => :bigserial, :force => :cascade do |t|
       t.string :name
       t.string :ems_ref
-      t.integer :resource_version
+      t.string :resource_version
       t.text :description
 
       t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
@@ -36,7 +36,7 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :ems_ref
       t.string :secret_name
-      t.integer :resource_version
+      t.string :resource_version
       t.string :generate_name
 
       t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
