@@ -6,8 +6,8 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.integer :resource_version
       t.text :url
 
-      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_systems
-      t.references :container_projects, :type => :bigint, :index => true
+      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
+      t.references :container_project, :type => :bigint, :index => true
 
       t.jsonb :extra
 
@@ -21,9 +21,9 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.integer :resource_version
       t.text :description
 
-      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_systems
-      t.references :container_projects, :type => :bigint, :index => true
-      t.references :container_service_brokers, :type => :bigint, :index => true
+      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
+      t.references :container_project, :type => :bigint, :index => true
+      t.references :container_service_broker, :type => :bigint, :index => true
 
       t.jsonb :extra
 
@@ -37,9 +37,9 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.integer :resource_version
       t.text :description
 
-      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_systems
-      t.references :container_projects, :type => :bigint, :index => true
-      t.references :container_service_classes, :type => :bigint, :index => true
+      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
+      t.references :container_project, :type => :bigint, :index => true
+      t.references :container_service_class, :type => :bigint, :index => true
 
       t.jsonb :extra
 
@@ -54,10 +54,10 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.integer :resource_version
       t.string :generate_name
 
-      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_systems
-      t.references :container_projects, :type => :bigint, :index => true
-      t.references :container_service_classes, :type => :bigint, :index => {:name => 'csi_on_container_service_classes'}
-      t.references :container_service_plans, :type => :bigint, :index => true
+      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
+      t.references :container_project, :type => :bigint, :index => true
+      t.references :container_service_class, :type => :bigint, :index => {:name => 'csi_on_container_service_classes'}
+      t.references :container_service_plan, :type => :bigint, :index => true
 
       t.jsonb :extra
 
@@ -70,9 +70,9 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.string :ems_ref
       t.integer :resource_version
 
-      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_systems
-      t.references :container_projects, :type => :bigint, :index => true
-      t.references :container_service_instances, :type => :bigint, :index => {:name => 'csb_on_container_service_instances'}
+      t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
+      t.references :container_project, :type => :bigint, :index => true
+      t.references :container_service_instance, :type => :bigint, :index => {:name => 'csb_on_container_service_instances'}
 
       t.jsonb :extra
 
