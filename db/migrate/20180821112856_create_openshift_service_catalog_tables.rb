@@ -13,7 +13,10 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.jsonb :extra
 
       t.datetime :ems_created_on
+      t.datetime :deleted_on
       t.timestamps
+
+      t.index :deleted_on
     end
 
     create_table :container_service_plans, :id => :bigserial, :force => :cascade do |t|
@@ -29,7 +32,10 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.jsonb :extra
 
       t.datetime :ems_created_on
+      t.datetime :deleted_on
       t.timestamps
+
+      t.index :deleted_on
     end
 
     create_table :container_service_instances, :id => :bigserial, :force => :cascade do |t|
@@ -47,7 +53,10 @@ class CreateOpenshiftServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.jsonb :extra
 
       t.datetime :ems_created_on
+      t.datetime :deleted_on
       t.timestamps
+
+      t.index :deleted_on
     end
   end
 end
