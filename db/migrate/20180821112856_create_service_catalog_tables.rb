@@ -3,7 +3,6 @@ class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
     create_table :service_offerings, :id => :bigserial, :force => :cascade do |t|
       t.string :name
       t.string :ems_ref
-      t.string :resource_version
       t.string :type
       t.text :description
 
@@ -11,7 +10,6 @@ class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
 
       t.jsonb :extra
 
-      t.datetime :ems_created_on
       t.datetime :deleted_on
       t.timestamps
 
@@ -21,7 +19,6 @@ class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
     create_table :service_plans, :id => :bigserial, :force => :cascade do |t|
       t.string :name
       t.string :ems_ref
-      t.string :resource_version
       t.string :type
       t.text :description
 
@@ -30,7 +27,6 @@ class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
 
       t.jsonb :extra
 
-      t.datetime :ems_created_on
       t.datetime :deleted_on
       t.timestamps
 
@@ -40,7 +36,6 @@ class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
     create_table :service_instances, :id => :bigserial, :force => :cascade do |t|
       t.string :name
       t.string :ems_ref
-      t.string :resource_version
       t.string :type
 
       t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
@@ -49,7 +44,6 @@ class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
 
       t.jsonb :extra
 
-      t.datetime :ems_created_on
       t.datetime :deleted_on
       t.timestamps
 
