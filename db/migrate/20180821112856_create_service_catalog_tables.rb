@@ -1,6 +1,6 @@
 class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
   def change
-    create_table :service_classes, :id => :bigserial, :force => :cascade do |t|
+    create_table :service_offerings, :id => :bigserial, :force => :cascade do |t|
       t.string :name
       t.string :ems_ref
       t.string :resource_version
@@ -26,7 +26,7 @@ class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.text :description
 
       t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
-      t.references :service_class, :type => :bigint, :index => true
+      t.references :service_offering, :type => :bigint, :index => true
 
       t.jsonb :extra
 
@@ -44,7 +44,7 @@ class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.string :type
 
       t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
-      t.references :service_class, :type => :bigint, :index => true
+      t.references :service_offering, :type => :bigint, :index => true
       t.references :service_plan, :type => :bigint, :index => true
 
       t.jsonb :extra
