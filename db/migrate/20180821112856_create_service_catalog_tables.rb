@@ -16,7 +16,7 @@ class CreateServiceCatalogTables < ActiveRecord::Migration[5.0]
       t.index :deleted_on
     end
 
-    create_table :service_parameters_set, :id => :bigserial, :force => :cascade do |t|
+    create_table :service_parameters_sets, :id => :bigserial, :force => :cascade do |t|
       t.string :name
       t.string :ems_ref
       t.string :type
