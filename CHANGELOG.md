@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 93 ending 2018-08-27
+
+### Added
+- Model relation "SecurityGroup belongs to NetworkRouter or CloudSubnet" [(#258)](https://github.com/ManageIQ/manageiq-schema/pull/258)
+- Update default of internal attribute in service template [(#251)](https://github.com/ManageIQ/manageiq-schema/pull/251)
+- Create a ConversionHost table [(#242)](https://github.com/ManageIQ/manageiq-schema/pull/242)
+- Migrate Nuage CloudSubnet default type to new subclass [(#215)](https://github.com/ManageIQ/manageiq-schema/pull/215)
+
 ## Unreleased as of Sprint 92 ending 2018-08-13
 
 ### Added
