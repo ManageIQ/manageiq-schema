@@ -1,4 +1,8 @@
 ActiveSupport::Inflector.inflections do |inflect|
+  inflect.singular(/Chassis$/, "Chassis")
+  inflect.plural(/Chassis$/, "Chassis")
+  inflect.singular(/chassis$/, "chassis")
+  inflect.plural(/chassis$/, "chassis")
   inflect.singular(/Queue$/, "Queue")
   inflect.plural(/Queue$/, "Queue")
   inflect.singular(/queue$/, "queue")
