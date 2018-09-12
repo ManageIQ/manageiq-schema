@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 94 ending 2018-09-10
+
+### Added
+- Add parent physical chassis id to physical chassis [(#268)](https://github.com/ManageIQ/manageiq-schema/pull/268)
+- Add link_to field on notification_types table to point to a binding [(#263)](https://github.com/ManageIQ/manageiq-schema/pull/263)
+- Add plugin display name [(#261)](https://github.com/ManageIQ/manageiq-schema/pull/261)
+- Add cancelation_status column in MiqRequest and MiqRequestTask [(#254)](https://github.com/ManageIQ/manageiq-schema/pull/254)
+- Create Canister migration [(#234)](https://github.com/ManageIQ/manageiq-schema/pull/234)
+- Add column report_base_model to ChargebackRate table [(#209)](https://github.com/ManageIQ/manageiq-schema/pull/209)
+
+### Fixed
+- Get rid of the condition modifier which is not needed and confusing. [(#95)](https://github.com/ManageIQ/manageiq-schema/pull/95)
+
 ## Unreleased as of Sprint 93 ending 2018-08-27
 
 ### Added
