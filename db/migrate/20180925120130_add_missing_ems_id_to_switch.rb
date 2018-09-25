@@ -21,6 +21,7 @@ class AddMissingEmsIdToSwitch < ActiveRecord::Migration[5.0]
     self.inheritance_column = :_type_disabled
 
     belongs_to :ext_management_system, :foreign_key => "ems_id"
+    belongs_to :host
 
     has_many :hosts, :through => :host_switches
     has_many :host_switches
@@ -35,6 +36,15 @@ class AddMissingEmsIdToSwitch < ActiveRecord::Migration[5.0]
           INNER JOIN hosts ON hosts.id = host_switches.host_id
           WHERE host_switches.switch_id = switches.id
              AND hosts.ems_id IS NOT NULL
+             AND switches.type = 'ManageIQ::Providers::Vmware::InfraManager::DistributedVirtualSwitch'
+      SQL
+
+      connection.execute <<-SQL
+        UPDATE switches
+          SET host_id=hosts.id
+          FROM host_switches
+          INNER JOIN hosts ON hosts.id = host_switches.host_id
+          WHERE host_switches.switch_id = switches.id
              AND switches.type = 'ManageIQ::Providers::Vmware::InfraManager::DistributedVirtualSwitch'
       SQL
     end
