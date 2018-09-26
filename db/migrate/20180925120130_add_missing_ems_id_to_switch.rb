@@ -45,7 +45,7 @@ class AddMissingEmsIdToSwitch < ActiveRecord::Migration[5.0]
           FROM host_switches
           INNER JOIN hosts ON hosts.id = host_switches.host_id
           WHERE host_switches.switch_id = switches.id
-             AND switches.type = 'ManageIQ::Providers::Vmware::InfraManager::DistributedVirtualSwitch'
+             AND switches.type = 'ManageIQ::Providers::Vmware::InfraManager::HostVirtualSwitch'
       SQL
     end
   end
