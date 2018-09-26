@@ -6,25 +6,25 @@ class AddMissingEmsIdToSwitch < ActiveRecord::Migration[5.0]
   class Host < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
 
-    belongs_to :ext_management_system, :foreign_key => "ems_id"
+    belongs_to :ext_management_system, :foreign_key => "ems_id", :class_name => "AddMissingEmsIdToSwitch::ExtManagementSystem"
 
-    has_many :host_switches
-    has_many :switches, :through => :host_switches
+    has_many :host_switches, :class_name => "AddMissingEmsIdToSwitch::HostSwitch"
+    has_many :switches, :through => :host_switches, :class_name => "AddMissingEmsIdToSwitch::Switch"
   end
 
   class HostSwitch < ActiveRecord::Base
-    belongs_to :host
-    belongs_to :switch
+    belongs_to :host, :class_name => "AddMissingEmsIdToSwitch::Host"
+    belongs_to :switch, :class_name => "AddMissingEmsIdToSwitch::Switch"
   end
 
   class Switch < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
 
-    belongs_to :ext_management_system, :foreign_key => "ems_id"
-    belongs_to :host
+    belongs_to :ext_management_system, :foreign_key => "ems_id", :class_name => "AddMissingEmsIdToSwitch::ExtManagementSystem"
+    belongs_to :host, :class_name => "AddMissingEmsIdToSwitch::Host"
 
-    has_many :hosts, :through => :host_switches
-    has_many :host_switches
+    has_many :hosts, :through => :host_switches, :class_name => "AddMissingEmsIdToSwitch::Host"
+    has_many :host_switches, :class_name => "AddMissingEmsIdToSwitch::HostSwitch"
   end
 
   def up
