@@ -84,17 +84,17 @@ describe AddMissingEmsIdToSwitch do
       migrate
 
       expect(dvswitch.reload.ems_id).to eq(vmware_ems.id)
-      expect(dvswitch.reload.host_id).to eq(host_esx.id)
+      expect(dvswitch.reload.host_id).to eq(nil)
       expect(dvswitch_archived.reload.ems_id).to eq(vmware_ems.id)
-      expect(dvswitch_archived.reload.host_id).to eq(host_esx_archived.id)
+      expect(dvswitch_archived.reload.host_id).to eq(nil)
       expect(dvswitch_without_assoc.reload.ems_id).to eq(vmware_ems.id)
       expect(dvswitch_without_assoc.reload.host_id).to eq(host_esx.id)
 
       # All switches except ManageIQ::Providers::Vmware::InfraManager::HostVirtualSwitch must stay the same
       expect(host_switch.reload.ems_id).to eq(nil)
-      expect(host_switch.reload.host_id).to eq(nil)
+      expect(host_switch.reload.host_id).to eq(host_esx.id)
       expect(host_switch_archived.reload.ems_id).to eq(vmware_ems.id)
-      expect(host_switch_archived.reload.host_id).to eq(nil)
+      expect(host_switch_archived.reload.host_id).to eq(host_esx_archived.id)
       expect(redhat_switch.reload.ems_id).to eq(nil)
       expect(redhat_switch.reload.host_id).to eq(nil)
 
