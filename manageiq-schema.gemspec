@@ -26,6 +26,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "rubocop", "~> 0.52.1"
+  s.add_development_dependency "rubocop", "~> 0.53.0"
   s.add_development_dependency "simplecov"
 end
