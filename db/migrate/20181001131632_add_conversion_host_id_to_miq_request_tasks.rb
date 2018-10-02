@@ -34,7 +34,7 @@ class AddConversionHostIdToMiqRequestTasks < ActiveRecord::Migration[5.0]
 
   def down
     conversion_host_ids = MiqRequestTask.where(:type => 'ServiceTemplateTransformationPlanTask').map do |task|
-      return if task.conversion_host.nil?
+      next if task.conversion_host.nil?
       task.options[:transformation_host_id] = task.conversion_host.resource.id
       task.save!
       task.conversion_host.id
