@@ -18,7 +18,7 @@ describe AddConversionHostIdToMiqRequestTasks do
       migrate
       task.reload
 
-      expect(task.options).to eq({ :dummy_key => 'dummy_value' })
+      expect(task.options).to eq(:dummy_key => 'dummy_value')
       expect(AddConversionHostIdToMiqRequestTasks::ConversionHost.find_by(:resource_id => conversion_host_id)).to be_nil
       expect(task.conversion_host).to be_nil
     end
@@ -33,7 +33,7 @@ describe AddConversionHostIdToMiqRequestTasks do
       migrate
       task.reload
 
-      expect(task.options).to eq({ :dummy_key => 'dummy_value' })
+      expect(task.options).to eq(:dummy_key => 'dummy_value')
       expect(AddConversionHostIdToMiqRequestTasks::ConversionHost.find_by(:resource => host)).not_to be_nil
       expect(task.conversion_host).to eq(AddConversionHostIdToMiqRequestTasks::ConversionHost.find_by(:resource => host))
     end
