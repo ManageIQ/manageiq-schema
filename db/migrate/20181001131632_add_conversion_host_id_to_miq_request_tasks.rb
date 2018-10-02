@@ -21,13 +21,14 @@ class AddConversionHostIdToMiqRequestTasks < ActiveRecord::Migration[5.0]
       host_id = task.options[:transformation_host_id]
       next unless host_id
       host = Host.find_by(:id => host_id)
-      next if host.nil?
-      task.conversion_host = ConversionHost.find_or_create_by!(:resource => host) do |ch|
-        ch.name                     = host.name
-        ch.vddk_transport_supported = true
-        ch.ssh_transport_supported  = false
-      end
       task.options.delete(:transformation_host_id)
+      if host.present?
+        task.conversion_host = ConversionHost.find_or_create_by!(:resource => host) do |ch|
+          ch.name                     = host.name
+          ch.vddk_transport_supported = true
+          ch.ssh_transport_supported  = false
+        end
+      end
       task.save!
     end
   end
@@ -38,7 +39,7 @@ class AddConversionHostIdToMiqRequestTasks < ActiveRecord::Migration[5.0]
       task.save!
       task.conversion_host.id
     end
-    ConversionHost.destroy(conversion_host_ids)
+    ConversionHost.destroy(conversion_host_ids.compact)
 
     remove_column :miq_request_tasks, :conversion_host_id
   end

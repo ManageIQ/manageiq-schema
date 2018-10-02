@@ -4,29 +4,31 @@ describe AddConversionHostIdToMiqRequestTasks do
   let(:task_stub) { migration_stub(:MiqRequestTask) }
   let(:host_stub) { migration_stub(:Host) }
   let(:conversion_host_stub) { migration_stub(:ConversionHost) }
-  let(:host_id) { 42 }
 
   migration_context :up do
     it "when host doesn't exist" do
+      host = host_stub.create!
+      conversion_host_id = host.id
       task = task_stub.create!(
         :type    => 'ServiceTemplateTransformationPlanTask',
-        :options => { :dummy_key => 'dummy_value', :transformation_host_id => host_id }
+        :options => { :dummy_key => 'dummy_value', :transformation_host_id => conversion_host_id }
       )
+      host.destroy!
 
       migrate
       task.reload
 
-      expect(task.options).to eq({ :dummy_key => 'dummy_value', :transformation_host_id => host_id })
-      expect(AddConversionHostIdToMiqRequestTasks::ConversionHost.find_by(:resource_id => host_id)).to be_nil
+      expect(task.options).to eq({ :dummy_key => 'dummy_value' })
+      expect(AddConversionHostIdToMiqRequestTasks::ConversionHost.find_by(:resource_id => conversion_host_id)).to be_nil
       expect(task.conversion_host).to be_nil
     end
 
     it "when host exist" do
+      host = host_stub.create!
       task = task_stub.create!(
         :type    => 'ServiceTemplateTransformationPlanTask',
-        :options => { :dummy_key => 'dummy_value', :transformation_host_id => host_id }
+        :options => { :dummy_key => 'dummy_value', :transformation_host_id => host.id }
       )
-      host = host_stub.create!(:id => host_id)
 
       migrate
       task.reload
