@@ -7,40 +7,37 @@ describe AddConversionHostIdToMiqRequestTasks do
 
   migration_context :up do
     it "creates conversion host" do
-      task = task_stub.create!
       host = host_stub.create!
-      conversion_host = conversion_host_stub.create!(
-        :resource_id   => host.id,
-        :resource_type => host.type
+      task = task_stub.create!(
+        :type    => 'ServiceTemplateTransformationPlanTask',
+        :options => { :transformation_host_id => host.id }
       )
-      task.options = { :transformation_host_id => conversion_host.id }
-      task.save
 
       migrate
 
       task.reload
       expect(task.options).to eq({})
-      expect(task.conversion_host).to eq(conversion_host)
+      expect(AddConversionHostIdToMiqRequestTasks::ConversionHost.find_by(:resource_id => host.id)).not_to be_nil
+      expect(task.conversion_host).to eq(AddConversionHostIdToMiqRequestTasks::ConversionHost.find_by(:resource_id => host.id))
     end
   end
 
   migration_context :down do
     it "updates task.options" do
-      task = task_stub.create!
       host = host_stub.create!
       conversion_host = conversion_host_stub.create!(
         :resource_id   => host.id,
         :resource_type => host.type
       )
-      conversion_host.save
-      task.conversion_host = conversion_host
-      task.save
+      task = task_stub.create!(
+        :type            => 'ServiceTemplateTransformationPlanTask',
+        :conversion_host => conversion_host
+      )
 
       migrate
 
       task.reload
-      expect(task.attributes).not_to include('conversion_host_id')
-      expect(task.options[:transformation_host_id]).to eq(conversion_host.id)
+      expect(task.options[:transformation_host_id]).to eq(host.id)
       expect { conversion_host.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
