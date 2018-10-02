@@ -35,14 +35,16 @@ class AddConversionHostIdToMiqRequestTasks < ActiveRecord::Migration[5.0]
   end
 
   def down
-    conversion_host_ids = MiqRequestTask.in_my_region.where(:type => 'ServiceTemplateTransformationPlanTask').map do |task|
+    conversion_host_ids = []
+    MiqRequestTask.in_my_region.where(:type => 'ServiceTemplateTransformationPlanTask').find_each do |task|
       next if task.conversion_host.nil?
       task.options[:transformation_host_id] = task.conversion_host.resource.id
       task.save!
-      task.conversion_host.id
-    end.uniq.compact
 
-    ConversionHost.destroy(conversion_host_ids)
+      conversion_host_ids << task.conversion_host.id
+    end
+
+    ConversionHost.destroy(conversion_host_ids.uniq.compact)
 
     remove_column :miq_request_tasks, :conversion_host_id
   end
