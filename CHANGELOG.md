@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 96 ending 2018-10-08
+
+### Added
+- Add Total Space column to Physical Storages [(#283)](https://github.com/ManageIQ/manageiq-schema/pull/283)
+- Add conversion_host_id to miq_request_task [(#281)](https://github.com/ManageIQ/manageiq-schema/pull/281)
+
+### Fixed
+- Fix invalid conversion host resource type [(#284)](https://github.com/ManageIQ/manageiq-schema/pull/284)
+- Fix incorrectly tenant default groups [(#278)](https://github.com/ManageIQ/manageiq-schema/pull/278)
+
 ## Unreleased as of Sprint 95 ending 2018-09-24
 
 ### Added
