@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer Beta-1
+## Hammer Beta-1 - Released 2018-10-12
 
 ### Added
 - Maintenance zone support for suspending provider [(#275)](https://github.com/ManageIQ/manageiq-schema/pull/275)
@@ -56,6 +56,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Add user_id group_id tenant_id to EventStream. [(#94)](https://github.com/ManageIQ/manageiq-schema/pull/94)
 - Migrate MiddlewareServer to MiddlewareServerWildfly and MiddlewareServerEap [(#81)](https://github.com/ManageIQ/manageiq-schema/pull/81)
 - Add requests and limits to Persistent Volume Claim [(#74)](https://github.com/ManageIQ/manageiq-schema/pull/74)
+- Update i18n catalog for hammer [(#286)](https://github.com/ManageIQ/manageiq-schema/pull/286)
+- Add conversion_host_id to miq_request_task [(#281)](https://github.com/ManageIQ/manageiq-schema/pull/281)
 
 ### Fixed
 - Get rid of the condition modifier which is not needed and confusing. [(#95)](https://github.com/ManageIQ/manageiq-schema/pull/95)
@@ -83,6 +85,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Move Openstack refresher settings [(#91)](https://github.com/ManageIQ/manageiq-schema/pull/91)
 - Migrate existing dialog field association data to use new relationship [(#80)](https://github.com/ManageIQ/manageiq-schema/pull/80)
 - single sequence for all metrics sub tables [(#48)](https://github.com/ManageIQ/manageiq-schema/pull/48)
+- Fix invalid conversion host resource type [(#284)](https://github.com/ManageIQ/manageiq-schema/pull/284)
+- Fix incorrectly tenant default groups [(#278)](https://github.com/ManageIQ/manageiq-schema/pull/278)
 
 ### Removed
 - Remove Settings.product.transformation [(#236)](https://github.com/ManageIQ/manageiq-schema/pull/236)
