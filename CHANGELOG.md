@@ -5,17 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Unreleased as of Sprint 96 ending 2018-10-08
-
-### Added
-- Add Total Space column to Physical Storages [(#283)](https://github.com/ManageIQ/manageiq-schema/pull/283)
-- Add conversion_host_id to miq_request_task [(#281)](https://github.com/ManageIQ/manageiq-schema/pull/281)
+## Unreleased as of Sprint 97 ending 2018-10-22
 
 ### Fixed
-- Fix invalid conversion host resource type [(#284)](https://github.com/ManageIQ/manageiq-schema/pull/284)
-- Fix incorrectly tenant default groups [(#278)](https://github.com/ManageIQ/manageiq-schema/pull/278)
+- Generate a new ansible rabbitmq password [(#289)](https://github.com/ManageIQ/manageiq-schema/pull/289)
 
-## Unreleased as of Sprint 95 ending 2018-09-24
+## Hammer Beta-1 - Released 2018-10-12
 
 ### Added
 - Maintenance zone support for suspending provider [(#275)](https://github.com/ManageIQ/manageiq-schema/pull/275)
@@ -23,55 +18,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Add table for service instances [(#267)](https://github.com/ManageIQ/manageiq-schema/pull/267)
 - Moving location_led_state to asset_details table [(#262)](https://github.com/ManageIQ/manageiq-schema/pull/262)
 - Add Owner/Group/Tenant to Authentication [(#237)](https://github.com/ManageIQ/manageiq-schema/pull/237)
-
-### Fixed
-- Add a "migrations_ran" column to miq_regions [(#266)](https://github.com/ManageIQ/manageiq-schema/pull/266)
-
-## Unreleased as of Sprint 94 ending 2018-09-10
-
-### Added
 - Add parent physical chassis id to physical chassis [(#268)](https://github.com/ManageIQ/manageiq-schema/pull/268)
 - Add link_to field on notification_types table to point to a binding [(#263)](https://github.com/ManageIQ/manageiq-schema/pull/263)
 - Add plugin display name [(#261)](https://github.com/ManageIQ/manageiq-schema/pull/261)
 - Add cancelation_status column in MiqRequest and MiqRequestTask [(#254)](https://github.com/ManageIQ/manageiq-schema/pull/254)
 - Create Canister migration [(#234)](https://github.com/ManageIQ/manageiq-schema/pull/234)
 - Add column report_base_model to ChargebackRate table [(#209)](https://github.com/ManageIQ/manageiq-schema/pull/209)
-
-### Fixed
-- Get rid of the condition modifier which is not needed and confusing. [(#95)](https://github.com/ManageIQ/manageiq-schema/pull/95)
-
-## Unreleased as of Sprint 93 ending 2018-08-27
-
-### Added
 - Model relation "SecurityGroup belongs to NetworkRouter or CloudSubnet" [(#258)](https://github.com/ManageIQ/manageiq-schema/pull/258)
 - Update default of internal attribute in service template [(#251)](https://github.com/ManageIQ/manageiq-schema/pull/251)
 - Create a ConversionHost table [(#242)](https://github.com/ManageIQ/manageiq-schema/pull/242)
 - Migrate Nuage CloudSubnet default type to new subclass [(#215)](https://github.com/ManageIQ/manageiq-schema/pull/215)
-
-## Unreleased as of Sprint 92 ending 2018-08-13
-
-### Added
 - Enable S3 DB Backups [(#227)](https://github.com/ManageIQ/manageiq-schema/pull/227)
-
-### Fixed
-- Change backtick to single quote [(#246)](https://github.com/ManageIQ/manageiq-schema/pull/246)
-- Add internal column to ServiceTemplate table [(#238)](https://github.com/ManageIQ/manageiq-schema/pull/238)
-
-## Unreleased as of Sprint 91 ending 2018-07-30
-
-### Added
 - Adding Location LED name to asset_details table [(#231)](https://github.com/ManageIQ/manageiq-schema/pull/231)
 - Add physical_switch_id and physical_chassis_id column to event stream table [(#229)](https://github.com/ManageIQ/manageiq-schema/pull/229)
 - Enable PhysicalStorage inside PhysicalChassis [(#224)](https://github.com/ManageIQ/manageiq-schema/pull/224)
 - Create table for Cloud Volume Types [(#223)](https://github.com/ManageIQ/manageiq-schema/pull/223)
 - Allow FloatingIp to relate directly to NetworkRouter [(#217)](https://github.com/ManageIQ/manageiq-schema/pull/217)
-
-### Removed
-- Remove Settings.product.transformation [(#236)](https://github.com/ManageIQ/manageiq-schema/pull/236)
-
-## Unreleased as of Sprint 89 ending 2018-07-02
-
-### Added
 - Add ems_ref to lans to help with unique listing [(#226)](https://github.com/ManageIQ/manageiq-schema/pull/226)
 - Add Firmware Type to Hardwares [(#221)](https://github.com/ManageIQ/manageiq-schema/pull/221)
 - Add a Status column to Storages [(#220)](https://github.com/ManageIQ/manageiq-schema/pull/220)
@@ -79,81 +41,68 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Adding column on physical_network_ports table to connect other ports [(#208)](https://github.com/ManageIQ/manageiq-schema/pull/208)
 - Add index on STI type columns [(#190)](https://github.com/ManageIQ/manageiq-schema/pull/190)
 - Add configuration_script_sources.last_update_error [(#187)](https://github.com/ManageIQ/manageiq-schema/pull/187)
-
-### Fixed
-- Fix the quadicon settings migration for users without quadicon settings [(#225)](https://github.com/ManageIQ/manageiq-schema/pull/225)
-- Convert user quadicon settings from the old format to the new one [(#213)](https://github.com/ManageIQ/manageiq-schema/pull/213)
-
-## Unreleased as of Sprint 88 ending 2018-06-18
-
-### Fixed
-- Clean Azure image names [(#198)](https://github.com/ManageIQ/manageiq-schema/pull/198)
-
-## Unreleased as of Sprint 87 ending 2018-06-04
-
-### Added
 - Add deleted_on to ServiceTemplate for archival [(#207)](https://github.com/ManageIQ/manageiq-schema/pull/207)
 - Creating Physical Storage table [(#196)](https://github.com/ManageIQ/manageiq-schema/pull/196)
+- Creating physical_network_ports table [(#185)](https://github.com/ManageIQ/manageiq-schema/pull/185)
+- Create a Physical Chassis table [(#183)](https://github.com/ManageIQ/manageiq-schema/pull/183)
+- Updating details for physical switches [(#182)](https://github.com/ManageIQ/manageiq-schema/pull/182)
+- Add compliance information [(#169)](https://github.com/ManageIQ/manageiq-schema/pull/169)
+- Add vm_ems_ref to event_streams [(#176)](https://github.com/ManageIQ/manageiq-schema/pull/176)
+- Add miq_task_id column to miq_queue table [(#167)](https://github.com/ManageIQ/manageiq-schema/pull/167)
+- Add lan info to a guest_device (port) [(#165)](https://github.com/ManageIQ/manageiq-schema/pull/165)
+- Updating switches data [(#160)](https://github.com/ManageIQ/manageiq-schema/pull/160)
+- Add last_updated_on to configuration_script_sources [(#172)](https://github.com/ManageIQ/manageiq-schema/pull/172)
+- Add ems_ref column to physical_racks table [(#170)](https://github.com/ManageIQ/manageiq-schema/pull/170)
+- Add hostname to Vm [(#168)](https://github.com/ManageIQ/manageiq-schema/pull/168)
+- create a physical rack table [(#156)](https://github.com/ManageIQ/manageiq-schema/pull/156)
+- Migrate Picture content from BinaryBlobs to Pictures table [(#153)](https://github.com/ManageIQ/manageiq-schema/pull/153)
+- Add tables for v2v migration [(#149)](https://github.com/ManageIQ/manageiq-schema/pull/149)
+- Rename Tables and some changes for Showback Models [(#96)](https://github.com/ManageIQ/manageiq-schema/pull/96)
+- Add user_id group_id tenant_id to EventStream. [(#94)](https://github.com/ManageIQ/manageiq-schema/pull/94)
+- Migrate MiddlewareServer to MiddlewareServerWildfly and MiddlewareServerEap [(#81)](https://github.com/ManageIQ/manageiq-schema/pull/81)
+- Add requests and limits to Persistent Volume Claim [(#74)](https://github.com/ManageIQ/manageiq-schema/pull/74)
+- Update i18n catalog for hammer [(#286)](https://github.com/ManageIQ/manageiq-schema/pull/286)
+- Add conversion_host_id to miq_request_task [(#281)](https://github.com/ManageIQ/manageiq-schema/pull/281)
+
+### Fixed
+- Get rid of the condition modifier which is not needed and confusing. [(#95)](https://github.com/ManageIQ/manageiq-schema/pull/95)
+- Add a "migrations_ran" column to miq_regions [(#266)](https://github.com/ManageIQ/manageiq-schema/pull/266)
+- Change backtick to single quote [(#246)](https://github.com/ManageIQ/manageiq-schema/pull/246)
+- Add internal column to ServiceTemplate table [(#238)](https://github.com/ManageIQ/manageiq-schema/pull/238)
+- Fix the quadicon settings migration for users without quadicon settings [(#225)](https://github.com/ManageIQ/manageiq-schema/pull/225)
+- Convert user quadicon settings from the old format to the new one [(#213)](https://github.com/ManageIQ/manageiq-schema/pull/213)
+- Clean Azure image names [(#198)](https://github.com/ManageIQ/manageiq-schema/pull/198)
+- Azure backslash to forward slash [(#192)](https://github.com/ManageIQ/manageiq-schema/pull/192)
+- Nil MiqDatabase#update_repo_name [(#191)](https://github.com/ManageIQ/manageiq-schema/pull/191)
+- Update provider_region to nil for Google provider [(#184)](https://github.com/ManageIQ/manageiq-schema/pull/184)
+- Set the switch types for VMware switches [(#180)](https://github.com/ManageIQ/manageiq-schema/pull/180)
+- Adding product details columns to asset_details table [(#181)](https://github.com/ManageIQ/manageiq-schema/pull/181)
+- nil out invalid hostnames on MiqServer records [(#164)](https://github.com/ManageIQ/manageiq-schema/pull/164)
+- Handle cases where a Picture with that id doesn't exist [(#159)](https://github.com/ManageIQ/manageiq-schema/pull/159)
+- Delete the dangling blob when there is a blob without a picture [(#158)](https://github.com/ManageIQ/manageiq-schema/pull/158)
+- Change container_quota_items float columns to decimals [(#151)](https://github.com/ManageIQ/manageiq-schema/pull/151)
+- Move Openstack refresh settings under the root where they belong [(#146)](https://github.com/ManageIQ/manageiq-schema/pull/146)
+- Ensure EMS relationships are established on upgrade. [(#117)](https://github.com/ManageIQ/manageiq-schema/pull/117)
+- Add an 'Allocated cpu cores' chargeback rate detail to existing chargeback rates [(#108)](https://github.com/ManageIQ/manageiq-schema/pull/108)
+- Migrate EmsRefresh.refresh queue args to data [(#107)](https://github.com/ManageIQ/manageiq-schema/pull/107)
+- Convert containers hawkular Endpoints port=nil to port=443 [(#98)](https://github.com/ManageIQ/manageiq-schema/pull/98)
+- Add sub_metric column to chargeback_rate_detail [(#93)](https://github.com/ManageIQ/manageiq-schema/pull/93)
+- Move Openstack refresher settings [(#91)](https://github.com/ManageIQ/manageiq-schema/pull/91)
+- Migrate existing dialog field association data to use new relationship [(#80)](https://github.com/ManageIQ/manageiq-schema/pull/80)
+- single sequence for all metrics sub tables [(#48)](https://github.com/ManageIQ/manageiq-schema/pull/48)
+- Fix invalid conversion host resource type [(#284)](https://github.com/ManageIQ/manageiq-schema/pull/284)
+- Fix incorrectly tenant default groups [(#278)](https://github.com/ManageIQ/manageiq-schema/pull/278)
+
+### Removed
+- Remove Settings.product.transformation [(#236)](https://github.com/ManageIQ/manageiq-schema/pull/236)
+- Remove all VMware MKS console-related records from SettingSchanges [(#166)](https://github.com/ManageIQ/manageiq-schema/pull/166)
+- Remove all instances of ManageIQ::Providers::Hawkular::MiddlewareManager from ext_management_systems [(#161)](https://github.com/ManageIQ/manageiq-schema/pull/161)
 
 ## Gaprindashvili-3 released 2018-05-15
 
 ### Fixed
 - Move SchemaMigration model from ManageIQ to ManageIQ::Schema plugin [(#175)](https://github.com/ManageIQ/manageiq-schema/pull/175)
 - Remove the limits from the tables in sorted order [(#179)](https://github.com/ManageIQ/manageiq-schema/pull/179)
-
-## Unreleased as of Sprint 85 ending 2018-05-07
-
-### Added
-- Creating physical_network_ports table [(#185)](https://github.com/ManageIQ/manageiq-schema/pull/185)
-
-### Fixed
-- Azure backslash to forward slash [(#192)](https://github.com/ManageIQ/manageiq-schema/pull/192)
-- Nil MiqDatabase#update_repo_name [(#191)](https://github.com/ManageIQ/manageiq-schema/pull/191)
-
-### Removed
-- Remove all VMware MKS console-related records from SettingSchanges [(#166)](https://github.com/ManageIQ/manageiq-schema/pull/166)
-
-## Unreleased as of Sprint 84 ending 2018-04-23
-
-### Added
-- Create a Physical Chassis table [(#183)](https://github.com/ManageIQ/manageiq-schema/pull/183)
-- Updating details for physical switches [(#182)](https://github.com/ManageIQ/manageiq-schema/pull/182)
-
-### Fixed
-- Update provider_region to nil for Google provider [(#184)](https://github.com/ManageIQ/manageiq-schema/pull/184)
-
-## Unreleased as of Sprint 83 ending 2018-04-09
-
-### Added
-- Add compliance information [(#169)](https://github.com/ManageIQ/manageiq-schema/pull/169)
-
-### Fixed
-- Set the switch types for VMware switches [(#180)](https://github.com/ManageIQ/manageiq-schema/pull/180)
-
-## Unreleased as of Sprint 82 ending 2018-03-26
-
-### Added
-- Add vm_ems_ref to event_streams [(#176)](https://github.com/ManageIQ/manageiq-schema/pull/176)
-- Add miq_task_id column to miq_queue table [(#167)](https://github.com/ManageIQ/manageiq-schema/pull/167)
-- Add lan info to a guest_device (port) [(#165)](https://github.com/ManageIQ/manageiq-schema/pull/165)
-- Updating switches data [(#160)](https://github.com/ManageIQ/manageiq-schema/pull/160)
-
-### Fixed
-- Adding product details columns to asset_details table [(#181)](https://github.com/ManageIQ/manageiq-schema/pull/181)
-
-### Removed
-- Remove all instances of ManageIQ::Providers::Hawkular::MiddlewareManager from ext_management_systems [(#161)](https://github.com/ManageIQ/manageiq-schema/pull/161)
-
-## Unreleased as of Sprint 80 ending 2018-02-26
-
-### Added
-- Add last_updated_on to configuration_script_sources [(#172)](https://github.com/ManageIQ/manageiq-schema/pull/172)
-- Add ems_ref column to physical_racks table [(#170)](https://github.com/ManageIQ/manageiq-schema/pull/170)
-- Add hostname to Vm [(#168)](https://github.com/ManageIQ/manageiq-schema/pull/168)
-- create a physical rack table [(#156)](https://github.com/ManageIQ/manageiq-schema/pull/156)
-
-### Fixed
-- nil out invalid hostnames on MiqServer records [(#164)](https://github.com/ManageIQ/manageiq-schema/pull/164)
 
 ## Gaprindashvili-1 - Released 2018-01-31
 
@@ -200,35 +149,5 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Fix issue with showback_rate belongs and type of the data in steps let INFINITY [(#67)](https://github.com/ManageIQ/manageiq-schema/pull/67)
 - Skip editing /etc/fstab if it doesn't exist [(#52)](https://github.com/ManageIQ/manageiq-schema/pull/52)
 - Set ActiveRecord::Migrator.migrations_paths correctly [(#51)](https://github.com/ManageIQ/manageiq-schema/pull/51)
-
-## Unreleased as of Sprint 79 ending 2018-01-29
-
-### Added
-- Migrate Picture content from BinaryBlobs to Pictures table [(#153)](https://github.com/ManageIQ/manageiq-schema/pull/153)
-- Add tables for v2v migration [(#149)](https://github.com/ManageIQ/manageiq-schema/pull/149)
-
-### Fixed
-- Handle cases where a Picture with that id doesn't exist [(#159)](https://github.com/ManageIQ/manageiq-schema/pull/159)
-- Delete the dangling blob when there is a blob without a picture [(#158)](https://github.com/ManageIQ/manageiq-schema/pull/158)
-- Change container_quota_items float columns to decimals [(#151)](https://github.com/ManageIQ/manageiq-schema/pull/151)
-- Move Openstack refresh settings under the root where they belong [(#146)](https://github.com/ManageIQ/manageiq-schema/pull/146)
-
-## Unreleased as of Sprint 72 ending 2017-10-30
-
-### Added
-- Rename Tables and some changes for Showback Models [(#96)](https://github.com/ManageIQ/manageiq-schema/pull/96)
-- Add user_id group_id tenant_id to EventStream. [(#94)](https://github.com/ManageIQ/manageiq-schema/pull/94)
-- Migrate MiddlewareServer to MiddlewareServerWildfly and MiddlewareServerEap [(#81)](https://github.com/ManageIQ/manageiq-schema/pull/81)
-- Add requests and limits to Persistent Volume Claim [(#74)](https://github.com/ManageIQ/manageiq-schema/pull/74)
-
-### Fixed
-- Ensure EMS relationships are established on upgrade. [(#117)](https://github.com/ManageIQ/manageiq-schema/pull/117)
-- Add an 'Allocated cpu cores' chargeback rate detail to existing chargeback rates [(#108)](https://github.com/ManageIQ/manageiq-schema/pull/108)
-- Migrate EmsRefresh.refresh queue args to data [(#107)](https://github.com/ManageIQ/manageiq-schema/pull/107)
-- Convert containers hawkular Endpoints port=nil to port=443 [(#98)](https://github.com/ManageIQ/manageiq-schema/pull/98)
-- Add sub_metric column to chargeback_rate_detail [(#93)](https://github.com/ManageIQ/manageiq-schema/pull/93)
-- Move Openstack refresher settings [(#91)](https://github.com/ManageIQ/manageiq-schema/pull/91)
-- Migrate existing dialog field association data to use new relationship [(#80)](https://github.com/ManageIQ/manageiq-schema/pull/80)
-- single sequence for all metrics sub tables [(#48)](https://github.com/ManageIQ/manageiq-schema/pull/48)
 
 ## Initial changelog added
