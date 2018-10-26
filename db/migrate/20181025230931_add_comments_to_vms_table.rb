@@ -18,10 +18,10 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :cpu_limit, "The CPU utilization limit for the VM. VMWare only."
     change_column_comment :vms, :cpu_reserve, "Amount of CPU that is guaranteed available for the VM. VMWare only."
 
-    change_column_comment :vms, :cpu_reserve_expand, "Amount on a resource pool that can grow beyond the specified value "\
-                                                     "if the parent resource pool has unreserved resources. VMWare only."
+    change_column_comment :vms, :cpu_reserve_expand, "Amount the CPU can grow beyond its normal limits if there "\
+                                                     "are unreserved resources available. VMWare only."
 
-    change_column_comment :vms, :cpu_shares, "The number of shares allocated. Used to determine resource allocation "\
+    change_column_comment :vms, :cpu_shares, "The number of CPU shares allocated. Used to determine resource allocation "\
                                              "in case of resource contention. VMWare only."
 
     change_column_comment :vms, :cpu_shares_level, "CPU shares allocation level. VMWare only."
@@ -53,13 +53,22 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
 
     change_column_comment :vms, :location, "The location or region of the VM."
     change_column_comment :vms, :memory_hot_add_enabled, "Indicates whether or not memory can be hot added to the running VM."
-    change_column_comment :vms, :memory_hot_add_increment, "[DEFINITION NEEDED]"
-    change_column_comment :vms, :memory_hot_add_limit, "[DEFINITION NEEDED]"
-    change_column_comment :vms, :memory_limit, "[DEFINITION NEEDED]"
-    change_column_comment :vms, :memory_reserve, "[DEFINITION NEEDED]"
-    change_column_comment :vms, :memory_reserve_expand, "[DEFINITION NEEDED]"
-    change_column_comment :vms, :memory_shares, "[DEFINITION NEEDED]"
-    change_column_comment :vms, :memory_shares_level, "[DEFINITION NEEDED]"
+
+    change_column_comment :vms, :memory_hot_add_increment, "Memory in MB that can be added to a running VM must be in "\
+                                                           "increments of this value. VMWare only."
+
+    change_column_comment :vms, :memory_hot_add_limit, "The maximum amount of memory, in MB, than can be added to a running VM. VMWare only."
+    change_column_comment :vms, :memory_limit, "The absolute memory limit for the VM."
+    change_column_comment :vms, :memory_reserve, "Amount of memory that is guaranteed available for the VM. VMWare only."
+
+    change_column_comment :vms, :memory_reserve_expand, "Amount the memory can grow beyond its normal limits if there "\
+                                                     "are unreserved resources available. VMWare only."
+
+    change_column_comment :vms, :memory_shares, "The number of memory shares allocated. Used to determine resource allocation "\
+                                             "in case of resource contention. VMWare only."
+
+    change_column_comment :vms, :memory_shares_level, "Memory shares allocation level. VMWare only."
+
     change_column_comment :vms, :miq_group_id, "MIQ Group associated with the VM."
     change_column_comment :vms, :name, "The name of the VM/Template."
     change_column_comment :vms, :orchestration_stack_id, "ID of the orchestration stack associated with the VM."
