@@ -84,7 +84,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :retirement_state, "The current retirement state."
     change_column_comment :vms, :retirement_warn, "Warning message when VM was put into retirement."
     change_column_comment :vms, :retires_on, "Timestamp the VM is to be retired."
-    change_column_comment :vms, :smart, "[DEFINITION NEEDED]"
+    change_column_comment :vms, :smart, "Indicates whether or not smart proxy is enabled. Deprecated."
     change_column_comment :vms, :standby_action, "Action taken when VM is put into standby mode."
     change_column_comment :vms, :storage_id, "ID of the storage object associated with the VM."
     change_column_comment :vms, :storage_profile_id, "ID of the storage profile associated with the VM."
