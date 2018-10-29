@@ -4,7 +4,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
 
     change_column_comment :vms, :autostart, "Indicates whether or not the VM is set to autostart."
     change_column_comment :vms, :availability_zone_id, "ID of the availability zone that the VM is part of."
-    change_column_comment :vms, :busy, "[DEFINITION NEEDED]"
+    change_column_comment :vms, :busy, "Indicates whether or not the VM is being scanned for SmartState analysis."
     change_column_comment :vms, :boot_time, "The last time the VM was started."
     change_column_comment :vms, :cloud, "Indicates whether or not the VM/Template is cloud or infra."
     change_column_comment :vms, :cloud_network_id, "ID of the cloud (virtual) network the VM/Template is associated with."
