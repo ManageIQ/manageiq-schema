@@ -51,7 +51,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :linked_clone, "Indicates whether the VM is a linked clone, i.e its disk is a referencing "\
                                                "disk pointing to snapshot of another VM."
 
-    change_column_comment :vms, :location, "The location or region of the VM."
+    change_column_comment :vms, :location, "The location or region of the VM, or its underlying storage."
     change_column_comment :vms, :memory_hot_add_enabled, "Indicates whether or not memory can be hot added to the running VM."
 
     change_column_comment :vms, :memory_hot_add_increment, "Memory in MB that can be added to a running VM must be in "\
