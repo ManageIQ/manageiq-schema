@@ -12,21 +12,21 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :cloud_tenant_id, "ID of the cloud tenant associated with the VM."
     change_column_comment :vms, :config_xml, "The VM or Template configuration in XML format. Deprecated."
     change_column_comment :vms, :connection_state, "Indicates the connection state of the VM, e.g. connected, disconnected, etc."
-    change_column_comment :vms, :cpu_affinity, "A comma separated list of host CPUs to schedule the VM on. VMware only."
+    change_column_comment :vms, :cpu_affinity, "A comma separated list of host CPUs to schedule the VM on."
     change_column_comment :vms, :cpu_hot_add_enabled, "Indicates if CPUs can be added to the VM while it is powered on."
     change_column_comment :vms, :cpu_hot_remove_enabled, "Indicates if a CPU can be removed from a VM while powered on."
-    change_column_comment :vms, :cpu_limit, "The CPU utilization limit for the VM. VMWare only."
-    change_column_comment :vms, :cpu_reserve, "Amount of CPU that is guaranteed available for the VM. VMWare only."
+    change_column_comment :vms, :cpu_limit, "The CPU utilization limit for the VM."
+    change_column_comment :vms, :cpu_reserve, "Amount of CPU that is guaranteed available for the VM."
 
     change_column_comment :vms, :cpu_reserve_expand, "Amount the CPU can grow beyond its normal limits if there "\
-                                                     "are unreserved resources available. VMWare only."
+                                                     "are unreserved resources available."
 
     change_column_comment :vms, :cpu_shares, "The number of CPU shares allocated. Used to determine resource allocation "\
-                                             "in case of resource contention. VMWare only."
+                                             "in case of resource contention."
 
-    change_column_comment :vms, :cpu_shares_level, "CPU shares allocation level. VMWare only."
+    change_column_comment :vms, :cpu_shares_level, "CPU shares allocation level."
     change_column_comment :vms, :created_on, "The timestamp the VM was added to the app inventory."
-    change_column_comment :vms, :deprecated, "Indicates whether or not a template is deprecated. Google only."
+    change_column_comment :vms, :deprecated, "Indicates whether or not a template is deprecated."
     change_column_comment :vms, :description, "A description of the VM that is typically set by the provider, but may also be edited."
     change_column_comment :vms, :ems_created_on, "Date the associated EMS was created."
     change_column_comment :vms, :ems_id, "ID of the ExtManagementSystem associated with the VM."
@@ -55,19 +55,19 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :memory_hot_add_enabled, "Indicates whether or not memory can be hot added to the running VM."
 
     change_column_comment :vms, :memory_hot_add_increment, "Memory in MB that can be added to a running VM must be in "\
-                                                           "increments of this value. VMWare only."
+                                                           "increments of this value."
 
-    change_column_comment :vms, :memory_hot_add_limit, "The maximum amount of memory, in MB, than can be added to a running VM. VMWare only."
+    change_column_comment :vms, :memory_hot_add_limit, "The maximum amount of memory, in MB, than can be added to a running VM."
     change_column_comment :vms, :memory_limit, "The absolute memory limit for the VM."
-    change_column_comment :vms, :memory_reserve, "Amount of memory that is guaranteed available for the VM. VMWare only."
+    change_column_comment :vms, :memory_reserve, "Amount of memory that is guaranteed available for the VM."
 
     change_column_comment :vms, :memory_reserve_expand, "Amount the memory can grow beyond its normal limits if there "\
-                                                     "are unreserved resources available. VMWare only."
+                                                     "are unreserved resources available."
 
     change_column_comment :vms, :memory_shares, "The number of memory shares allocated. Used to determine resource allocation "\
-                                             "in case of resource contention. VMWare only."
+                                             "in case of resource contention."
 
-    change_column_comment :vms, :memory_shares_level, "Memory shares allocation level. VMWare only."
+    change_column_comment :vms, :memory_shares_level, "Memory shares allocation level."
 
     change_column_comment :vms, :miq_group_id, "ID of the MIQ Group owner."
     change_column_comment :vms, :name, "The name of the VM/Template."
