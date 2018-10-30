@@ -30,7 +30,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :description, "A description of the VM that is typically set by the provider, but may also be edited."
     change_column_comment :vms, :ems_created_on, "The timestamp the VM or Templated was created on the EMS itself."
     change_column_comment :vms, :ems_id, "ID of the ExtManagementSystem associated with the VM."
-    change_column_comment :vms, :evm_owner_id, "ID of VM owner from product database."
+    change_column_comment :vms, :evm_owner_id, "ID of the user that provisioned the VM (if provisioned through the app)."
     change_column_comment :vms, :ems_ref, "A native unique reference for the VM within the EMS."
     change_column_comment :vms, :ems_ref_obj, "A YAML serialized version of the ems_ref."
     change_column_comment :vms, :ems_cluster_id, "ID of associated cluster."
