@@ -76,7 +76,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :previous_state, "The previous power state change."
     change_column_comment :vms, :publicly_available, "Indicates whether the VM is public or private."
     change_column_comment :vms, :raw_power_state, "The power state refreshed from the EMS."
-    change_column_comment :vms, :registered, "Indicates whether the VM registered to a Provider."
+    change_column_comment :vms, :registered, "Indicates whether the VM registered to a Provider. Deprecated."
     change_column_comment :vms, :resource_group_id, "ID of the resource group that the VM/Template belongs to."
     change_column_comment :vms, :retired, "Indicates whether or not the VM is retired."
     change_column_comment :vms, :retirement_last_warn, "Date of last retirement warning."
