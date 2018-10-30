@@ -69,7 +69,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
 
     change_column_comment :vms, :memory_shares_level, "Memory shares allocation level. VMWare only."
 
-    change_column_comment :vms, :miq_group_id, "MIQ Group associated with the VM."
+    change_column_comment :vms, :miq_group_id, "ID of the MIQ Group owner."
     change_column_comment :vms, :name, "The name of the VM/Template."
     change_column_comment :vms, :orchestration_stack_id, "ID of the orchestration stack associated with the VM."
     change_column_comment :vms, :power_state, "The current power state, typically 'on' or 'off'."
