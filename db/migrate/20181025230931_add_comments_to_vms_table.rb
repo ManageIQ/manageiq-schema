@@ -28,7 +28,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :created_on, "The timestamp the VM was added to the app inventory."
     change_column_comment :vms, :deprecated, "Indicates whether or not a template is deprecated."
     change_column_comment :vms, :description, "A description of the VM that is typically set by the provider, but may also be edited."
-    change_column_comment :vms, :ems_created_on, "Date the VM or Templated was created on the EMS itself."
+    change_column_comment :vms, :ems_created_on, "The timestamp the VM or Templated was created on the EMS itself."
     change_column_comment :vms, :ems_id, "ID of the ExtManagementSystem associated with the VM."
     change_column_comment :vms, :evm_owner_id, "ID of VM owner from product database."
     change_column_comment :vms, :ems_ref, "A native unique reference for the VM within the EMS."
