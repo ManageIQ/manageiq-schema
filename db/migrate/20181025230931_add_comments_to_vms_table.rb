@@ -95,7 +95,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :type, "An internal class name that includes the provider type."
     change_column_comment :vms, :uid_ems, "A globally unique reference for the VM across EMS."
     change_column_comment :vms, :updated_on, "The last timestamp the VM was modified within the app."
-    change_column_comment :vms, :vendor, "The vendor for the VM, e.g. Azure, Amazon, etc."
+    change_column_comment :vms, :vendor, "The vendor for the VM, e.g. azure, amazon, etc."
     change_column_comment :vms, :version, "The version of the VM definition."
     change_column_comment :vms, :vnc_port, "Port or port range used for VNC connections."
   end
