@@ -47,9 +47,9 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :id, "The internal database ID."
     change_column_comment :vms, :host_id, "ID of the host that the VM/Template resides on."
     change_column_comment :vms, :last_perf_capture_on, "Timestamp for last performance metrics capture."
-    change_column_comment :vms, :last_scan_on, "Timestamp for last SmartState analysis."
+    change_column_comment :vms, :last_scan_on, "Timestamp for last SmartState analysis scan."
     change_column_comment :vms, :last_scan_attempt_on, "Timestamp for last attempt to perform SmartState Analysis."
-    change_column_comment :vms, :last_sync_on, "Timestamp for when the data from SmartState was last synced with the database."
+    change_column_comment :vms, :last_sync_on, "Timestamp for last SmartState analysis synchronization."
 
     change_column_comment :vms, :linked_clone, "Indicates whether the VM is a linked clone, i.e its disk is a referencing "\
                                                "disk pointing to snapshot of another VM."
