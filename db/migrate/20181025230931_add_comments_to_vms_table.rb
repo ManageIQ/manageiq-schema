@@ -60,7 +60,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
     change_column_comment :vms, :memory_hot_add_increment, "Memory in MB that can be added to a running VM must be in "\
                                                            "increments of this value."
 
-    change_column_comment :vms, :memory_hot_add_limit, "The maximum amount of memory, in MB, than can be added to a running VM."
+    change_column_comment :vms, :memory_hot_add_limit, "The maximum amount of memory, in MB, that can be added to a running VM."
     change_column_comment :vms, :memory_limit, "The absolute memory limit for the VM."
     change_column_comment :vms, :memory_reserve, "Amount of memory that is guaranteed available for the VM."
 
