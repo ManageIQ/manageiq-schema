@@ -1,21 +1,19 @@
-# Spanish translations for ManageIQ_Schema package.
-# Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the ManageIQ_Schema package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
-#
+# Translator <tr.rh02@oceantranslations.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_Schema 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-10-03 16:18+0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2018-10-03 16:18+0200\n"
+"PO-Revision-Date: 2018-10-19 03:24+0000\n"
+"Last-Translator: Translator <tr.rh02@oceantranslations.com>\n"
 "Language-Team: Spanish\n"
-"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Zanata 4.6.2\n"
 
+#: ../lib/manageiq/schema/engine.rb:17
 msgid "Schema"
-msgstr ""
+msgstr "Esquema"
