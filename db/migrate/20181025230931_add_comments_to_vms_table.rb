@@ -42,7 +42,7 @@ class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
                                                   "crashes it will immediately pick up on another host in the cluster."
 
     change_column_comment :vms, :flavor_id, "ID of associated flavor."
-    change_column_comment :vms, :format, "The format of the VM's disk, such as VMDK."
+    change_column_comment :vms, :format, "The format of the VM's disk, such as VMDK. Deprecated."
     change_column_comment :vms, :guid, "A value used to uniquely identify the VM internally."
     change_column_comment :vms, :id, "The internal database ID."
     change_column_comment :vms, :host_id, "ID of the host that the VM/Template resides on."
