@@ -1,5 +1,5 @@
 class AddCommentsToVmsTable < ActiveRecord::Migration[5.0]
-  def change
+  def up
     change_table_comment :vms, "Virtual Machines and Templates"
 
     change_column_comment :vms, :autostart, "Indicates whether or not the VM is set to autostart."
