@@ -5,7 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Unreleased as of Sprint 97 ending 2018-10-22
+## Unreleased as of Sprint 98 ending 2018-11-05
+
+### Added
+- Add tenant_id to miq_product_features [(#291)](https://github.com/ManageIQ/manageiq-schema/pull/291)
+- Add ID references to PhysicalDisks and Canisters [(#285)](https://github.com/ManageIQ/manageiq-schema/pull/285) 
+
+## Gaprindashvili-6 - Released 2018-11-02
+
+### Added
+- Optimize migration which creates task for each job [(#201)](https://github.com/ManageIQ/manageiq-schema/pull/201)
+
+## Hammer Beta-2 - Released 2018-10-29
 
 ### Fixed
 - Generate a new ansible rabbitmq password [(#289)](https://github.com/ManageIQ/manageiq-schema/pull/289)
