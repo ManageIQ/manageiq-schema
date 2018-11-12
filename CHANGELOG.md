@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer Beta-2
+
+### Fixed
+- Generate a new ansible rabbitmq password [(#289)](https://github.com/ManageIQ/manageiq-schema/pull/289)
+
 ## Hammer Beta-1 - Released 2018-10-12
 
 ### Added
