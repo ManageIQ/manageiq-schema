@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 101 ending 2018-12-17
+
+### Fixed
+- Remove worker rows referencing a renamed worker [(#310)](https://github.com/ManageIQ/manageiq-schema/pull/310)
+
 ## Unreleased as of Sprint 99 ending 2018-11-19
 
 ### Fixed
