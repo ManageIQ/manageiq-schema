@@ -5,34 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Unreleased as of Sprint 101 ending 2018-12-17
-
-### Fixed
-- Remove worker rows referencing a renamed worker [(#310)](https://github.com/ManageIQ/manageiq-schema/pull/310)
-
-## Unreleased as of Sprint 99 ending 2018-11-19
-
-### Fixed
-- Default VM connection_state is now 'connected' [(#305)](https://github.com/ManageIQ/manageiq-schema/pull/305)
-- Add evm_owner tenant group to orch stacks [(#288)](https://github.com/ManageIQ/manageiq-schema/pull/288)
-
-## Unreleased as of Sprint 98 ending 2018-11-05
-
-### Added
-- Add tenant_id to miq_product_features [(#291)](https://github.com/ManageIQ/manageiq-schema/pull/291)
-- Add ID references to PhysicalDisks and Canisters [(#285)](https://github.com/ManageIQ/manageiq-schema/pull/285) 
-
-## Gaprindashvili-6 - Released 2018-11-02
-
-### Added
-- Optimize migration which creates task for each job [(#201)](https://github.com/ManageIQ/manageiq-schema/pull/201)
-
-## Hammer Beta-2 - Released 2018-10-29
-
-### Fixed
-- Generate a new ansible rabbitmq password [(#289)](https://github.com/ManageIQ/manageiq-schema/pull/289)
-
-## Hammer Beta-1 - Released 2018-10-12
+## Hammer-1
 
 ### Added
 - Maintenance zone support for suspending provider [(#275)](https://github.com/ManageIQ/manageiq-schema/pull/275)
@@ -114,11 +87,34 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - single sequence for all metrics sub tables [(#48)](https://github.com/ManageIQ/manageiq-schema/pull/48)
 - Fix invalid conversion host resource type [(#284)](https://github.com/ManageIQ/manageiq-schema/pull/284)
 - Fix incorrectly tenant default groups [(#278)](https://github.com/ManageIQ/manageiq-schema/pull/278)
+- Generate a new ansible rabbitmq password [(#289)](https://github.com/ManageIQ/manageiq-schema/pull/289)
+- Add tenant_id to miq_product_features [(#291)](https://github.com/ManageIQ/manageiq-schema/pull/291)
 
 ### Removed
 - Remove Settings.product.transformation [(#236)](https://github.com/ManageIQ/manageiq-schema/pull/236)
 - Remove all VMware MKS console-related records from SettingSchanges [(#166)](https://github.com/ManageIQ/manageiq-schema/pull/166)
 - Remove all instances of ManageIQ::Providers::Hawkular::MiddlewareManager from ext_management_systems [(#161)](https://github.com/ManageIQ/manageiq-schema/pull/161)
+
+## Unreleased as of Sprint 101 ending 2018-12-17
+
+### Fixed
+- Remove worker rows referencing a renamed worker [(#310)](https://github.com/ManageIQ/manageiq-schema/pull/310)
+
+## Unreleased as of Sprint 99 ending 2018-11-19
+
+### Fixed
+- Default VM connection_state is now 'connected' [(#305)](https://github.com/ManageIQ/manageiq-schema/pull/305)
+- Add evm_owner tenant group to orch stacks [(#288)](https://github.com/ManageIQ/manageiq-schema/pull/288)
+
+## Unreleased as of Sprint 98 ending 2018-11-05
+
+### Added
+- Add ID references to PhysicalDisks and Canisters [(#285)](https://github.com/ManageIQ/manageiq-schema/pull/285) 
+
+## Gaprindashvili-6 - Released 2018-11-02
+
+### Added
+- Optimize migration which creates task for each job [(#201)](https://github.com/ManageIQ/manageiq-schema/pull/201)
 
 ## Gaprindashvili-3 released 2018-05-15
 
