@@ -5,17 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer RC-2
-
-### Fixed
-- Add tenant_id to miq_product_features [(#291)](https://github.com/ManageIQ/manageiq-schema/pull/291)
-
-## Hammer Beta-2 - Released 2018-10-29
-
-### Fixed
-- Generate a new ansible rabbitmq password [(#289)](https://github.com/ManageIQ/manageiq-schema/pull/289)
-
-## Hammer Beta-1 - Released 2018-10-12
+## Hammer-1
 
 ### Added
 - Maintenance zone support for suspending provider [(#275)](https://github.com/ManageIQ/manageiq-schema/pull/275)
@@ -97,6 +87,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - single sequence for all metrics sub tables [(#48)](https://github.com/ManageIQ/manageiq-schema/pull/48)
 - Fix invalid conversion host resource type [(#284)](https://github.com/ManageIQ/manageiq-schema/pull/284)
 - Fix incorrectly tenant default groups [(#278)](https://github.com/ManageIQ/manageiq-schema/pull/278)
+- Generate a new ansible rabbitmq password [(#289)](https://github.com/ManageIQ/manageiq-schema/pull/289)
+- Add tenant_id to miq_product_features [(#291)](https://github.com/ManageIQ/manageiq-schema/pull/291)
 
 ### Removed
 - Remove Settings.product.transformation [(#236)](https://github.com/ManageIQ/manageiq-schema/pull/236)
