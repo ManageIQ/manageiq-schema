@@ -218,6 +218,7 @@ miq_scsi_luns
 miq_scsi_targets
 miq_searches
 miq_servers
+miq_set_memberships
 miq_sets
 miq_shortcuts
 miq_tasks
