@@ -76,7 +76,14 @@ module MigrationHelper
     quoted_name = connection.quote_column_name(name)
     quoted_table = connection.quote_table_name(table)
     quoted_function = connection.quote_table_name(function)
-    safe_direction = direction.downcase == 'before' ? 'BEFORE' : 'AFTER'
+    safe_direction = case(direction.downcase)
+                     when 'before'
+                       'BEFORE'
+                     when 'after'
+                       'AFTER'
+                     when 'insteadof'
+                       'INSTEAD OF'
+                     end
 
     connection.execute <<-EOSQL, 'Create trigger'
       CREATE TRIGGER #{quoted_name}
