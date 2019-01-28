@@ -16,12 +16,11 @@ Gem::Specification.new do |s|
   s.files = Dir["{db,lib}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
 
   s.add_dependency "activerecord-id_regions", "~> 0.2.2"
+  s.add_dependency "manageiq-password", "~> 0.2.0"
   s.add_dependency "more_core_extensions", "~> 3.5"
   s.add_dependency "pg", "~> 0.18.2"
   s.add_dependency "pg-pglogical", "~> 2.1.1"
   s.add_dependency "rails", "~>5.0.7.1"
-
-  s.add_dependency "manageiq-gems-pending"  # This is just for MiqPassword for now
 
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
   s.add_development_dependency "rspec"
