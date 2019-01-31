@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-1
+## Hammer-2
+
+### Fixed
+- Add a schema_migrations_ran [(#330)](https://github.com/ManageIQ/manageiq-schema/pull/330)
+
+## Hammer-1 - Released 2019-01-15
 
 ### Added
 - Maintenance zone support for suspending provider [(#275)](https://github.com/ManageIQ/manageiq-schema/pull/275)
