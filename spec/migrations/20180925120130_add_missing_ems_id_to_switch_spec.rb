@@ -61,10 +61,9 @@ describe AddMissingEmsIdToSwitch do
       dvswitch_archived    = switch_stub.create!(:name                  => "DVS", :uid_ems => "dvswitch-1", :shared => true,
                                                  :ext_management_system => vmware_ems,
                                                  :type                  => "ManageIQ::Providers::Vmware::InfraManager::DistributedVirtualSwitch")
-      host_switch          = switch_stub.create!(:name => "vSwitch0", :uid_ems => "vSwitch0",
+      host_switch          = switch_stub.create!(:name => "vSwitch0", :uid_ems => "vSwitch0", :shared => false,
                                                  :type => "ManageIQ::Providers::Vmware::InfraManager::HostVirtualSwitch")
       host_switch_archived = switch_stub.create!(:name                  => "vSwitch0", :uid_ems => "vSwitch0",
-                                                 :ext_management_system => vmware_ems,
                                                  :type                  => "ManageIQ::Providers::Vmware::InfraManager::HostVirtualSwitch")
       redhat_switch        = switch_stub.create!(:name => "vSwitch0", :uid_ems => "vSwitch0")
       physical_switch      = switch_stub.create!(:name                  => "Physical Switch", :uid_ems => "switch-1",
@@ -93,10 +92,10 @@ describe AddMissingEmsIdToSwitch do
       # All switches except ManageIQ::Providers::Vmware::InfraManager::HostVirtualSwitch must stay the same
       expect(host_switch.reload.ems_id).to eq(nil)
       expect(host_switch.reload.host_id).to eq(host_esx.id)
-      expect(host_switch_archived.reload.ems_id).to eq(vmware_ems.id)
+      expect(host_switch_archived.reload.ems_id).to eq(nil)
       expect(host_switch_archived.reload.host_id).to eq(host_esx_archived.id)
       expect(redhat_switch.reload.ems_id).to eq(nil)
-      expect(redhat_switch.reload.host_id).to eq(nil)
+      expect(redhat_switch.reload.host_id).to eq(host_redhat.id)
 
       # Lenovo must be unaffected, since the switch relation is done a different way
       expect(physical_switch.reload.ems_id).to eq(lenovo_ems.id)
