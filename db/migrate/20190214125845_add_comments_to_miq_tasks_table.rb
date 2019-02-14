@@ -10,7 +10,7 @@ class AddCommentsToMiqTasksTable < ActiveRecord::Migration[5.0]
     change_column_comment :miq_tasks, :miq_server_id, "The ID of the ManageIQ server where the task was executed."
     change_column_comment :miq_tasks, :name, "The name of the task. Typically doubles as a description."
     change_column_comment :miq_tasks, :pct_complete, "The current completion percentage of the task."
-    change_column_comment :miq_tasks, :results, "Deprecated."
+    change_column_comment :miq_tasks, :results, "Task execution result. Deprecated."
     change_column_comment :miq_tasks, :started_on, "The timestamp the task was actually started."
     change_column_comment :miq_tasks, :state, "The current state of the task - Initialized, Queued, Active, Finished, etc."
     change_column_comment :miq_tasks, :status, "The current status of the task - Ok, Warn, Error, Timeout, Expired, or Unknown."
