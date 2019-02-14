@@ -3,8 +3,8 @@ class AddCommentsToMiqTasksTable < ActiveRecord::Migration[5.0]
     change_table_comment :miq_tasks, "ManageIQ background tasks"
 
     change_column_comment :miq_tasks, :context_data, "Serialized metadata that may contain more detailed information about the task."
-    change_column_comment :miq_tasks, :created_on, "[builtin] The timestamp the task was added to the app inventory."
-    change_column_comment :miq_tasks, :id, "The internal database ID."
+    change_column_comment :miq_tasks, :created_on, "[builtin] The timestamp the record was added to the app inventory."
+    change_column_comment :miq_tasks, :id, "[builtin] The internal database ID."
     change_column_comment :miq_tasks, :identifier, "The resource this task is related to in 'class:id' format."
     change_column_comment :miq_tasks, :message, "Message associated with the task for logging or UI purposes."
     change_column_comment :miq_tasks, :miq_server_id, "The ID of the ManageIQ server where the task was executed."
@@ -14,7 +14,7 @@ class AddCommentsToMiqTasksTable < ActiveRecord::Migration[5.0]
     change_column_comment :miq_tasks, :started_on, "The timestamp the task was actually started."
     change_column_comment :miq_tasks, :state, "The current state of the task - Initialized, Queued, Active, Finished, etc."
     change_column_comment :miq_tasks, :status, "The current status of the task - Ok, Warn, Error, Timeout, Expired, or Unknown."
-    change_column_comment :miq_tasks, :updated_on, "[builtin] The timestamp the task was last updated within the appliance."
+    change_column_comment :miq_tasks, :updated_on, "[builtin] The timestamp the record was last updated within the appliance."
     change_column_comment :miq_tasks, :userid, "The userid that created the task, or 'system' if created by the appliance."
     change_column_comment :miq_tasks, :zone, "The zone in which the task should be executed, or any zone if null."
   end
