@@ -1,6 +1,6 @@
 require_migration
 
-describe RemoveSpecialCharactersFromAnsibleRabbitmqPassword do
+describe RemoveSpecialCharactersFromAnsibleRabbitmqPasswordTwo do
   let(:database_stub)       { migration_stub(:MiqDatabase) }
   let(:authentication_stub) { migration_stub(:Authentication) }
   let(:db_id)               { database_stub.first.id }
@@ -8,7 +8,7 @@ describe RemoveSpecialCharactersFromAnsibleRabbitmqPassword do
     {
       :name          => "Ansible Rabbitmq Authentication",
       :authtype      => "ansible_rabbitmq_auth",
-      :userid        => "ansible",
+      :userid        => "tower",
       :type          => "AuthUseridPassword",
       :resource_id   => db_id,
       :resource_type => "MiqDatabase"
