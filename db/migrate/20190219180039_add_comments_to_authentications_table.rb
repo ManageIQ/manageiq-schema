@@ -4,7 +4,7 @@ class AddCommentsToAuthenticationsTable < ActiveRecord::Migration[5.0]
 
     change_column_comment :authentications, :id, "[builtin] The internal record ID. This is the primary key."
     change_column_comment :authentications, :name, "Symbolic name for the authentication"
-    change_column_comment :authentications, :authtype, "The authentication type, e.g. ssh_keypair, default, etc."
+    change_column_comment :authentications, :authtype, "The authentication type or role, e.g. ssh_keypair, default, amqp, etc."
     change_column_comment :authentications, :userid, "The userid used in a userid + password authentication approach."
     change_column_comment :authentications, :password, "The password for the given userid, if any. Encrypted."
     change_column_comment :authentications, :resource_id, "The ID of the associated resource."
@@ -16,9 +16,9 @@ class AddCommentsToAuthenticationsTable < ActiveRecord::Migration[5.0]
     change_column_comment :authentications, :credentials_changed_on, "The timestamp that credentials were last changed."
     change_column_comment :authentications, :status, "The current status of the authentication, e.g. valid, invalid, incomplete, etc."
     change_column_comment :authentications, :status_details, "Detailed information regarding the current status."
-    change_column_comment :authentications, :type, "The STI type of the authentication."
+    change_column_comment :authentications, :type, "The STI type of the authentication, e.g. AuthKeyPair, AuthToken, AuthUseridPassword, etc."
     change_column_comment :authentications, :auth_key, "The private ssh key associated with the resource. Encrypted."
-    change_column_comment :authentications, :fingerprint
+    change_column_comment :authentications, :fingerprint, "The RSA key fingerprint for the SSH public key."
     change_column_comment :authentications, :service_account
     change_column_comment :authentications, :challenge
     change_column_comment :authentications, :login
