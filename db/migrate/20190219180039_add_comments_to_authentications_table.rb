@@ -1,6 +1,6 @@
 class AddCommentsToAuthenticationsTable < ActiveRecord::Migration[5.0]
   def up
-    change_table_comment :authentications, "Authentication information for various resources"
+    change_table_comment :authentications, "Authentication information for various resources."
 
     change_column_comment :authentications, :id, "[builtin] The internal record ID. This is the primary key."
     change_column_comment :authentications, :name, "Symbolic name for the authentication"
@@ -12,7 +12,7 @@ class AddCommentsToAuthenticationsTable < ActiveRecord::Migration[5.0]
     change_column_comment :authentications, :created_on, "[builtin] The timestamp the record was created."
     change_column_comment :authentications, :updated_on, "[builtin] The timestamp the record was last updated."
     change_column_comment :authentications, :last_valid_on, "The timestamp this authentication was last used successfully."
-    change_column_comment :authentications, :last_invalid_on "The timestamp this authentication last failed."
+    change_column_comment :authentications, :last_invalid_on, "The timestamp this authentication last failed."
     change_column_comment :authentications, :credentials_changed_on, "The timestamp that credentials were last changed."
     change_column_comment :authentications, :status, "The current status of the authentication, e.g. valid, invalid, incomplete, etc."
     change_column_comment :authentications, :status_details, "Detailed information regarding the current status."
