@@ -5,7 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-2
+## Unreleased as of Sprint 105 ending 2019-02-18
+
+### Added
+- Add comments to the conversion_hosts table [(#335)](https://github.com/ManageIQ/manageiq-schema/pull/335)
+- Add missing ems_id to switch [(#232)](https://github.com/ManageIQ/manageiq-schema/pull/232)
+
+### Fixed
+- Create a new migration to fix special characters in the rabbitmq password [(#337)](https://github.com/ManageIQ/manageiq-schema/pull/337)
+
+## Hammer-2 - Released 2019-02-07
 
 ### Fixed
 - Add a schema_migrations_ran [(#330)](https://github.com/ManageIQ/manageiq-schema/pull/330)
