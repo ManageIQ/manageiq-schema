@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 106 ending 2019-03-04
+
+### Added
+- Add the date of when inventory was collected [(#340)](https://github.com/ManageIQ/manageiq-schema/pull/340)
+- Use views for the metrics and metric_rollups tables [(#327)](https://github.com/ManageIQ/manageiq-schema/pull/327)
+
 ## Hammer-3
 
 ### Fixed
