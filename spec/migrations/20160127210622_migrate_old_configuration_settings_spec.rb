@@ -62,7 +62,8 @@ describe MigrateOldConfigurationSettings do
 
       migrate
 
-      expect(config_stub.first.settings).to eq new_settings
+      settings = adjust_role!(config_stub.first.settings)
+      expect(settings).to eq new_settings
     end
 
     it "with newer configuration data" do
@@ -70,7 +71,8 @@ describe MigrateOldConfigurationSettings do
 
       migrate
 
-      expect(config_stub.first.settings).to eq new_settings
+      settings = adjust_role!(config_stub.first.settings)
+      expect(settings).to eq new_settings
     end
 
     it "will not modify the server roles if the ui_worker key is present" do
@@ -78,7 +80,16 @@ describe MigrateOldConfigurationSettings do
 
       migrate
 
-      expect(config_stub.first.settings).to eq new_settings_with_web_server_worker_keys
+      settings = adjust_role!(config_stub.first.settings)
+      expect(settings).to eq new_settings_with_web_server_worker_keys
     end
+  end
+
+  # Adjust the value of role to avoid sporadic test failures on the order of the roles
+  def adjust_role!(settings)
+    if (role = settings.fetch_path(:settings, :role))
+      settings.store_path(:settings, :role, role.split(",").sort.join(","))
+    end
+    settings
   end
 end
