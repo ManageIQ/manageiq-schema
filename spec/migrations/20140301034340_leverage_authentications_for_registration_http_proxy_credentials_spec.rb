@@ -22,7 +22,7 @@ describe LeverageAuthenticationsForRegistrationHttpProxyCredentials do
       db   = db_stub.first
 
       expect(auth.userid).to eq("abc")
-      expect(ManageIQ::Password.decrypt(auth.password)).to eq("def")
+      expect(auth.password).to be_encrypted("def")
       expect { db.registration_http_proxy_username }.to raise_error(NoMethodError)
       expect { db.registration_http_proxy_password }.to raise_error(NoMethodError)
     end
@@ -49,8 +49,8 @@ describe LeverageAuthenticationsForRegistrationHttpProxyCredentials do
 
       # Expect data
       db = db.reload
-      expect(db.registration_http_proxy_username).to                       eq("abc")
-      expect(ManageIQ::Password.decrypt(db.registration_http_proxy_password)).to  eq("def")
+      expect(db.registration_http_proxy_username).to eq("abc")
+      expect(db.registration_http_proxy_password).to be_encrypted("def")
     end
   end
 end
