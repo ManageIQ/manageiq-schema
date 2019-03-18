@@ -75,7 +75,7 @@ class MoveAnsibleContainerSecretsIntoDatabase < ActiveRecord::Migration[5.0]
       decoded_data["rabbit-password"],
       decoded_data["admin-password"],
       ApplicationRecord.configurations[Rails.env]["password"]
-    ].map { |v| MiqPassword.encrypt(v) }
+    ].map { |v| ManageIQ::Password.encrypt(v) }
   rescue OpenURI::HTTPError
     nil
   end

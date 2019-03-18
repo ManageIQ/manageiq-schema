@@ -46,7 +46,7 @@ class MoveLogCollectionDepotSettingsToFileDepot < ActiveRecord::Migration[4.2]
       :authtype      => "default",
       :name          => "FileDepot",
       :userid        => settings[:username],
-      :password      => MiqPassword.try_encrypt(settings[:password]),
+      :password      => ManageIQ::Password.try_encrypt(settings[:password]),
       :resource_id   => depot.id,
       :resource_type => "FileDepot",
       :type          => "AuthUseridPassword"
