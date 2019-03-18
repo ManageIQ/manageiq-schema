@@ -3,7 +3,7 @@ require_migration
 describe EncryptMiqDatabaseRegistrationHttpProxyPasswordField do
   let(:miq_database_stub) { migration_stub(:MiqDatabase) }
   let(:password) { "password" }
-  let(:enc_pass) { MiqPassword.encrypt(password) }
+  let(:enc_pass) { ManageIQ::Password.encrypt(password) }
 
   migration_context :up do
     it "should encrypt unencrypted password" do
@@ -12,8 +12,7 @@ describe EncryptMiqDatabaseRegistrationHttpProxyPasswordField do
       migrate
 
       encrypted = miq_database_stub.first.registration_http_proxy_password
-      expect(MiqPassword.encrypted?(encrypted)).to be_truthy
-      expect(MiqPassword.decrypt(encrypted)).to eq password
+      expect(encrypted).to be_encrypted(password)
     end
   end
 

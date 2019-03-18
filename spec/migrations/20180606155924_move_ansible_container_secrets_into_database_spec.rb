@@ -94,7 +94,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
           :name          => "Ansible Secret Key",
           :authtype      => "ansible_secret_key",
           :type          => "AuthToken",
-          :auth_key      => MiqPassword.encrypt("notthekey"),
+          :auth_key      => ManageIQ::Password.encrypt("notthekey"),
           :resource_id   => db_id,
           :resource_type => "MiqDatabase"
         )
@@ -132,7 +132,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
       :type     => "AuthToken"
     )
     expect(auths.count).to eq(1)
-    MiqPassword.decrypt(auths.first.auth_key)
+    ManageIQ::Password.decrypt(auths.first.auth_key)
   end
 
   def ansible_rabbitmq_password
@@ -143,7 +143,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
       :type     => "AuthUseridPassword"
     )
     expect(auths.count).to eq(1)
-    MiqPassword.decrypt(auths.first.password)
+    ManageIQ::Password.decrypt(auths.first.password)
   end
 
   def ansible_admin_password
@@ -154,7 +154,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
       :type     => "AuthUseridPassword"
     )
     expect(auths.count).to eq(1)
-    MiqPassword.decrypt(auths.first.password)
+    ManageIQ::Password.decrypt(auths.first.password)
   end
 
   def ansible_database_password
@@ -165,6 +165,6 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
       :type     => "AuthUseridPassword"
     )
     expect(auths.count).to eq(1)
-    MiqPassword.decrypt(auths.first.password)
+    ManageIQ::Password.decrypt(auths.first.password)
   end
 end

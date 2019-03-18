@@ -12,7 +12,7 @@ class LeverageAuthenticationsForRegistrationHttpProxyCredentials < ActiveRecord:
           :authtype      => "registration_http_proxy",
           :name          => "MiqDatabase vmdb_development",
           :userid        => db.registration_http_proxy_username,
-          :password      => MiqPassword.try_encrypt(db.registration_http_proxy_password),
+          :password      => ManageIQ::Password.try_encrypt(db.registration_http_proxy_password),
           :resource_id   => db.id,
           :resource_type => "MiqDatabase",
           :type          => "AuthUseridPassword"
@@ -38,7 +38,7 @@ class LeverageAuthenticationsForRegistrationHttpProxyCredentials < ActiveRecord:
 
         db.update_attributes(
           :registration_http_proxy_username => auth.userid,
-          :registration_http_proxy_password => MiqPassword.try_encrypt(auth.password)
+          :registration_http_proxy_password => ManageIQ::Password.try_encrypt(auth.password)
         )
 
         auth.destroy
