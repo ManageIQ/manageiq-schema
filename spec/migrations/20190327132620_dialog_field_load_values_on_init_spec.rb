@@ -4,6 +4,8 @@ describe DialogFieldLoadValuesOnInit do
   let(:dialog_field_stub) { migration_stub(:DialogField) }
 
   migration_context :up do
+    let(:show_button) { nil }
+
     before do
       [true, false, nil].each do |load_values|
         dialog_field_stub.create!(:show_refresh_button => show_button, :load_values_on_init => load_values)
