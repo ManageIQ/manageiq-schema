@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 108 ending 2019-04-01
+
+### Added
+- Add zone to service templates. [(#358)](https://github.com/ManageIQ/manageiq-schema/pull/358)
+- Dialog field - set load_values_on_init to true where show_refresh_button was not enabled [(#357)](https://github.com/ManageIQ/manageiq-schema/pull/357)
+- Add state to services [(#356)](https://github.com/ManageIQ/manageiq-schema/pull/356)
+
 ## Unreleased as of Sprint 107 ending 2019-03-18
 
 ### Added
@@ -16,7 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Add the date of when inventory was collected [(#340)](https://github.com/ManageIQ/manageiq-schema/pull/340)
 - Use views for the metrics and metric_rollups tables [(#327)](https://github.com/ManageIQ/manageiq-schema/pull/327)
 
-## Hammer-3
+## Hammer-3 - Released 2019-03-06
 
 ### Fixed
 - Create a new migration to fix special characters in the rabbitmq password [(#337)](https://github.com/ManageIQ/manageiq-schema/pull/337)
