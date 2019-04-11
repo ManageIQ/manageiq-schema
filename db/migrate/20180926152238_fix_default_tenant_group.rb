@@ -36,8 +36,6 @@ class FixDefaultTenantGroup < ActiveRecord::Migration[5.0]
       create_with(
         :description      => "Tenant #{tenant.name} #{tenant.id} access",
         :sequence         => 1,
-        :guid             => SecureRandom.uuid,
-        :miq_user_role_id => role.try(:id)
       ).find_or_create_by!(
         :tenant_id  => tenant.id,
         :group_type => TENANT_GROUP,
