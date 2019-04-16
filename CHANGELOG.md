@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 109 ending 2019-04-15
+
+### Added
+- Create join table between service templates and tenants [(#349)](https://github.com/ManageIQ/manageiq-schema/pull/349)
+
 ## Unreleased as of Sprint 108 ending 2019-04-01
 
 ### Added
