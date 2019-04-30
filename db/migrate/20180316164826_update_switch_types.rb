@@ -19,8 +19,8 @@ class UpdateSwitchTypes < ActiveRecord::Migration[5.0]
   class Switch < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
 
-    has_many :hosts, :through => :host_switches, :class_name => "UpdateSwitchTypes::Host"
     has_many :host_switches,                     :class_name => "UpdateSwitchTypes::HostSwitch"
+    has_many :hosts, :through => :host_switches, :class_name => "UpdateSwitchTypes::Host"
   end
 
   def up

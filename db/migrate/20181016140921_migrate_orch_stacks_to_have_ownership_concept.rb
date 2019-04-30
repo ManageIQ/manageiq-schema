@@ -37,8 +37,7 @@ class MigrateOrchStacksToHaveOwnershipConcept < ActiveRecord::Migration[5.0]
 
     def self.create_tenant_group(tenant)
       create_with(
-        :description         => "Tenant access",
-        :default_tenant_role => MiqUserRole.default_tenant_role
+        :description         => "Tenant access"
       ).find_or_create_by!(
         :group_type => TENANT_GROUP,
         :tenant_id  => tenant.id,

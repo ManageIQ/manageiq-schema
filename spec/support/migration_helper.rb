@@ -84,7 +84,7 @@ module Spec
 
       def migrate_under_test
         Rails.logger.debug("========= migrate start ====================================")
-        described_class.migrate(migration_direction)
+        run_migrate
         Rails.logger.debug("========= migrate complete =================================")
       end
 
@@ -102,7 +102,13 @@ module Spec
       end
 
       def migrate_to(version)
-        suppress_migration_messages { ActiveRecord::Migrator.migrate('db/migrate', version) }
+        suppress_migration_messages do
+          if ActiveRecord::VERSION::STRING >= "5.2.0"
+            ActiveRecord::MigrationContext.new('db/migrate').migrate(version)
+          else
+            ActiveRecord::Migrator.migrate('db/migrate', version)
+          end
+        end
       end
 
       def this_migration_version
@@ -116,9 +122,25 @@ module Spec
         migrations[i - 1].version
       end
 
+      def run_migrate
+        if ActiveRecord::VERSION::STRING >= "5.2.0"
+          ActiveRecord::MigrationContext.new('db/migrate').run(migration_direction, this_migration_version)
+        else
+          described_class.migrate(migration_direction)
+        end
+      end
+
+      def schema_migrations
+        if ActiveRecord::VERSION::STRING >= "5.2.0"
+          ActiveRecord::MigrationContext.new('db/migrate').migrations
+        else
+          ActiveRecord::Migrator.migrations('db/migrate')
+        end
+      end
+
       def migrations_and_index
         name = described_class.name.underscore
-        migrations = ActiveRecord::Migrator.migrations('db/migrate')
+        migrations = schema_migrations
         i = migrations.index { |m| m.filename.ends_with? "#{name}.rb" }
         raise "Unknown migration for #{described_class}" if i.nil?
         return migrations, i

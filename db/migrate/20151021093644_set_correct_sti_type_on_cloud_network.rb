@@ -15,7 +15,7 @@ class SetCorrectStiTypeOnCloudNetwork < ActiveRecord::Migration[4.2]
     self.inheritance_column = :_type_disabled
 
     belongs_to :ext_management_system,
-               :foreign_key => :ems_id, :class_name => SetCorrectStiTypeOnCloudNetwork::BaseManager
+               :foreign_key => :ems_id, :class_name => "SetCorrectStiTypeOnCloudNetwork::BaseManager"
   end
 
   def up
