@@ -13,6 +13,10 @@ module ManageIQ
         end
       end
 
+      def self.vmdb_plugin?
+        true
+      end
+
       def self.plugin_name
         _('Schema')
       end
