@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 112 ending 2019-05-27
+
+### Added
+- Add columns of price and currency to services. [(#373)](https://github.com/ManageIQ/manageiq-schema/pull/373)
+- Add price to service templates. [(#367)](https://github.com/ManageIQ/manageiq-schema/pull/367)
+
 ## Unreleased as of Sprint 109 ending 2019-04-15
 
 ### Added
