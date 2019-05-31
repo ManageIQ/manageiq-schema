@@ -1,4 +1,4 @@
-class AddGuidToMiqDatabases < ActiveRecord::Migration[5.2]
+class AddGuidToMiqDatabases < ActiveRecord::Migration[5.0]
   class MiqDatabase < ActiveRecord::Base
   end
 
