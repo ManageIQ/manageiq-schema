@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 113 ending 2019-06-10
+
+### Added
+- Rename service state to lifecycle_state. [(#374)](https://github.com/ManageIQ/manageiq-schema/pull/374)
+
 ## Unreleased as of Sprint 112 ending 2019-05-27
 
 ### Added
