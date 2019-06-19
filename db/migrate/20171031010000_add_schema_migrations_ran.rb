@@ -10,7 +10,9 @@ class AddSchemaMigrationsRan < ActiveRecord::Migration[5.0]
 
     pglogical = ActiveRecord::Base.connection.pglogical
     if pglogical.enabled? && pglogical.replication_sets.include?('miq')
-      pglogical.replication_set_add_table('miq', "schema_migrations_ran", true)
+      # don't do an initial data sync for this table
+      # we want the data do come in as it's replicated rather than in bulk
+      pglogical.replication_set_add_table('miq', "schema_migrations_ran", false)
     end
   end
 
