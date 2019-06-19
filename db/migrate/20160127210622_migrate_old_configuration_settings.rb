@@ -58,7 +58,7 @@ class MigrateOldConfigurationSettings < ActiveRecord::Migration[4.2]
     return if roles.include?('user_interface')
 
     roles << 'user_interface'
-    config.store_path(:server, :role, roles.join(','))
+    config.store_path(:server, :role, roles.sort.join(','))
   end
 
   def update_old_web_service_worker_settings!(config)
@@ -68,7 +68,7 @@ class MigrateOldConfigurationSettings < ActiveRecord::Migration[4.2]
     return if roles.include?('web_services')
 
     roles << 'web_services'
-    config.store_path(:server, :role, roles.join(','))
+    config.store_path(:server, :role, roles.sort.join(','))
   end
 
   def update_old_event_catcher_settings!(config)
