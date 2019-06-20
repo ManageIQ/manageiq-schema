@@ -76,7 +76,7 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
   def awx_credential_info(awx_id)
     cred_info = awx_connection.async_exec("SELECT inputs FROM main_credential WHERE id = $1::BIGINT", [awx_id]).first
     # in case there is no matching credential on the awx side
-    return unless cred_info
+    return {} unless cred_info
 
     inputs = cred_info["inputs"]
     # in case the inputs column is NULL
