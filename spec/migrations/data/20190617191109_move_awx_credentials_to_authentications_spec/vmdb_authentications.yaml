@@ -1,0 +1,292 @@
+---
+- initial:
+    name: CFME Default Credential
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential
+    manager_ref: '2'
+    options:
+      :ssh_key_data: ''
+      :ssh_key_unlock: ''
+      :become_method: ''
+      :become_username: ''
+      :become_password: ''
+  migrated:
+    name: CFME Default Credential
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential
+    options:
+      :become_method: ""
+- initial:
+    name: machine
+    userid: machine
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential
+    manager_ref: '3'
+    options:
+      :ssh_key_data: "$encrypted$"
+      :ssh_key_unlock: ''
+      :become_method: sudo
+      :become_username: machine
+      :become_password: "$encrypted$"
+  migrated:
+    name: machine
+    userid: machine
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential
+    password: machine
+    auth_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEAlDTKmb+czZIFQF1/9z5NWTFIlGWeTAfFg1cFhOsUVmPDwEww
+      ojsT5BK8yRPJz4ZbMECEPdkmNeuUXg3JG4OqOjyeblUIlrNPpYPEQN9qhOcbRQc0
+      vbmzdQYfVA3L+8FkrfMnvUBLLxL/t/8+s/EzOrXim4mrhIaUFM77ufREmiPKRIC+
+      J8leYBAHfnz5YqWeEWRqd8wgVgAiGm8imJEzkV2NV7je1fTW+tKloI4EGgTPXO/+
+      c5qoaDhjWZlbcCcVhEz/Icw2tk7CoXjz8zY2ejgPdxy1ls7FEwTJBAooWofUwg7i
+      qiBU/6YdJyA9ufT4Fle7+Rt+OcenhZMU7FpWLQIDAQABAoIBAQCSt0gxuDyUTQ+h
+      zm3V5vlPaLh/H7H7dl4TTVyLXuS9OPoaLdKfZ3ijeeEl9c78//bZ56SCTavECTjR
+      ezgxYsBr8oKsmsVr2oroQW9RAVtDwj1+skmF4IZFPRBad2YODj+K7IHUmgdTzK0W
+      CzqZjBe48UIp07nV8hw6FUWhqq0XIQF9Ztp09E5Wm9lyrhzX5VcHWVsuL/ha2kfI
+      8ZP7YQcpWIkdR6C5s8wyoMWe/IPruWBd0TJUGRfB6kFvkfBIXfDHFXIeYnsV8bUX
+      PT3iIcjV4aklGH8Disc4Ji2X2iVQipgrRPDzbXJAWSsJl3jWEXPkwDJH8OsjKhkz
+      CquBMOIBAoGBAMMY+KoALRohGEco3ts4/Ar8ge3CeEERI0RqBa5pplYEXnG75FIw
+      bWmnB1G4R0hJ9aUTbtMzp9UYIqSWqimQUEvPxmGY2bBppUoXeXiwJHKTNs0dcGDl
+      Qe+aDsQMCDnlMBqztRHNnQG0DA2zuD9tJ1KVne0Y9XetsABOlYGxqpntAoGBAMJ4
+      i6+RQw+q6QJi3Jk7/H1GJLZmEP7VKyQ+iWVb210qopdaEsqff2bMlta+0AXH8QCr
+      VxLoFZC//Vy9KPqLUVGAiscHxeglvKC+Y9AFjfw4Fy2pvn9G9xXPZs0cZ778o5JK
+      RruXeXpOEv7oH3t/DoZMUQJ6pfA+r3UI3yqFsiVBAoGACN8Fz5Uad+mxVOsC1y0M
+      KOO6dLk3Bp5k4COCBqA/NAIW2U0V4LbbAsbZilm6xAq45LyxeWEL7KCgUqOXMTSi
+      sg/MkXuFyoPDRE808svvnFYdU85W4dEK4n461adGaHuHaG9reFfFH+Kz+ZuGcTvh
+      YdvzxmgwITUAn8LzAWa2vzECgYBvye26Qc2D7yI8jenzaAkvVif6ddelNZK0JgLD
+      Mjd6aezHBi8xLNiGlmrLDSr1d8bxNI08QA9Ngx+4tMAergFT0Yl0+eHpHfA9ktQ7
+      m0XQS8n/JMltzrRwZCXbGE4G+qFokavxYBSjmsfOok6eph4KU0pqG2jSHqarpyrp
+      /aq3QQKBgEVDEEx8sQ0Iriauub2LuaBPR3Xl9NxWlKockOcW72NZ4zTDYE+dpKRj
+      JTLz+UNUpRlXh9EQenR0sN0EQ5Wlp82q6ujc/xD2lRVRpVemNUPzZ4mU0bmSS8Vk
+      oT5EHG0IIamNgLgwNgjyWcYwcP5d/MFoMrB6LtVXwkJBbh9V5w6J
+      -----END RSA PRIVATE KEY-----
+    become_username: machine
+    become_password: machine
+    options:
+      :become_method: sudo
+- initial:
+    name: network
+    userid: network
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential
+    manager_ref: '4'
+    options:
+      :authorize: true
+      :authorize_password: "$encrypted$"
+      :ssh_key_data: "$encrypted$"
+      :ssh_key_unlock: ''
+  migrated:
+    name: network
+    password: network
+    userid: network
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::NetworkCredential
+    auth_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEAlDTKmb+czZIFQF1/9z5NWTFIlGWeTAfFg1cFhOsUVmPDwEww
+      ojsT5BK8yRPJz4ZbMECEPdkmNeuUXg3JG4OqOjyeblUIlrNPpYPEQN9qhOcbRQc0
+      vbmzdQYfVA3L+8FkrfMnvUBLLxL/t/8+s/EzOrXim4mrhIaUFM77ufREmiPKRIC+
+      J8leYBAHfnz5YqWeEWRqd8wgVgAiGm8imJEzkV2NV7je1fTW+tKloI4EGgTPXO/+
+      c5qoaDhjWZlbcCcVhEz/Icw2tk7CoXjz8zY2ejgPdxy1ls7FEwTJBAooWofUwg7i
+      qiBU/6YdJyA9ufT4Fle7+Rt+OcenhZMU7FpWLQIDAQABAoIBAQCSt0gxuDyUTQ+h
+      zm3V5vlPaLh/H7H7dl4TTVyLXuS9OPoaLdKfZ3ijeeEl9c78//bZ56SCTavECTjR
+      ezgxYsBr8oKsmsVr2oroQW9RAVtDwj1+skmF4IZFPRBad2YODj+K7IHUmgdTzK0W
+      CzqZjBe48UIp07nV8hw6FUWhqq0XIQF9Ztp09E5Wm9lyrhzX5VcHWVsuL/ha2kfI
+      8ZP7YQcpWIkdR6C5s8wyoMWe/IPruWBd0TJUGRfB6kFvkfBIXfDHFXIeYnsV8bUX
+      PT3iIcjV4aklGH8Disc4Ji2X2iVQipgrRPDzbXJAWSsJl3jWEXPkwDJH8OsjKhkz
+      CquBMOIBAoGBAMMY+KoALRohGEco3ts4/Ar8ge3CeEERI0RqBa5pplYEXnG75FIw
+      bWmnB1G4R0hJ9aUTbtMzp9UYIqSWqimQUEvPxmGY2bBppUoXeXiwJHKTNs0dcGDl
+      Qe+aDsQMCDnlMBqztRHNnQG0DA2zuD9tJ1KVne0Y9XetsABOlYGxqpntAoGBAMJ4
+      i6+RQw+q6QJi3Jk7/H1GJLZmEP7VKyQ+iWVb210qopdaEsqff2bMlta+0AXH8QCr
+      VxLoFZC//Vy9KPqLUVGAiscHxeglvKC+Y9AFjfw4Fy2pvn9G9xXPZs0cZ778o5JK
+      RruXeXpOEv7oH3t/DoZMUQJ6pfA+r3UI3yqFsiVBAoGACN8Fz5Uad+mxVOsC1y0M
+      KOO6dLk3Bp5k4COCBqA/NAIW2U0V4LbbAsbZilm6xAq45LyxeWEL7KCgUqOXMTSi
+      sg/MkXuFyoPDRE808svvnFYdU85W4dEK4n461adGaHuHaG9reFfFH+Kz+ZuGcTvh
+      YdvzxmgwITUAn8LzAWa2vzECgYBvye26Qc2D7yI8jenzaAkvVif6ddelNZK0JgLD
+      Mjd6aezHBi8xLNiGlmrLDSr1d8bxNI08QA9Ngx+4tMAergFT0Yl0+eHpHfA9ktQ7
+      m0XQS8n/JMltzrRwZCXbGE4G+qFokavxYBSjmsfOok6eph4KU0pqG2jSHqarpyrp
+      /aq3QQKBgEVDEEx8sQ0Iriauub2LuaBPR3Xl9NxWlKockOcW72NZ4zTDYE+dpKRj
+      JTLz+UNUpRlXh9EQenR0sN0EQ5Wlp82q6ujc/xD2lRVRpVemNUPzZ4mU0bmSS8Vk
+      oT5EHG0IIamNgLgwNgjyWcYwcP5d/MFoMrB6LtVXwkJBbh9V5w6J
+      -----END RSA PRIVATE KEY-----
+    become_password: network
+    options:
+      :authorize: true
+- initial:
+    name: scm
+    userid: scm
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential
+    manager_ref: '5'
+    options:
+      :ssh_key_unlock: ''
+      :ssh_key_data: "$encrypted$"
+  migrated:
+    name: scm
+    password: scm
+    userid: scm
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::ScmCredential
+    auth_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEAlDTKmb+czZIFQF1/9z5NWTFIlGWeTAfFg1cFhOsUVmPDwEww
+      ojsT5BK8yRPJz4ZbMECEPdkmNeuUXg3JG4OqOjyeblUIlrNPpYPEQN9qhOcbRQc0
+      vbmzdQYfVA3L+8FkrfMnvUBLLxL/t/8+s/EzOrXim4mrhIaUFM77ufREmiPKRIC+
+      J8leYBAHfnz5YqWeEWRqd8wgVgAiGm8imJEzkV2NV7je1fTW+tKloI4EGgTPXO/+
+      c5qoaDhjWZlbcCcVhEz/Icw2tk7CoXjz8zY2ejgPdxy1ls7FEwTJBAooWofUwg7i
+      qiBU/6YdJyA9ufT4Fle7+Rt+OcenhZMU7FpWLQIDAQABAoIBAQCSt0gxuDyUTQ+h
+      zm3V5vlPaLh/H7H7dl4TTVyLXuS9OPoaLdKfZ3ijeeEl9c78//bZ56SCTavECTjR
+      ezgxYsBr8oKsmsVr2oroQW9RAVtDwj1+skmF4IZFPRBad2YODj+K7IHUmgdTzK0W
+      CzqZjBe48UIp07nV8hw6FUWhqq0XIQF9Ztp09E5Wm9lyrhzX5VcHWVsuL/ha2kfI
+      8ZP7YQcpWIkdR6C5s8wyoMWe/IPruWBd0TJUGRfB6kFvkfBIXfDHFXIeYnsV8bUX
+      PT3iIcjV4aklGH8Disc4Ji2X2iVQipgrRPDzbXJAWSsJl3jWEXPkwDJH8OsjKhkz
+      CquBMOIBAoGBAMMY+KoALRohGEco3ts4/Ar8ge3CeEERI0RqBa5pplYEXnG75FIw
+      bWmnB1G4R0hJ9aUTbtMzp9UYIqSWqimQUEvPxmGY2bBppUoXeXiwJHKTNs0dcGDl
+      Qe+aDsQMCDnlMBqztRHNnQG0DA2zuD9tJ1KVne0Y9XetsABOlYGxqpntAoGBAMJ4
+      i6+RQw+q6QJi3Jk7/H1GJLZmEP7VKyQ+iWVb210qopdaEsqff2bMlta+0AXH8QCr
+      VxLoFZC//Vy9KPqLUVGAiscHxeglvKC+Y9AFjfw4Fy2pvn9G9xXPZs0cZ778o5JK
+      RruXeXpOEv7oH3t/DoZMUQJ6pfA+r3UI3yqFsiVBAoGACN8Fz5Uad+mxVOsC1y0M
+      KOO6dLk3Bp5k4COCBqA/NAIW2U0V4LbbAsbZilm6xAq45LyxeWEL7KCgUqOXMTSi
+      sg/MkXuFyoPDRE808svvnFYdU85W4dEK4n461adGaHuHaG9reFfFH+Kz+ZuGcTvh
+      YdvzxmgwITUAn8LzAWa2vzECgYBvye26Qc2D7yI8jenzaAkvVif6ddelNZK0JgLD
+      Mjd6aezHBi8xLNiGlmrLDSr1d8bxNI08QA9Ngx+4tMAergFT0Yl0+eHpHfA9ktQ7
+      m0XQS8n/JMltzrRwZCXbGE4G+qFokavxYBSjmsfOok6eph4KU0pqG2jSHqarpyrp
+      /aq3QQKBgEVDEEx8sQ0Iriauub2LuaBPR3Xl9NxWlKockOcW72NZ4zTDYE+dpKRj
+      JTLz+UNUpRlXh9EQenR0sN0EQ5Wlp82q6ujc/xD2lRVRpVemNUPzZ4mU0bmSS8Vk
+      oT5EHG0IIamNgLgwNgjyWcYwcP5d/MFoMrB6LtVXwkJBbh9V5w6J
+      -----END RSA PRIVATE KEY-----
+- initial:
+    name: vault
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential
+    manager_ref: '6'
+    options:
+      :vault_password: "$encrypted$"
+  migrated:
+    name: vault
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential
+    password: vault
+- initial:
+    name: amazon
+    userid: amazon
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::AmazonCredential
+    manager_ref: '7'
+    options:
+      :security_token: "$encrypted$"
+  migrated:
+    name: amazon
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::AmazonCredential
+    password: amazon
+    userid: amazon
+    auth_key: amazon
+- initial:
+    name: azure
+    userid: azure
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::AzureCredential
+    manager_ref: '8'
+    options:
+      :subscription: azure
+      :tenant: azure
+      :secret: "$encrypted$"
+      :client: azure
+  migrated:
+    name: azure
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::AzureCredential
+    auth_key: azure
+    password: azure
+    userid: azure
+    options:
+      :client: azure
+      :tenant: azure
+      :subscription: azure
+- initial:
+    name: google
+    userid: google
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::GoogleCredential
+    manager_ref: '9'
+    options:
+      :ssh_key_data: "$encrypted$"
+      :project: google
+  migrated:
+    name: google
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::GoogleCredential
+    userid: google
+    auth_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEAlDTKmb+czZIFQF1/9z5NWTFIlGWeTAfFg1cFhOsUVmPDwEww
+      ojsT5BK8yRPJz4ZbMECEPdkmNeuUXg3JG4OqOjyeblUIlrNPpYPEQN9qhOcbRQc0
+      vbmzdQYfVA3L+8FkrfMnvUBLLxL/t/8+s/EzOrXim4mrhIaUFM77ufREmiPKRIC+
+      J8leYBAHfnz5YqWeEWRqd8wgVgAiGm8imJEzkV2NV7je1fTW+tKloI4EGgTPXO/+
+      c5qoaDhjWZlbcCcVhEz/Icw2tk7CoXjz8zY2ejgPdxy1ls7FEwTJBAooWofUwg7i
+      qiBU/6YdJyA9ufT4Fle7+Rt+OcenhZMU7FpWLQIDAQABAoIBAQCSt0gxuDyUTQ+h
+      zm3V5vlPaLh/H7H7dl4TTVyLXuS9OPoaLdKfZ3ijeeEl9c78//bZ56SCTavECTjR
+      ezgxYsBr8oKsmsVr2oroQW9RAVtDwj1+skmF4IZFPRBad2YODj+K7IHUmgdTzK0W
+      CzqZjBe48UIp07nV8hw6FUWhqq0XIQF9Ztp09E5Wm9lyrhzX5VcHWVsuL/ha2kfI
+      8ZP7YQcpWIkdR6C5s8wyoMWe/IPruWBd0TJUGRfB6kFvkfBIXfDHFXIeYnsV8bUX
+      PT3iIcjV4aklGH8Disc4Ji2X2iVQipgrRPDzbXJAWSsJl3jWEXPkwDJH8OsjKhkz
+      CquBMOIBAoGBAMMY+KoALRohGEco3ts4/Ar8ge3CeEERI0RqBa5pplYEXnG75FIw
+      bWmnB1G4R0hJ9aUTbtMzp9UYIqSWqimQUEvPxmGY2bBppUoXeXiwJHKTNs0dcGDl
+      Qe+aDsQMCDnlMBqztRHNnQG0DA2zuD9tJ1KVne0Y9XetsABOlYGxqpntAoGBAMJ4
+      i6+RQw+q6QJi3Jk7/H1GJLZmEP7VKyQ+iWVb210qopdaEsqff2bMlta+0AXH8QCr
+      VxLoFZC//Vy9KPqLUVGAiscHxeglvKC+Y9AFjfw4Fy2pvn9G9xXPZs0cZ778o5JK
+      RruXeXpOEv7oH3t/DoZMUQJ6pfA+r3UI3yqFsiVBAoGACN8Fz5Uad+mxVOsC1y0M
+      KOO6dLk3Bp5k4COCBqA/NAIW2U0V4LbbAsbZilm6xAq45LyxeWEL7KCgUqOXMTSi
+      sg/MkXuFyoPDRE808svvnFYdU85W4dEK4n461adGaHuHaG9reFfFH+Kz+ZuGcTvh
+      YdvzxmgwITUAn8LzAWa2vzECgYBvye26Qc2D7yI8jenzaAkvVif6ddelNZK0JgLD
+      Mjd6aezHBi8xLNiGlmrLDSr1d8bxNI08QA9Ngx+4tMAergFT0Yl0+eHpHfA9ktQ7
+      m0XQS8n/JMltzrRwZCXbGE4G+qFokavxYBSjmsfOok6eph4KU0pqG2jSHqarpyrp
+      /aq3QQKBgEVDEEx8sQ0Iriauub2LuaBPR3Xl9NxWlKockOcW72NZ4zTDYE+dpKRj
+      JTLz+UNUpRlXh9EQenR0sN0EQ5Wlp82q6ujc/xD2lRVRpVemNUPzZ4mU0bmSS8Vk
+      oT5EHG0IIamNgLgwNgjyWcYwcP5d/MFoMrB6LtVXwkJBbh9V5w6J
+      -----END RSA PRIVATE KEY-----
+    options:
+      :project: google
+- initial:
+    name: openstack
+    userid: openstack
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::OpenstackCredential
+    manager_ref: '10'
+    options:
+      :host: openstack
+      :project: openstack
+      :domain: openstack
+  migrated:
+    name: openstack
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::OpenstackCredential
+    password: opnstack
+    userid: openstack
+    options:
+      :host: openstack
+      :domain: openstack
+      :project: openstack
+- initial:
+    name: rhv
+    userid: rhv
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::RhvCredential
+    manager_ref: '11'
+    options:
+      :host: rhv
+  migrated:
+    name: rhv
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::RhvCredential
+    password: rhv
+    userid: rhv
+    options:
+      :host: rhv
+- initial:
+    name: vmware
+    userid: vmware
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VmwareCredential
+    manager_ref: '12'
+    options:
+      :host: vmware
+  migrated:
+    name: vmware
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VmwareCredential
+    password: vmware
+    userid: vmware
+    options:
+      :host: vmware
+- initial:
+    name: utf8test
+    userid: こにちわ
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential
+    manager_ref: '13'
+  migrated:
+    name: utf8test
+    userid: こにちわ
+    type: ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential
+    password: äèíôúñæþßこにちわ密码şŞ
