@@ -78,11 +78,7 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
     # in case there is no matching credential on the awx side
     return {} unless cred_info
 
-    inputs = cred_info["inputs"]
-    # in case the inputs column is NULL
-    return unless inputs
-
-    JSON.parse(inputs)
+    JSON.parse(cred_info["inputs"])
   end
 
   def awx_connection
