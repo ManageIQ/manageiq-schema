@@ -50,6 +50,7 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
       end
     end
   rescue PG::ConnectionBad
+    say("awx database is unreachable, credentials cannot be migrated")
   end
 
   private
