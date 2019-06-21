@@ -109,6 +109,8 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
   end
 
   def decrypted_awx_value(field, value, pk)
+    require 'awesome_spawn'
+
     return value unless value.include?("$encrypted$")
 
     env = {
