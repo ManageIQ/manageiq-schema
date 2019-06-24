@@ -1,5 +1,6 @@
 class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
   class Authentication < ActiveRecord::Base
+    include ActiveRecord::IdRegions
     self.inheritance_column = :_type_disabled
     serialize :options
   end
@@ -70,7 +71,7 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
       ManageIQ::Providers::EmbeddedAnsible::AutomationManager::RhvCredential
       ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VmwareCredential
     ]
-    Authentication.where(:type => types)
+    Authentication.in_my_region.where(:type => types)
   end
 
   def awx_credential_info(awx_id)
