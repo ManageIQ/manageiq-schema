@@ -108,6 +108,24 @@ describe MoveAwxCredentialsToAuthentications do
         expect(auth.reload.options).to be_nil
       end
 
+      it "migrates credentials with nil options" do
+        auth = authentication.create!(
+          :name        => "machine",
+          :userid      => "machine",
+          :type        => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential",
+          :manager_ref => "3"
+        )
+
+        stub_awx_cred_for_id(awx_conn, "3", [{"inputs" => {"password" => "qwerty"}.to_json}])
+
+        migrate
+
+        auth.reload
+
+        expect(auth.options).to be_nil
+        expect(ManageIQ::Password.decrypt(auth.password)).to eq("qwerty")
+      end
+
       it "migrates options fields from the awx database" do
         auth = authentication.create!(
           :name        => "machine",

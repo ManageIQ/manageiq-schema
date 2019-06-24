@@ -87,7 +87,7 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
   end
 
   def update_authentication(auth, awx_info)
-    auth.options = auth.options.slice(*OPTIONS_FIELDS.map(&:to_sym)).presence
+    auth.options = auth.options.slice(*OPTIONS_FIELDS.map(&:to_sym)).presence if auth.options
 
     awx_info.each do |k, v|
       if OPTIONS_FIELDS.include?(k)
