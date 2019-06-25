@@ -169,6 +169,20 @@ describe MoveAwxCredentialsToAuthentications do
         expect(auth.options).to eq(expected_options)
       end
 
+      it "sets the manager ref to the authentication id" do
+        auth = authentication.create!(
+          :name        => "machine",
+          :userid      => "machine",
+          :type        => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::MachineCredential"
+        ).tap { |a| a.update!(:manager_ref => (a.id + 10).to_s) }
+
+        stub_awx_cred_for_id(awx_conn, (auth.id + 10).to_s, [{"inputs" => {}.to_json}])
+
+        migrate
+
+        expect(auth.reload.manager_ref).to eq(auth.id.to_s)
+      end
+
       it "migrates real data" do
         # load the initial set of authentication records
         auths = YAML.load_file(data_dir.join("vmdb_authentications.yaml"))

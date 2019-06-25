@@ -106,6 +106,7 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
         say("Unknown credential field #{k}, ignoring")
       end
     end
+    auth.manager_ref = auth.id.to_s
     auth.save!
   end
 
