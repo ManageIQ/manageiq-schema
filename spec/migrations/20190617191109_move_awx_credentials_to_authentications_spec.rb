@@ -4,6 +4,10 @@ require 'json'
 require 'yaml'
 
 describe MoveAwxCredentialsToAuthentications do
+  let(:script_path) do
+    File.expand_path(Pathname.new(__dir__).join("..", "..", "db", "migrate", "data", File.basename(__FILE__, "_spec.rb"), "standalone_decrypt.py"))
+  end
+
   let(:data_dir) { Pathname.new(__dir__).join("data", File.basename(__FILE__, ".rb")) }
 
   let(:authentication) { migration_stub(:Authentication) }
@@ -213,10 +217,10 @@ describe MoveAwxCredentialsToAuthentications do
   def expect_credential_decrypts
     stubs = YAML.load_file(data_dir.join("awesome_stubs.yaml"))
     stubs.each do |h|
-      result = AwesomeSpawn::CommandResult.new("python3 standalone_decrypt.py", h[:output], "", 0)
+      result = AwesomeSpawn::CommandResult.new("python3 #{script_path}", h[:output], "", 0)
       expect(AwesomeSpawn).to receive(:run).with(
         "python3",
-        :params => array_including(/standalone_decrypt\.py/),
+        :params => [script_path],
         :env    => h[:env]
       ).and_return(result)
     end
