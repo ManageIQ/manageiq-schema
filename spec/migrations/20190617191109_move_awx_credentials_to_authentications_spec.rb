@@ -16,18 +16,38 @@ describe MoveAwxCredentialsToAuthentications do
   let(:secret_key)      { "ecad5764714a254a619d74ccc1c4387b" }
   let(:miq_database_id) { miq_database.create.id }
 
-  before do
-    authentication.create!(
-      :name          => "Ansible Secret Key",
-      :authtype      => "ansible_secret_key",
-      :resource_id   => miq_database_id,
-      :resource_type => "MiqDatabase",
-      :type          => "AuthToken",
-      :auth_key      => ManageIQ::Password.encrypt(secret_key)
-    )
-  end
-
   migration_context :up do
+    before do
+      authentication.create!(
+        :name          => "Ansible Secret Key",
+        :authtype      => "ansible_secret_key",
+        :resource_id   => miq_database_id,
+        :resource_type => "MiqDatabase",
+        :type          => "AuthToken",
+        :auth_key      => ManageIQ::Password.encrypt(secret_key)
+      )
+    end
+
+    describe "standalone_decrpyt.py" do
+      before do
+        unless AwesomeSpawn.run("python3", :params => [:c => "from django.utils.encoding import smart_str, smart_bytes"]).success?
+          skip "This spec requires python3 and django to be installed"
+        end
+      end
+
+      it "decrypts the things correctly" do
+        stubs = YAML.load_file(data_dir.join("awesome_stubs.yaml"))
+        stubs.each do |h|
+          result = AwesomeSpawn.run(
+            "python3",
+            :params => [script_path],
+            :env    => h[:env]
+          )
+          expect(result.output).to eq(h[:output])
+        end
+      end
+    end
+
     it "doesn't try to migrate authentications without a manager ref" do
       auth = authentication.create!(
         :name => "no_manager_ref",
