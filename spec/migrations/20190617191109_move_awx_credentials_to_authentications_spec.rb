@@ -1,5 +1,4 @@
 require_migration
-require 'awesome_spawn'
 require 'json'
 require 'yaml'
 
@@ -28,22 +27,56 @@ describe MoveAwxCredentialsToAuthentications do
       )
     end
 
-    describe "standalone_decrpyt.py" do
-      before do
-        unless AwesomeSpawn.run("python3", :params => [:c => "from django.utils.encoding import smart_str, smart_bytes"]).success?
-          skip "This spec requires python3 and django to be installed"
-        end
+    describe "AnsibleDecrypt" do
+      let(:cases) do
+        [
+          {
+            :value => "test",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1hsODNWMUN6cTktanZfZm5GMG5tbXNYZXBXQzBBVWVaWXBkZUx1bUFPVXhxZUo4cHcxdjlFeWZqNi1EX3FiZTRGa2dCUTlsMHE3UnBEeG52Y1JSa2V4amc9PQ=="
+          },
+          {
+            :value => "password",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1hsMTgycWViNl9PajJnSk54ME93bklRZXgwRXNjWjAyMDB5dE5ESGRlSEhoR3pJM2Q4Z1R4OXo4N2JmZXRlT19FaENtWHViRXBRTDFKa1A5c09wVHAzbGc9PQ=="
+          },
+          {
+            :value => "ca$hcOw",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1hsQ3BkXzFfVDgweUotVlhDcmpSRWlYV1BIU0RTdTNSR1BWanRYRVhWV0tMVzRFcTNSU0tPT0hmRUNIT0lXZ09hUk1IY2x6Sm1SYW13N1RDYks2TUd5MWc9PQ=="
+          },
+          {
+            :value => "Tw45!&zQ",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1hsOXo0MDlKenRtM0RjUkx5blo2TlFlOVBqcE50c1N4Z2Zka3daSzgyVVJNVUlGWi04cU5TTjBZVElGbkw4SHNSb1JoTDVlMS04SUVSaG5LbXIwRmYtaUE9PQ=="
+          },
+          {
+            :value => "`~!@\#$%^&*()_+-=[]{}\\|;:\"'<>,./?",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1hsOXhvRk9GQ21SYWVHbmdESXl3aHk0bUxfaUpBRks3U0k3ZWx4U3hPcGxUd29nSUIzTlhoRmNxWVpia2lwN1U4RF9ubVpFUDZPeldGbGN2blZMeXM2SHNQWFZEWnRjdEtyRTdPVVVBSTFVaWRwcGRGX0hZNmtqNVU1eEthbXlFQlo="
+          },
+          {
+            :value => "abc\t\n\vzabc",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1hsU3A0OXF5d1FrMlViU2N0ZDNIVEh3OVF5THdaMFpaTlFhMERSaDlnVk5EcUtZVnZ0TlhielJ1cUlfTVRDY0pPVHNONkdjcGN4bTFZRXo2bFV2WHk4aXc9PQ=="
+          },
+          {
+            :value => "äèíôúñæþß",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1hsVHN2dy1wY2RKQ21fWFlWcGh4UmRac1VUVkE0X2dLT2pZYkdmaW1tN0JKTU8xSXV0eW9qUjdsb2ZvVWFVczZTVGVzWWhFRnA3bTZCbzBBNzBnSnpwUG5jZHBNTGEwYUQ0RGRXRkwyaGd0ZUk9"
+          },
+          {
+            :value => "\343\201\223\343\201\253\343\201\241\343\202\217",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1htSGw5bEFsdXQ5LVE3anFpdm55d0ktYmpSWDNwV0ZwMWNWdmhzckFrdV9Obk02bzQwTDJKRVlwaDgwdDZMYU4tR2p6OVJ0T3UtX1JCQ3lqbjY0QmNLb2c9PQ=="
+          },
+          {
+            :value => "\345\257\206\347\240\201",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1htSGdGazNOWkEwMzl3VlJQSlB5bHJIc3FSRWN1Z0Y0OFJJemRBVndLZGpjRzZ2aHZhMW5STkljbmlPa1h6cWQyVlkzRjd3SEZkS0JsRDZWNFNJNFpWaFE9PQ=="
+          },
+          {
+            :value => "şŞ",
+            :encrypted => "$encrypted$UTF8$AESCBC$Z0FBQUFBQmRFN1htOUdENV9Eendob0s3NVRSRjN1Yjd4T25JZmthbEYtVWtSbEdLV0pOcjhuTlluRjBOeUFXelV2OUhtWFFCVzE2MzV6ZE1DZmVJRFE1YWJSVDlOUndfcVE9PQ=="
+          }
+        ]
       end
 
-      it "decrypts the things correctly" do
-        stubs = YAML.load_file(data_dir.join("awesome_stubs.yaml"))
-        stubs.each do |h|
-          result = AwesomeSpawn.run(
-            "python3",
-            :params => [script_path],
-            :env    => h[:env]
-          )
-          expect(result.output).to eq(h[:output])
+      it "decrypts special cases successfully" do
+        cases.each do |c|
+          decrypted = described_class::AnsibleDecrypt.decrypt("password", c[:encrypted], "1")
+          expect(decrypted).to eq(c[:value])
         end
       end
     end
@@ -213,7 +246,6 @@ describe MoveAwxCredentialsToAuthentications do
         auths.each { |auth| authentication.create!(auth["initial"]) }
 
         stub_awx_credentials(awx_conn)
-        expect_credential_decrypts
 
         migrate
 
@@ -231,18 +263,6 @@ describe MoveAwxCredentialsToAuthentications do
     credentials.each do |cred|
       data = cred["attributes"].to_json
       stub_awx_cred_for_id(connection, cred["id"], [{"inputs" => data}])
-    end
-  end
-
-  def expect_credential_decrypts
-    stubs = YAML.load_file(data_dir.join("awesome_stubs.yaml"))
-    stubs.each do |h|
-      result = AwesomeSpawn::CommandResult.new("python3 #{script_path}", h[:output], "", 0)
-      expect(AwesomeSpawn).to receive(:run).with(
-        "python3",
-        :params => [script_path],
-        :env    => h[:env]
-      ).and_return(result)
     end
   end
 
