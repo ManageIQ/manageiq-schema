@@ -5,11 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-8
+
+### Fixed
+- Don't sync the schema_migrations_ran table when adding it [(#383)](https://github.com/ManageIQ/manageiq-schema/pull/383)
+
 ## Unreleased as of Sprint 114 ending 2019-06-24
 
 ### Fixed
 - Allow up to 5.1 versioned migrations [(#384)](https://github.com/ManageIQ/manageiq-schema/pull/384)
-- Don't sync the schema_migrations_ran table when adding it [(#383)](https://github.com/ManageIQ/manageiq-schema/pull/383)
 
 ## Unreleased as of Sprint 113 ending 2019-06-10
 
