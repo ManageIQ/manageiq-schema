@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-3
+## Hammer-8
+
+### Fixed
+- Don't sync the schema_migrations_ran table when adding it [(#383)](https://github.com/ManageIQ/manageiq-schema/pull/383)
+
+## Hammer-3 - Released 2019-03-06
 
 ### Fixed
 - Create a new migration to fix special characters in the rabbitmq password [(#337)](https://github.com/ManageIQ/manageiq-schema/pull/337)
