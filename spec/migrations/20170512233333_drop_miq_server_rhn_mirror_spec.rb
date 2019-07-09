@@ -46,7 +46,7 @@ describe DropMiqServerRhnMirror do
       mock_fstab_lines = ["/dev/sda / xfs defaults 0 0", "/dev/sdb /repo xfs defaults 0 0"]
       expect(File).to receive(:exist?).with("/etc/fstab").and_return(true)
       expect(File).to receive(:read).with("/etc/fstab").and_return(mock_fstab_lines.join("\n"))
-      expect(File).to receive(:write).with("/etc/fstab", "/dev/sda     / xfs defaults        0        0 \n")
+      expect(File).to receive(:write).with("/etc/fstab", "/dev/sda     / xfs defaults 0 0\n")
 
       expect(FileUtils).to receive(:rm_f).with("/etc/httpd/conf.d/manageiq-https-mirror.conf")
       expect(FileUtils).to receive(:rm_f).with("/etc/yum.repos.d/manageiq-mirror.repo")
