@@ -5,12 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 116 ending 2019-07-22
+
+### Fixed
+- Existing services should have a lifecycle state of provisioned [(#392)](https://github.com/ManageIQ/manageiq-schema/pull/392)
+- Remove serialization of non-existing classes/objects [(#390)](https://github.com/ManageIQ/manageiq-schema/pull/390)
+
 ## Unreleased as of Sprint 115 ending 2019-07-08
 
 ### Added
 - Open URL through automate for various objects [(#380)](https://github.com/ManageIQ/manageiq-schema/pull/380)
 
-## Hammer-8
+## Hammer-8 - Released 2019-07-02
 
 ### Fixed
 - Don't sync the schema_migrations_ran table when adding it [(#383)](https://github.com/ManageIQ/manageiq-schema/pull/383)
