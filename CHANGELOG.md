@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk Beta1
+## Ivanchuk-Beta2
+
+### Removed
+- Remove the local configuration script sources for embedded ansible [(#400)](https://github.com/ManageIQ/manageiq-schema/pull/400)
+
+## Ivanchuk-Beta1 - Released 2019-07-29
 
 ### Changed
 - Rename WebsocketWorker to RemoteConsoleWorker [(#319)](https://github.com/ManageIQ/manageiq-schema/pull/319)
