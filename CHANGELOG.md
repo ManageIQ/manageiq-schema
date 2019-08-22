@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Unreleased as of Sprint 118 - 2019-08-19
+## Ivanchuk RC1
 
 ### Fixed
 - Migrate with cleared schema cache [(#401)](https://github.com/ManageIQ/manageiq-schema/pull/401)
