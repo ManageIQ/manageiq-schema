@@ -5,20 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk RC1
-
-### Fixed
-- Migrate with cleared schema cache [(#401)](https://github.com/ManageIQ/manageiq-schema/pull/401)
-
-## Ivanchuk-Beta2 - Released 2019-08-15
-
-### Removed
-- Remove the local configuration script sources for embedded ansible [(#400)](https://github.com/ManageIQ/manageiq-schema/pull/400)
-
-## Ivanchuk-Beta1 - Released 2019-07-29
-
-### Changed
-- Rename WebsocketWorker to RemoteConsoleWorker [(#319)](https://github.com/ManageIQ/manageiq-schema/pull/319)
+## Ivanchuk-1
 
 ### Added
 - Open URL through automate for various objects [(#380)](https://github.com/ManageIQ/manageiq-schema/pull/380)
@@ -35,12 +22,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Add comments to the conversion_hosts table [(#335)](https://github.com/ManageIQ/manageiq-schema/pull/335)
 - Add missing ems_id to switch [(#232)](https://github.com/ManageIQ/manageiq-schema/pull/232)
 
+### Changed
+- Rename WebsocketWorker to RemoteConsoleWorker [(#319)](https://github.com/ManageIQ/manageiq-schema/pull/319)
+
 ### Fixed
+- Migrate with cleared schema cache [(#401)](https://github.com/ManageIQ/manageiq-schema/pull/401)
 - Existing services should have a lifecycle state of provisioned [(#392)](https://github.com/ManageIQ/manageiq-schema/pull/392)
 - Remove serialization of non-existing classes/objects [(#390)](https://github.com/ManageIQ/manageiq-schema/pull/390)
 - Allow up to 5.1 versioned migrations [(#384)](https://github.com/ManageIQ/manageiq-schema/pull/384)
 
 ### Removed
+- Remove the local configuration script sources for embedded ansible [(#400)](https://github.com/ManageIQ/manageiq-schema/pull/400)
 - Removes OpenStack Cinder event Worker Rows [(#320)](https://github.com/ManageIQ/manageiq-schema/pull/320)
 
 ## Hammer-8 - Released 2019-07-02
