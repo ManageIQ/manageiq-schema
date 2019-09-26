@@ -139,6 +139,10 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
       return value unless value.include?("$encrypted$")
 
       new(secret_key, value, field_name, primary_key).decrypt
+    rescue Fernet256::InvalidToken
+      raise unless ENV["HARDCODE_ANSIBLE_PASSWORD"]
+
+      ENV["HARDCODE_ANSIBLE_PASSWORD"]
     end
 
     def self.secret_key
@@ -267,6 +271,15 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
     end
   rescue PG::ConnectionBad
     say("awx database is unreachable, credentials cannot be migrated")
+  rescue Fernet256::InvalidToken
+    say("awx password invalid, credentials cannot be migrated")
+    say("This is often the case when migrating a support database")
+    say("And fix_auth has reset the ansible secret key")
+    say("")
+    say("If you want to continue and set all the invalid passwords")
+    say("to a preknown bogus value then")
+    say("run migrate again with $HARDCODE_ANSIBLE_PASSWORD=bogus")
+    raise
   end
 
   private
