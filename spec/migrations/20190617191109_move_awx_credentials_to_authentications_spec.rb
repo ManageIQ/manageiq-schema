@@ -12,6 +12,7 @@ describe MoveAwxCredentialsToAuthentications do
   let(:authentication) { migration_stub(:Authentication) }
   let(:miq_database)   { migration_stub(:MiqDatabase) }
 
+  let(:awx_conn)        { instance_double(PG::Connection) }
   let(:secret_key)      { "ecad5764714a254a619d74ccc1c4387b" }
   let(:miq_database_id) { miq_database.create.id }
 
@@ -117,8 +118,6 @@ describe MoveAwxCredentialsToAuthentications do
     end
 
     context "with an awx database connection" do
-      let(:awx_conn) { instance_double(PG::Connection) }
-
       before do
         allow(PG::Connection).to receive(:new).with(a_hash_including(:dbname => "awx")).and_return(awx_conn)
       end
