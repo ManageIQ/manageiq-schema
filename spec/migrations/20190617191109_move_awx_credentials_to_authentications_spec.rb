@@ -16,18 +16,27 @@ describe MoveAwxCredentialsToAuthentications do
   let(:secret_key)      { "ecad5764714a254a619d74ccc1c4387b" }
   let(:miq_database_id) { miq_database.create.id }
 
-  migration_context :up do
-    before do
-      authentication.create!(
-        :name          => "Ansible Secret Key",
-        :authtype      => "ansible_secret_key",
-        :resource_id   => miq_database_id,
-        :resource_type => "MiqDatabase",
-        :type          => "AuthToken",
-        :auth_key      => ManageIQ::Password.encrypt(secret_key)
-      )
-    end
+  before do
+    authentication.create!(
+      :name          => "Ansible Secret Key",
+      :authtype      => "ansible_secret_key",
+      :resource_id   => miq_database_id,
+      :resource_type => "MiqDatabase",
+      :type          => "AuthToken",
+      :auth_key      => ManageIQ::Password.encrypt(secret_key)
+    )
+  end
 
+  # Since the @secret_key is memoized in the class of AnsibleDecrypt, between
+  # specs this won't get refreshed with any changes if they were provided.
+  #
+  # Previously this wasn't a problem since we always used the same key in the
+  # specs... but times are changing!
+  after do
+    described_class::AnsibleDecrypt.instance_variable_set(:@secret_key, nil)
+  end
+
+  migration_context :up do
     describe "AnsibleDecrypt" do
       let(:cases) do
         [
