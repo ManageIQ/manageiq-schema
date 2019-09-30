@@ -12,21 +12,31 @@ describe MoveAwxCredentialsToAuthentications do
   let(:authentication) { migration_stub(:Authentication) }
   let(:miq_database)   { migration_stub(:MiqDatabase) }
 
+  let(:awx_conn)        { instance_double(PG::Connection) }
   let(:secret_key)      { "ecad5764714a254a619d74ccc1c4387b" }
   let(:miq_database_id) { miq_database.create.id }
 
-  migration_context :up do
-    before do
-      authentication.create!(
-        :name          => "Ansible Secret Key",
-        :authtype      => "ansible_secret_key",
-        :resource_id   => miq_database_id,
-        :resource_type => "MiqDatabase",
-        :type          => "AuthToken",
-        :auth_key      => ManageIQ::Password.encrypt(secret_key)
-      )
-    end
+  before do
+    authentication.create!(
+      :name          => "Ansible Secret Key",
+      :authtype      => "ansible_secret_key",
+      :resource_id   => miq_database_id,
+      :resource_type => "MiqDatabase",
+      :type          => "AuthToken",
+      :auth_key      => ManageIQ::Password.encrypt(secret_key)
+    )
+  end
 
+  # Since the @secret_key is memoized in the class of AnsibleDecrypt, between
+  # specs this won't get refreshed with any changes if they were provided.
+  #
+  # Previously this wasn't a problem since we always used the same key in the
+  # specs... but times are changing!
+  after do
+    described_class::AnsibleDecrypt.instance_variable_set(:@secret_key, nil)
+  end
+
+  migration_context :up do
     describe "AnsibleDecrypt" do
       let(:cases) do
         [
@@ -117,8 +127,6 @@ describe MoveAwxCredentialsToAuthentications do
     end
 
     context "with an awx database connection" do
-      let(:awx_conn) { instance_double(PG::Connection) }
-
       before do
         allow(PG::Connection).to receive(:new).with(a_hash_including(:dbname => "awx")).and_return(awx_conn)
       end
@@ -251,34 +259,77 @@ describe MoveAwxCredentialsToAuthentications do
 
         expect_authentications_migrated
       end
+
+      context "with a 'bogus' secret key (DB restore use case)" do
+        let(:secret_key) { "invalid" }
+
+        before do
+          # load the initial set of authentication records
+          auths = YAML.load_file(data_dir.join("vmdb_authentications.yaml"))
+          auths.each { |auth| authentication.create!(auth["initial"]) }
+
+          stub_awx_credentials(awx_conn, true)
+        end
+
+        it "fails to migrate real data and fails with an error" do
+          expect { migrate }.to raise_error(described_class::Fernet256::InvalidToken)
+        end
+
+        context "with $HARDCODE_ANSIBLE_PASSWORD set 'bogus'" do
+          around do |example|
+            begin
+              old_env = ENV.delete("HARDCODE_ANSIBLE_PASSWORD")
+              ENV["HARDCODE_ANSIBLE_PASSWORD"] = 'bogus'
+
+              example.run
+            ensure
+              ENV["HARDCODE_ANSIBLE_PASSWORD"] = old_env
+            end
+          end
+
+          it "sets a default if the value fails to decrypt" do
+            migrate
+            expect_authentications_migrated('bogus')
+          end
+        end
+      end
     end
   end
 
-  def stub_awx_cred_for_id(connection, id, data)
-    expect(connection).to receive(:async_exec).with("SELECT inputs FROM main_credential WHERE id = $1::BIGINT", [id]).and_return(data)
+  def stub_awx_cred_for_id(connection, id, data, rspec_allow = false)
+    query = ["SELECT inputs FROM main_credential WHERE id = $1::BIGINT", [id]]
+
+    if rspec_allow
+      allow(connection)
+    else
+      expect(connection)
+    end.to receive(:async_exec).with(*query).and_return(data)
   end
 
-  def stub_awx_credentials(connection)
+  def stub_awx_credentials(connection, rspec_allow = false)
     credentials = YAML.load_file(data_dir.join("credential_attributes.yaml"))
     credentials.each do |cred|
       data = cred["attributes"].to_json
-      stub_awx_cred_for_id(connection, cred["id"], [{"inputs" => data}])
+      stub_awx_cred_for_id(connection, cred["id"], [{"inputs" => data}], rspec_allow)
     end
   end
 
-  def expect_authentications_migrated
+  def expect_authentications_migrated(using_hardcoded_secret = nil)
     authentications = YAML.load_file(data_dir.join("vmdb_authentications.yaml"))
     authentications.each do |auth|
       attrs = auth["migrated"]
-      expected_attrs = encrypt_values(attrs)
+      expected_attrs = encrypt_values(attrs, using_hardcoded_secret)
       expect(authentication.find_by(:name => attrs["name"], :type => attrs["type"])).to have_attributes(expected_attrs)
     end
   end
 
-  def encrypt_values(attrs)
+  def encrypt_values(attrs, using_hardcoded_secret = nil)
     attrs.dup.tap do |h|
       %w[auth_key auth_key_password become_password password].each do |key|
-        h[key] = ManageIQ::Password.encrypt(h[key].chomp) if h.key?(key)
+        if h.key?(key)
+          value_to_encrypt = using_hardcoded_secret || h[key].chomp
+          h[key] = ManageIQ::Password.encrypt(value_to_encrypt)
+        end
       end
     end
   end
