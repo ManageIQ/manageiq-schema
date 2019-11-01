@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Sprint 122 - Unreleased as of 2019-10-14
+
+### Fixed
+- Rename service display column to visible. [(#410)](https://github.com/ManageIQ/manageiq-schema/pull/410)
+
 ## Sprint 120 - Unreleased as of 2019-09-16
 
 ### Fixed
