@@ -13,8 +13,7 @@ env:
   - RUBY_GC_HEAP_GROWTH_FACTOR=1.25
 addons:
   postgresql: '10'
-before_install: bin/setup
-before_script: bundle exec rake spec:setup
+install: bin/setup
 after_script: bundle exec codeclimate-test-reporter
 notifications:
   webhooks:
