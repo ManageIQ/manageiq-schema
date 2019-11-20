@@ -97,5 +97,19 @@ describe MigrateEmsRefObjToEmsRefType do
       migrate
       expect(vm.reload.ems_ref_obj).to eq("--- b7212ae9-e968-4431-bb17-cc16d5095cd0\n")
     end
+
+    it "ignores hosts that have ems_ref_obj set already" do
+      host_instance_uuid = SecureRandom.uuid
+      ems_ref_obj        = YAML.dump(host_instance_uuid)
+      host = host_stub.create!(
+        :type        => "ManageIQ::Providers::Openstack::InfraManager::Host",
+        :ems_ref_obj => ems_ref_obj,
+        :ems_ref     => "host-123"
+      )
+
+      migrate
+
+      expect(host.reload.ems_ref_obj).to eq(ems_ref_obj)
+    end
   end
 end
