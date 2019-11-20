@@ -1,7 +1,10 @@
 #!/bin/bash
 if [[ -n "$CI" ]]; then
   echo 'gem: --no-ri --no-rdoc --no-document' > ~/.gemrc
+  bundle config --local path $(pwd)/vendor/bundle
+
   psql -c "CREATE USER root SUPERUSER PASSWORD 'smartvm';" -U postgres
-else
-  bundle exec rake spec:setup
 fi
+
+bundle update --jobs=3
+bundle exec rake spec:setup
