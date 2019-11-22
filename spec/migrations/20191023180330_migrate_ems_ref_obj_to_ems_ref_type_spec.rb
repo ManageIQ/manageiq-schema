@@ -83,7 +83,8 @@ describe MigrateEmsRefObjToEmsRefType do
       vm = vm_stub.create!(
         :type        => "ManageIQ::Providers::Amazon::CloudManager::Vm",
         :ems_ref     => "b7212ae9-e968-4431-bb17-cc16d5095cd0",
-        :ems_ref_obj => nil
+        :ems_ref_obj => nil,
+        :cloud       => true
       )
 
       migrate
@@ -124,6 +125,19 @@ describe MigrateEmsRefObjToEmsRefType do
       migrate
 
       expect(host.reload.ems_ref_obj).to eq(ems_ref_obj)
+    end
+
+    it "ignores cloud vms" do
+      vm = vm_stub.create!(
+        :type        => "ManageIQ::Providers::Amazon::CloudManager::Vm",
+        :ems_ref     => "b7212ae9-e968-4431-bb17-cc16d5095cd0",
+        :ems_ref_obj => nil,
+        :cloud       => true
+      )
+
+      migrate
+
+      expect(vm.reload.ems_ref_obj).to be_nil
     end
   end
 end
