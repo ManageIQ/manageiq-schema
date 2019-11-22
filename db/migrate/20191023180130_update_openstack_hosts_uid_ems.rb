@@ -5,9 +5,7 @@ class UpdateOpenstackHostsUidEms < ActiveRecord::Migration[5.1]
   end
 
   def up
-    Host.in_my_region.where(:type => "ManageIQ::Providers::Openstack::InfraManager::Host").find_each do |host|
-      next if host.ems_ref_obj.nil?
-
+    Host.in_my_region.where(:type => "ManageIQ::Providers::Openstack::InfraManager::Host").where.not(:ems_ref_obj => nil).find_each do |host|
       host.uid_ems = YAML.safe_load(host.ems_ref_obj)
       host.save!
     end

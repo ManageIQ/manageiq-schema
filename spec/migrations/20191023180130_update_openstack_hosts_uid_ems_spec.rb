@@ -30,6 +30,19 @@ describe UpdateOpenstackHostsUidEms do
 
       expect(host.reload.uid_ems).to eq("abcd")
     end
+
+    it "skips hosts with nil ems_ref_obj" do
+      host = host_stub.create!(
+        :type        => "ManageIQ::Providers::Openstack::InfraManager::Host",
+        :ems_ref     => "some-other_ref",
+        :ems_ref_obj => nil,
+        :uid_ems     => "some_other_ref"
+      )
+
+      migrate
+
+      expect(host.reload.uid_ems).to eq("some_other_ref")
+    end
   end
 
   migration_context :down do
