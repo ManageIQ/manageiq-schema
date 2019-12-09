@@ -1,2 +1,6 @@
 Rails/ApplicationRecord:
   Enabled: false
+
+Rails/SkipsModelValidations:
+  Whitelist:
+  - update_all
