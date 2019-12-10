@@ -21,8 +21,6 @@ class SplitStoragesPerEms < ActiveRecord::Migration[5.0]
         ems_id            = hs.host&.ems_id
         datastore_ems_ref = hs.ems_ref || storage.ems_ref
 
-        next if ems_id.nil?
-
         [ems_id, datastore_ems_ref]
       end
 
@@ -44,6 +42,8 @@ class SplitStoragesPerEms < ActiveRecord::Migration[5.0]
 
       # Link up the host_storage records to the new storages
       host_storages_by_ems_id_and_ems_ref.each_key do |ems_id, ems_ref|
+        next if ems_id.nil?
+
         # Connect all of the HostStorage records to the new Storage record
         host_storages_ids = host_storages_by_ems_id_and_ems_ref[[ems_id, ems_ref]].map(&:id)
         storage = storages_by_ems_id_and_ems_ref[[ems_id, ems_ref]]
