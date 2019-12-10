@@ -120,9 +120,9 @@ describe SplitStoragesPerEms do
         end
 
         context "with an archived host" do
-          let(:archived_host) do
+          let!(:archived_host) do
             host_stub.create!.tap do |h|
-              host_storage_stub.create!(:host_id => h.id, :storage_id => storage.id, ems_ref => "datastore-3")
+              host_storage_stub.create!(:host_id => h.id, :storage_id => storage.id, :ems_ref => "datastore-3")
             end
           end
 
