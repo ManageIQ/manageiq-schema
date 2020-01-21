@@ -114,7 +114,7 @@ class MigrateOrchStacksToHaveOwnershipConcept < ActiveRecord::Migration[5.0]
       OrchestrationStack.find_each do |stack|
         user = if stack.service.present?
                  stack.service.tenant_identity
-               elsif !stack.ems_id.nil?
+               elsif stack.ext_management_system
                  stack.ext_management_system.tenant_identity
                else
                  User.super_admin
