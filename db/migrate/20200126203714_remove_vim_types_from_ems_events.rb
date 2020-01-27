@@ -1,4 +1,9 @@
 class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
+  disable_ddl_transaction!
+  include MigrationHelper
+
+  BATCH_SIZE = 5_000
+
   module VimType
     def vimType
       @vimType.nil? ? nil : @vimType.to_s
@@ -17,17 +22,9 @@ class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
     end
   end
 
-  class VimHash < Hash
-    include VimType
-  end
-
-  class VimArray < Array
-    include VimType
-  end
-
-  class VimString < String
-    include VimType
-  end
+  class VimHash < Hash; include VimType; end
+  class VimArray < Array; include VimType; end
+  class VimString < String; include VimType; end
 
   class EventStream < ActiveRecord::Base
     include ActiveRecord::IdRegions
@@ -40,9 +37,18 @@ class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
     vim_string_backup = const_replace(:VimString, VimString)
     vim_array_backup  = const_replace(:VimArray, VimArray)
 
-    EventStream.in_my_region.where(:source => "VC").find_each do |event|
-      full_data = YAML.load(event.full_data)
-      event.update!(:full_data => vim_types_to_basic_types(full_data).to_yaml)
+    say_with_time("Removing Vim Types from EmsEvents") do
+      base_relation = EventStream.in_my_region.where(:source => "VC")
+      say_batch_started(base_relation.size)
+
+      processed_count = 0
+      base_relation.find_each(batch_size: BATCH_SIZE) do |event|
+        full_data = YAML.load(event.full_data)
+        event.update!(:full_data => vim_types_to_basic_types(full_data).to_yaml)
+
+        processed_count += 1
+        say_batch_processed(processed_count) if processed_count % BATCH_SIZE == 0
+      end
     end
 
     const_replace(:VimHash, vim_hash_backup)

@@ -39,7 +39,12 @@ describe RemoveVimTypesFromEmsEvents do
 
       expect(full_data.class.name).to eq("Hash")
       expect(full_data["key"].class.name).to eq("String")
+      expect(full_data["key"]).to eq("585137")
       expect(full_data["datacenter"].class.name).to eq("Hash")
+      expect(full_data["datacenter"]).to include(
+        "name"       => "dev-vc67-DC",
+        "datacenter" => "datacenter-104"
+      )
     end
   end
 
