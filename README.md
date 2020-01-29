@@ -22,3 +22,11 @@ The gem is available as open source under the terms of the [Apache License 2.0](
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Run Tests in dev environment
+1. Modify `spec/dummy/config/database.yml` to access local database
+2. Run: `bin/setup`
+    1. Performs `bundle update`
+    2. Generates random database region number
+    3. Creates/resets `dummy_test` database
+3. Run: `rspec spec/migrations/<spec_file>`</br>or `rake` (Run all migration tests)
