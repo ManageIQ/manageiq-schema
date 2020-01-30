@@ -30,6 +30,16 @@ describe MigrateOrchStacksToHaveOwnershipConcept do
       expect(stack).to have_attributes(:tenant_id => ext_ms.tenant_id, :evm_owner_id => ext_ms.tenant_identity.id, :miq_group_id => ext_ms.tenant_identity.current_group.id)
     end
 
+    it "sets owner, tenant, and group from the user if the ems was deleted but the stack ems id is still set" do
+      stack = orchestration_stack.create!(:ems_id => -2)
+      expect(orchestration_stack.count).to eq(1)
+
+      migrate
+      stack.reload
+
+      expect(stack).to have_attributes(:tenant_id => user.current_tenant.id, :evm_owner_id => user.id, :miq_group_id => user.current_group.id)
+    end
+
     it "sets owner, tenant, and group from the service if the service exists and ems doesn't" do
       svc = service.create!(:tenant_id => tenant.id, :miq_group_id => group.id)
       stack = orchestration_stack.create!(:direct_services => [svc])
