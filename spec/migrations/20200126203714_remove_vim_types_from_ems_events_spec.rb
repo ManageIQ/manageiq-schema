@@ -26,9 +26,24 @@ describe RemoveVimTypesFromEmsEvents do
               :@xsiType: :DatacenterEventArgument
               :@vimType:
           eventType: VmCreatedEvent
+          arguments: !ruby/array:VimArray
+            internal:
+            - !ruby/hash-with-ivars:VimHash
+              elements:
+                datacenter: !ruby/string:VimString
+                  str: datacenter-104
+                  xsiType: :Datacenter
+                  vimType: :ManagedObjectReference
+              ivars:
+                :@xsiType: :DatacenterArgument
+                :@vimType:
+            ivars:
+              :@xsiType: :KeyAnyValue
+              :@vimType:
         ivars:
           :@xsiType: :VmCreatedEvent
           :@vimType:
+
       FULL_DATA
 
       event = event_stream_stub.create!(:full_data => full_data, :source => "VC")
@@ -45,6 +60,10 @@ describe RemoveVimTypesFromEmsEvents do
         "name"       => "dev-vc67-DC",
         "datacenter" => "datacenter-104"
       )
+      expect(full_data["arguments"].class).to eq(Array)
+      expect(full_data["arguments"].count).to eq(1)
+      expect(full_data["arguments"].first.class).to eq(Hash)
+      expect(full_data["arguments"].first).to include("datacenter" => "datacenter-104")
     end
   end
 end
