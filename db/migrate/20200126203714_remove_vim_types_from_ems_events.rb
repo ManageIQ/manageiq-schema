@@ -38,16 +38,15 @@ class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
         base_relation = EventStream.in_my_region.where(:source => "VC")
         say_batch_started(base_relation.size)
 
-        processed_count = 0
-        base_relation.find_each(batch_size: BATCH_SIZE) do |event|
-          full_data = YAML.load(event.full_data)
-          event.update!(:full_data => vim_types_to_basic_types(full_data).to_yaml)
-
-          processed_count += 1
-          if (processed_count % BATCH_SIZE).zero?
-            say_batch_processed(processed_count)
-            processed_count = 0
+        base_relation.find_in_batches(batch_size: BATCH_SIZE) do |events|
+          ActiveRecord::Base.transaction do
+            events.each do |event|
+              full_data = YAML.load(event.full_data)
+              event.update!(:full_data => vim_types_to_basic_types(full_data).to_yaml)
+            end
           end
+
+          say_batch_processed(events.count)
         end
       end
     end
