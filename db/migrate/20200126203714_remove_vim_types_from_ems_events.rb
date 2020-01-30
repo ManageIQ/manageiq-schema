@@ -35,7 +35,7 @@ class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
   def up
     with_replaced_constants(:VimHash => VimHash, :VimString => VimString, :VimArray => VimArray) do
       say_with_time("Removing Vim Types from EmsEvents") do
-        base_relation = EventStream.in_my_region.where(:source => "VC")
+        base_relation = EventStream.in_my_region.where(:source => "VC").where("full_data LIKE ?", "%hash-with-ivars:VimHash%")
         say_batch_started(base_relation.size)
 
         base_relation.find_in_batches(batch_size: BATCH_SIZE) do |events|
