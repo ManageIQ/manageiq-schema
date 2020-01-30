@@ -44,7 +44,10 @@ class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
           event.update!(:full_data => vim_types_to_basic_types(full_data).to_yaml)
 
           processed_count += 1
-          say_batch_processed(processed_count) if processed_count % BATCH_SIZE == 0
+          if (processed_count % BATCH_SIZE).zero?
+            say_batch_processed(processed_count)
+            processed_count = 0
+          end
         end
       end
     end
