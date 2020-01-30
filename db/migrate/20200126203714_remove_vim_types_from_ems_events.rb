@@ -58,7 +58,7 @@ class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
     backed_up_constants = Hash[constants.map { |sym, klass| [sym, const_replace(sym, klass)] }]
     yield
   ensure
-    backed_up_constants.each { |sym, klass| const_replace(sym, klass) }
+    backed_up_constants.each { |sym, klass| const_replace(sym, klass) unless klass.nil? }
   end
 
   def const_replace(const_name, new_const)
