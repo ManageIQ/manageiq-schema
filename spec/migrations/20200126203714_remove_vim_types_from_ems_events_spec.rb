@@ -47,7 +47,4 @@ describe RemoveVimTypesFromEmsEvents do
       )
     end
   end
-
-  migration_context :down do
-  end
 end
