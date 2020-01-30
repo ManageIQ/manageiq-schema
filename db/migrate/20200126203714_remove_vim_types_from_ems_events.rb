@@ -67,6 +67,7 @@ class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
 
   def const_remove(const_name)
     return unless Object.const_defined?(const_name)
+
     Object.send(:remove_const, const_name)
   end
 
