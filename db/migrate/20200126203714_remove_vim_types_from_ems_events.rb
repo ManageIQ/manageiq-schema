@@ -76,9 +76,9 @@ class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
       obj = obj.to_s
     when VimHash
       obj = obj.to_h
-      obj.each { |key, val| obj[key] = vim_types_to_basic_types(val) }
+      obj.transform_values! { |val| vim_types_to_basic_types(val) }
     when VimArray
-      obj = obj.map { |v| vim_types_to_basic_types(v) }
+      obj.map! { |v| vim_types_to_basic_types(v) }
     end
 
     obj
