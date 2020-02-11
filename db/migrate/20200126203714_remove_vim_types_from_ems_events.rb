@@ -39,10 +39,24 @@ class RemoveVimTypesFromEmsEvents < ActiveRecord::Migration[5.1]
         say_batch_started(base_relation.size)
 
         base_relation.find_in_batches(batch_size: BATCH_SIZE) do |events|
+          processors = ENV["RAILS_ENV"] == "test" ? 0 : nil
+
+          resources = events.collect { |event| [event.id, event.full_data] }
+
+          require 'parallel'
+          resources = Parallel.map(resources, :in_processes => processors) do |event_id, full_data|
+            ActiveRecord::Base.connection.reconnect! unless processors == 0
+
+            [event_id, vim_types_to_basic_types(YAML.load(full_data)).to_yaml]
+          end
+
+          ActiveRecord::Base.connection.reconnect! unless processors == 0
+
+          event_full_data_by_event_id = Hash[resources]
+
           ActiveRecord::Base.transaction do
             events.each do |event|
-              full_data = YAML.load(event.full_data)
-              event.update!(:full_data => vim_types_to_basic_types(full_data).to_yaml)
+              event.update!(:full_data => event_full_data_by_event_id[event.id])
             end
           end
 
