@@ -1,6 +1,6 @@
-class RenameTowHatToResourceTypeInMiqPolicyAndCondition < ActiveRecord::Migration[5.0]
+class RenameTowHatToTargetClassNameInMiqPolicyAndCondition < ActiveRecord::Migration[5.1]
   def change
-    rename_column :miq_policies, :towhat, :resource_type
-    rename_column :conditions,   :towhat, :resource_type
+    rename_column :miq_policies, :towhat, :target_class_name
+    rename_column :conditions,   :towhat, :target_class_name
   end
 end
