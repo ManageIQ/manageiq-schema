@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Ivanchuk-4
+
+### Fixed
+- Fix issue with orch stacks still having references to deleted ems [(#449)](https://github.com/ManageIQ/manageiq-schema/pull/449)
+
+## Ivanchuk-3
+
+### Fixed
+- Bump linux admin [(#445)](https://github.com/ManageIQ/manageiq-schema/pull/445)
+
+## Ivanchuk-2
+
+### Fixed
+- EmbeddedAnsibleWorker was removed in ivanchuk but worker rows were not [(#414)](https://github.com/ManageIQ/manageiq-schema/pull/414)
+- Handle faulty v2_key while upgrading ansible (with specs) [(#419)](https://github.com/ManageIQ/manageiq-schema/pull/419)
+- Test ruby 2.5.5 [(#430)](https://github.com/ManageIQ/manageiq-schema/pull/430)
 
 ## Ivanchuk-1
 
