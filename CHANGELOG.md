@@ -4,15 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
-
-## Sprint 122 - Unreleased as of 2019-10-14
+## Jansa-1 Alpha-1
 
 ### Fixed
 - Rename service display column to visible. [(#410)](https://github.com/ManageIQ/manageiq-schema/pull/410)
-
-## Sprint 120 - Unreleased as of 2019-09-16
-
-### Fixed
 - Set zone's visible column default true and update existing rows [(#413)](https://github.com/ManageIQ/manageiq-schema/pull/413)
 
 ## Ivanchuk-1 - Released 2019-09-18
