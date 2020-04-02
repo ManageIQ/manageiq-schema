@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{db,lib}/**/*", "LICENSE.txt", "Rakefile", "README.md"]
 
+  s.add_dependency "ancestry"
   s.add_dependency "activerecord-id_regions", "~> 0.3.0"
   s.add_dependency "linux_admin", "~> 2.0"
   s.add_dependency "manageiq-password", "~> 0.3"
