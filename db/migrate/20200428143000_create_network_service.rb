@@ -1,5 +1,3 @@
-# rake db:migrate:down VERSION=20200428000001
-# rake db:migrate:up VERSION=20200428000001
 class CreateNetworkService < ActiveRecord::Migration[5.0]
   def change
     create_table :network_services do |t|
@@ -8,7 +6,8 @@ class CreateNetworkService < ActiveRecord::Migration[5.0]
       t.string     :description
       t.string     :ems_ref
       t.references :ems,               :type => :bigint
-      t.references :cloud_tenant,      :type => :bigint   
+      t.references :cloud_tenant,      :type => :bigint
+      t.timestamps
     end
 
     create_table :network_service_entries do |t|
@@ -21,6 +20,7 @@ class CreateNetworkService < ActiveRecord::Migration[5.0]
       t.string     :protocol
       t.string     :source_ports
       t.string     :destination_ports
+      t.timestamps
     end
 
     add_index :network_services,        :type

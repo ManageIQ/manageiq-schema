@@ -1,5 +1,3 @@
-# rake db:migrate:down VERSION=20200428000002
-# rake db:migrate:up VERSION=20200428000002
 class CreateSecurityPolicy < ActiveRecord::Migration[5.0]
   def change
     create_table :security_policies do |t|
@@ -10,6 +8,7 @@ class CreateSecurityPolicy < ActiveRecord::Migration[5.0]
       t.references :ems,               :type => :bigint
       t.references :cloud_tenant,      :type => :bigint   
       t.integer    :sequence_number
+      t.timestamps
     end
 
     add_index :security_policies,     :type
@@ -27,6 +26,7 @@ class CreateSecurityPolicy < ActiveRecord::Migration[5.0]
       t.string     :action
       t.string     :direction
       t.string     :ip_protocol
+      t.timestamps
     end
 
     add_index :security_policy_rules, :type
