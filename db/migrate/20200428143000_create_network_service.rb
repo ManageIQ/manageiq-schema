@@ -13,7 +13,7 @@ class CreateNetworkService < ActiveRecord::Migration[5.0]
     create_table :network_service_entries do |t|
       t.string     :type
       t.string     :name
-      t.string     :description      
+      t.string     :description
       t.string     :ems_ref
       t.references :ems,               :type => :bigint
       t.references :network_service,   :type => :bigint
