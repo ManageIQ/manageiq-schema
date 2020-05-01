@@ -24,9 +24,10 @@ The gem is available as open source under the terms of the [Apache License 2.0](
 5. Create new Pull Request
 
 ## Run Tests in dev environment
-1. Modify `spec/dummy/config/database.yml` to access local database
+1. If necessary, copy `spec/dummy/config/database.tmpl.yml` to `spec/dummy/config/database.yml` and modify it to access your local database
 2. Run: `bin/setup`
-    1. Performs `bundle update`
-    2. Generates random database region number
-    3. Creates/resets `dummy_test` database
+    1. Copies `spec/dummy/config/database.tmpl.yml` to `spec/dummy/config/database.yml` if it doesn't exist
+    2. Performs `bundle update`
+    3. Generates random database region number
+    4. Creates/resets `dummy_test` database
 3. Run: `rspec spec/migrations/<spec_file>`</br>or `rake` (Run all migration tests)
