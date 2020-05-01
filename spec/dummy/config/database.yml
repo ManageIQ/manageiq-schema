@@ -2,6 +2,8 @@
 base: &base
   adapter: postgresql
   encoding: utf8
+  username: root
+  password: smartvm
   pool: 5
   wait_timeout: 5
   min_messages: warning
