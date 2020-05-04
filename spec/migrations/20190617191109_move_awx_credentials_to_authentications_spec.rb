@@ -272,7 +272,7 @@ describe MoveAwxCredentialsToAuthentications do
         end
 
         it "fails to migrate real data and fails with an error" do
-          expect { migrate }.to raise_error(described_class::Fernet256::InvalidToken)
+          expect { migrate }.to raise_error(StandardError, /#{described_class::Fernet256::InvalidToken.to_s}/)
         end
 
         context "with $HARDCODE_ANSIBLE_PASSWORD set 'bogus'" do
