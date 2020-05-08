@@ -10,4 +10,7 @@
 /spec/reports/
 /tmp/
 
+# ignore included plugins in bundler.d
+bundler.d/*
+
 /spec/dummy/
