@@ -4,8 +4,7 @@ describe "Data migrations" do
     "20160317041206_add_maintenance_to_host_spec.rb",
     "20160428215808_add_filters_to_entitlements_spec.rb",
     "20160713130940_remove_type_template_and_vms_filters_from_miq_search_spec.rb",
-    "20170419154137_remove_deleted_migration_timestamps_spec.rb",
-    "20171011180000_move_openstack_refresher_settings_spec.rb"
+    "20170419154137_remove_deleted_migration_timestamps_spec.rb"
   ].freeze
 
   def data_migration_files
