@@ -7,19 +7,21 @@ describe AdjustChargebackReportsFeatures do
 
   migration_context :up do
     describe 'product features update' do
-      AdjustChargebackReportsFeatures::FEATURE_MAPPING.keys.each do |identifier|
-        context "feature #{identifier}" do
-          it 'also sets the chargeback_reports_view feature' do
-            feature = feature_stub.create!(:identifier => identifier)
-            roles_feature_stub.create!(:miq_product_feature_id => feature.id, :miq_user_role_id => user_role_id)
-
-            migrate
-
-            new_roles_feature = roles_feature_stub.where(:miq_user_role_id => user_role_id).where.not(:miq_product_feature_id => feature.id).first
-            new_feature = feature_stub.find(new_roles_feature.miq_product_feature_id)
-            expect(new_feature.identifier).to eq('chargeback_reports_view')
-          end
+      it 'also sets the chargeback_reports_view feature' do
+        AdjustChargebackReportsFeatures::FEATURE_MAPPING.keys.each do |identifier|
+          feature = feature_stub.create!(:identifier => identifier)
+          roles_feature_stub.create!(:miq_product_feature_id => feature.id, :miq_user_role_id => user_role_id)
         end
+
+        migrate
+
+        assigned = roles_feature_stub.where(:miq_user_role_id => user_role_id)
+        expect(assigned.count).to eq(5)
+
+        feature = feature_stub.find_by(:identifier => 'chargeback_reports_view')
+        new_roles_feature = roles_feature_stub.where(:miq_user_role_id => user_role_id).where(:miq_product_feature_id => feature.id).first
+        new_feature = feature_stub.find(new_roles_feature.miq_product_feature_id)
+        expect(new_feature.identifier).to eq('chargeback_reports_view')
       end
 
       it 'renames the features' do
@@ -58,6 +60,13 @@ describe AdjustChargebackReportsFeatures do
         expect(view_feature2.reload.identifier).to eq('chargeback_download_pdf')
         expect(view_feature3.reload.identifier).to eq('chargeback_download_text')
         expect(view_feature4.reload.identifier).to eq('chargeback_report_only')
+      end
+
+      it 'skips feature renaming when no role features are set' do
+        migrate
+
+        assigned = roles_feature_stub.where(:miq_user_role_id => user_role_id)
+        expect(assigned.count).to eq(0)
       end
     end
   end
