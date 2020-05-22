@@ -27,9 +27,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pg-pglogical",            "~> 2.1.1"
   spec.add_dependency "rails",                   "~>5.2.4", ">=5.2.4.3"
 
+  spec.add_development_dependency "manageiq-style"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-rails"
-  spec.add_development_dependency "rubocop",                   "~> 0.69.0"
-  spec.add_development_dependency "rubocop-performance"
   spec.add_development_dependency "simplecov"
 end
