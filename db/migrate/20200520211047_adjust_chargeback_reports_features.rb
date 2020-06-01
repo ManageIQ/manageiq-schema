@@ -32,8 +32,6 @@ class AdjustChargebackReportsFeatures < ActiveRecord::Migration[5.2]
     say_with_time 'Adjusting chargeback reports features to explorer views' do
       admin_feature = MiqProductFeature.find_or_create_by!(:identifier => 'chargeback_reports')
 
-      return if MiqRolesFeature.none?
-
       MiqRolesFeature.where(:miq_product_feature_id => admin_feature.id).each do |feature|
         old_feature_ids.each do |id|
           MiqRolesFeature.create!(:miq_product_feature_id => id, :miq_user_role_id => feature.miq_user_role_id)

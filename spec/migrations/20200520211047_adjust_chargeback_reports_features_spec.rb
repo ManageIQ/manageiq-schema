@@ -62,11 +62,16 @@ describe AdjustChargebackReportsFeatures do
         expect(view_feature4.reload.identifier).to eq('chargeback_report_only')
       end
 
-      it 'skips feature renaming when no role features are set' do
+      it 'product feature is renamed when no role features are set' do
         migrate
 
         assigned = roles_feature_stub.where(:miq_user_role_id => user_role_id)
         expect(assigned.count).to eq(0)
+
+        expect(view_feature1.reload.identifier).to eq('chargeback_download_csv')
+        expect(view_feature2.reload.identifier).to eq('chargeback_download_pdf')
+        expect(view_feature3.reload.identifier).to eq('chargeback_download_text')
+        expect(view_feature4.reload.identifier).to eq('chargeback_report_only')
       end
     end
   end
