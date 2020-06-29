@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "activerecord-id_regions", "~> 0.3.0"
   s.add_dependency "linux_admin", "~> 2.0"
   s.add_dependency "manageiq-password", "~> 0.3"
-  s.add_dependency "more_core_extensions", "~> 3.5"
+  s.add_dependency "more_core_extensions", ">= 3.5", "< 5"
   s.add_dependency "pg"
   s.add_dependency "pg-pglogical", "~> 2.1.1"
   s.add_dependency "rails", "~>5.2.4", ">=5.2.4.3"
