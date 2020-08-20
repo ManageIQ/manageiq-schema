@@ -5,7 +5,10 @@ module ManageIQ
 
       ActiveSupport.on_load(:active_record) do
         require_relative 'migrate_with_cleared_schema_cache'
+        require_relative 'schema_dumper'
+
         ActiveRecord::Migration.prepend(MigrateWithClearedSchemaCache)
+        ActiveRecord::ConnectionAdapters::SchemaDumper.prepend(SchemaDumper)
       end
 
       initializer :append_migrations do |app|
