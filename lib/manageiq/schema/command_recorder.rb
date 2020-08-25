@@ -8,6 +8,14 @@ module ManageIQ
       def drop_trigger(*args)
         record(:drop_trigger, args)
       end
+
+      def create_view(*args)
+        record(:create_view, args)
+      end
+
+      def drop_view(*args)
+        record(:drop_view, args)
+      end
     end
   end
 end

@@ -5,7 +5,15 @@ module ManageIQ
 
       def tables(stream)
         super
+        miq_metric_views(stream)
         triggers(stream)
+      end
+
+      def miq_metric_views(stream)
+        @connection.views.each do |view|
+          stream.puts "  create_miq_metric_view #{view["name"].inspect}"
+          stream.puts
+        end
       end
 
       def triggers(stream)

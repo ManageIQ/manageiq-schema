@@ -14,6 +14,15 @@ module ManageIQ
         execute("DROP FUNCTION IF EXISTS #{quoted_name}();", 'Drop trigger function')
       end
 
+      def create_miq_metric_view(name)
+        execute("CREATE VIEW #{name} AS SELECT * FROM #{name}_base")
+        execute("ALTER VIEW #{name} ALTER COLUMN id SET DEFAULT nextval('#{name}_base_id_seq')")
+      end
+
+      def drop_miq_metric_view(name)
+        execute("DROP VIEW #{name}")
+      end
+
       # Fetch the direction, table, name, and body for all of the MIQ INSERT
       # database triggers
       #
@@ -28,6 +37,30 @@ module ManageIQ
           JOIN pg_proc                     ON pg_trigger.tgname  = pg_proc.proname
           JOIN information_schema.triggers ON pg_trigger.tgname  = information_schema.triggers.trigger_name
         TRIGGER_SQL
+      end
+
+      # Fetch the name, definition, kind, and namespace for the DB VIEWS in the
+      # current DB
+      #
+      # Query taken and slightly modified from the scenic gem:
+      #
+      #   https://github.com/scenic-views/scenic/blob/048e0805/lib/scenic/adapters/postgres/views.rb#L25-L40
+      #
+      # TODO:  Just use scenic...
+      #
+      def views
+        execute(<<~VIEW_SQL.prepend("\n"))
+          SELECT c.relname             AS name,
+                 pg_get_viewdef(c.oid) AS definition,
+                 c.relkind             AS kind,
+                 n.nspname             AS namespace
+          FROM pg_class c
+          LEFT JOIN pg_namespace n ON n.oid = c.relnamespace
+          WHERE c.relkind IN ('m', 'v')
+            AND c.relname NOT IN (SELECT extname FROM pg_extension)
+            AND n.nspname = ANY (current_schemas(false))
+          ORDER BY c.oid
+        VIEW_SQL
       end
 
       private
