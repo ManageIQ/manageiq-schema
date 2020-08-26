@@ -23,6 +23,25 @@ module ManageIQ
         execute("DROP VIEW #{name}")
       end
 
+      def add_miq_metric_table_inheritance(table, inherit_from, options = {})
+        quoted_table      = quote_table_name(table)
+        quoted_inherit    = quote_table_name(inherit_from)
+        quoted_constraint = quote_column_name("#{table}_inheritance_check")
+        conditions        = sanitize_sql_for_conditions(options[:conditions])
+
+        execute("ALTER TABLE #{quoted_table} ADD CONSTRAINT #{quoted_constraint} CHECK (#{conditions})", 'Add inheritance check constraint')
+        execute("ALTER TABLE #{quoted_table} INHERIT #{quoted_inherit}", 'Add table inheritance')
+      end
+
+      def drop_miq_metric_table_inheritance(table, inherit_from)
+        quoted_table      = quote_table_name(table)
+        quoted_inherit    = quote_table_name(inherit_from)
+        quoted_constraint = quote_column_name("#{table}_inheritance_check")
+
+        execute("ALTER TABLE #{quoted_table} DROP CONSTRAINT #{quoted_constraint}", 'Drop inheritance check constraint')
+        execute("ALTER TABLE #{quoted_table} NO INHERIT #{quoted_inherit}", 'Drop table inheritance')
+      end
+
       # Fetch the direction, table, name, and body for all of the MIQ INSERT
       # database triggers
       #
@@ -64,6 +83,14 @@ module ManageIQ
       end
 
       private
+
+      def sanitize_sql_for_conditions(conditions)
+        unless defined?(::DummyActiveRecordForMiqSchemaStatements)
+          Object.const_set(:DummyActiveRecordForMiqSchemaStatements, Class.new(ActiveRecord::Base))
+        end
+
+        DummyActiveRecordForMiqSchemaStatements.send(:sanitize_sql_for_conditions, conditions)
+      end
 
       def add_trigger_function(name, body)
         execute(<<-EOSQL, 'Create trigger function')

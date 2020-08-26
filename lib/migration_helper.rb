@@ -64,6 +64,10 @@ module MigrationHelper
   #
   # Table inheritance
   #
+  # (note:  Can't remove because it is used in CollapsedInitialMigration and
+  # this method was renamed in MiqSchemaStatements.  Renaming might have been a
+  # poor choice...)
+  #
 
   def add_table_inheritance(table, inherit_from, options = {})
     quoted_table = connection.quote_table_name(table)
