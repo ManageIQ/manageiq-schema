@@ -1,5 +1,11 @@
 class CollapsedInitialMigration < ActiveRecord::Migration[5.1]
   def up
+    # This collapsed initial migration is partly generated from Rails' schema
+    #   dumper, so we will ignore rubocop warnings.
+    # rubocop:disable Rails/CreateTableWithTimestamps
+    # rubocop:disable Style/HashSyntax
+    # rubocop:disable Style/MethodCallWithArgsParentheses
+
     # These are extensions that must be enabled in order to support this database
     enable_extension "plpgsql"
 
@@ -7693,9 +7699,15 @@ class CollapsedInitialMigration < ActiveRecord::Migration[5.1]
         END CASE;
         RETURN NEW;
     SQL
+
+    # rubocop:enable Rails/CreateTableWithTimestamps
+    # rubocop:enable Style/HashSyntax
+    # rubocop:enable Style/MethodCallWithArgsParentheses
   end
 
   def down
+    # rubocop:disable Style/MethodCallWithArgsParentheses
+
     drop_trigger "metric_rollups", "metric_rollups_partition"
     drop_trigger "metrics",        "metrics_partition"
 
@@ -8072,5 +8084,7 @@ class CollapsedInitialMigration < ActiveRecord::Migration[5.1]
     drop_table "asset_details"
     drop_table "advanced_settings"
     drop_table "accounts"
+
+    # rubocop:enable Style/MethodCallWithArgsParentheses
   end
 end
