@@ -6,7 +6,7 @@ describe AddFailedLoginAttemptsToUsers do
 
   migration_context :up do
     it 'creates a new field which defaults to 0' do
-      expect { user.failed_login_attempts }.to raise_error
+      expect(user).to_not respond_to(:failed_login_attempts)
 
       migrate
       user.reload
