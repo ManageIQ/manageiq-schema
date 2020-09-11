@@ -3,6 +3,14 @@ require_migration
 describe CollapsedInitialMigration do
   let(:connection) { ActiveRecord::Base.connection }
 
+  migration_context :up do
+    it "will fail on a non-empty database" do
+      connection.execute("INSERT INTO schema_migrations VALUES ('20161213140739'), ('20171026190133')")
+
+      expect { migrate }.to raise_error(StandardError, /cannot be migrated/)
+    end
+  end
+
   migration_context :down do
     it "database should be empty" do
       migrate
