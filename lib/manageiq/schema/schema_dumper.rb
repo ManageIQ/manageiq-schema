@@ -12,7 +12,19 @@ module ManageIQ
 
       def table(table, stream)
         super
+        add_id_column_comment(table, stream)
         track_miq_metric_table_inheritance(table)
+      end
+
+      def add_id_column_comment(table, stream)
+        pk      = @connection.primary_key(table)
+        pkcol   = @connection.columns(table).detect { |c| c.name == pk }
+        comment = pkcol.comment
+
+        return unless comment
+
+        stream.puts "  change_column_comment #{remove_prefix_and_suffix(table).inspect}, #{pk.inspect}, #{comment.inspect}"
+        stream.puts
       end
 
       # Must be done after all of the table definitions since `metrics_01` is
