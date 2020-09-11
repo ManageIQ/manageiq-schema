@@ -1,5 +1,21 @@
 class CollapsedInitialMigration < ActiveRecord::Migration[5.1]
   def up
+    # Ensure the database is empty if this migration is run.
+    #
+    # If a user has upgraded to at least ManageIQ Ivanchuk, then they will have
+    #   migration 20190726204302 from before the collapse, and this migration
+    #   will not run since it shares that number.
+    # If this is a brand new database, schema_migrations will be empty.  This
+    #   migration will run and allow that case.
+    # If a user has not upgraded to at least ManageIQ Ivanchuk, then they will
+    #   have entries in their schema_migrations table, but will not have
+    #   migration 20190726204302. This migration will run and disallow that case.
+    if table_exists?("schema_migrations") &&
+      connection.select_value("SELECT COUNT(*) FROM schema_migrations") != 0
+      raise "This database cannot be migrated. You must first upgrade this " \
+            "database using the ManageIQ Ivanchuk release."
+    end
+
     # This collapsed initial migration is partly generated from Rails' schema
     #   dumper, so we will ignore rubocop warnings.
     # rubocop:disable Rails/CreateTableWithTimestamps
