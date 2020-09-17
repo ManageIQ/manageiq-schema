@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 # Declare your gem's dependencies in manageiq-schema.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -12,6 +12,3 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 # your gemspec. These might include edge Rails or gems from your path or
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
-
-# To use a debugger
-# gem 'byebug', group: [:development, :test]
