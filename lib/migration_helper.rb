@@ -54,56 +54,19 @@ module MigrationHelper
   # Triggers
   #
 
+  # Keeping this helper to suppress the SQL body from the `say_with_time` output
   def add_trigger(direction, table, name, body)
     say_with_time("add_trigger(:#{direction}, :#{table}, :#{name})") do
-      add_trigger_function(name, body)
-      add_trigger_hook(direction, name, table, name)
-    end
-  end
-
-  def add_trigger_function(name, body)
-    quoted_name = connection.quote_table_name(name)
-    quoted_body = connection.quote("BEGIN\n#{body}\nEND;\n")
-
-    connection.execute <<-EOSQL, 'Create trigger function'
-      CREATE OR REPLACE FUNCTION #{quoted_name}()
-      RETURNS TRIGGER AS #{quoted_body}
-      LANGUAGE plpgsql;
-    EOSQL
-  end
-
-  def add_trigger_hook(direction, name, table, function)
-    quoted_name = connection.quote_column_name(name)
-    quoted_table = connection.quote_table_name(table)
-    quoted_function = connection.quote_table_name(function)
-    safe_direction = case(direction.downcase)
-                     when 'before'
-                       'BEFORE'
-                     when 'after'
-                       'AFTER'
-                     when 'insteadof'
-                       'INSTEAD OF'
-                     end
-
-    connection.execute <<-EOSQL, 'Create trigger'
-      CREATE TRIGGER #{quoted_name}
-      #{safe_direction} INSERT ON #{quoted_table}
-      FOR EACH ROW EXECUTE PROCEDURE #{quoted_function}();
-    EOSQL
-  end
-
-  def drop_trigger(table, name)
-    quoted_name = connection.quote_column_name(name)
-    quoted_table = connection.quote_table_name(table)
-
-    say_with_time("drop_trigger(:#{table}, :#{name})") do
-      connection.execute("DROP TRIGGER IF EXISTS #{quoted_name} ON #{quoted_table};", 'Drop trigger')
-      connection.execute("DROP FUNCTION IF EXISTS #{quoted_name}();", 'Drop trigger function')
+      connection.add_trigger(direction, table, name, body)
     end
   end
 
   #
   # Table inheritance
+  #
+  # (note:  Can't remove because it is used in CollapsedInitialMigration and
+  # this method was renamed in MiqSchemaStatements.  Renaming might have been a
+  # poor choice...)
   #
 
   def add_table_inheritance(table, inherit_from, options = {})
