@@ -19,7 +19,7 @@ module ManageIQ
       def add_id_column_comment(table, stream)
         pk      = @connection.primary_key(table)
         pkcol   = @connection.columns(table).detect { |c| c.name == pk }
-        comment = pkcol.comment
+        comment = pkcol.try(:comment)
 
         return unless comment
 
@@ -87,8 +87,8 @@ module ManageIQ
 
       def track_miq_metric_table_inheritance(table)
         return unless table.match?(METRIC_ROLLUP_TABLE_REGEXP)
+        return unless (inherit_from = determine_table_parent(table))
 
-        inherit_from              = determine_table_parent(table)
         inherited_metrics_tables << [table, inherit_from]
       end
 
@@ -97,12 +97,16 @@ module ManageIQ
       end
 
       def determine_table_parent(table_name)
-        @connection.execute(<<-SQL).first["parent_table"]
+        table = @connection.execute(<<-SQL)
           SELECT pg_class.relname AS parent_table
           FROM   pg_catalog.pg_inherits
           JOIN pg_class ON pg_class.oid = pg_inherits.inhparent
           WHERE inhrelid = '#{table_name}'::regclass
         SQL
+
+        return if table.first.nil?
+
+        table.first["parent_table"]
       end
 
       def column_spec_for_primary_key(column)
