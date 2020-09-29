@@ -19,7 +19,7 @@ module ManageIQ
       def add_id_column_comment(table, stream)
         pk      = @connection.primary_key(table)
         pkcol   = @connection.columns(table).detect { |c| c.name == pk }
-        comment = pkcol.comment
+        comment = pkcol.try(:comment)
 
         return unless comment
 
