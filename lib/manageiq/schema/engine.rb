@@ -3,6 +3,10 @@ module ManageIQ
     class Engine < ::Rails::Engine
       isolate_namespace ManageIQ::Schema
 
+      # This auto-generated line is intentionally commented out to avoid
+      #   autoload of helper classes when part of ManageIQ core.
+      # config.autoload_paths << root.join('lib').to_s
+
       ActiveSupport.on_load(:active_record) do
         require_relative 'migrate_with_cleared_schema_cache'
         require_relative 'schema_statements'

@@ -1,5 +1,3 @@
-.rubocop-*
-.ruby-version
 /.bundle/
 /.yardoc
 /Gemfile.lock
@@ -10,7 +8,11 @@
 /spec/reports/
 /tmp/
 
-# ignore included plugins in bundler.d
-bundler.d/*
+.rubocop-*
+/bundler.d/*
+!/bundler.d/.keep
+/config/settings.local.yml
+/config/settings/*.local.yml
+/config/environments/*.local.yml
 
 /spec/dummy/

@@ -1,3 +1,6 @@
+desc "Run all specs"
+task :spec => ["spec:non_migration", "spec:migrations"]
+
 namespace :spec do
   task :initialize do
     ENV["VERBOSE"]   ||= "false"
