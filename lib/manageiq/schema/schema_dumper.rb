@@ -5,7 +5,7 @@ module ManageIQ
 
       def tables(stream)
         super
-        miq_metric_table_contraints(stream)
+        miq_metric_table_constraints(stream)
         miq_metric_views(stream)
         triggers(stream)
       end
@@ -28,18 +28,18 @@ module ManageIQ
       end
 
       # Must be done after all of the table definitions since `metrics_01` is
-      # dumpped prior to `metrics_base`, etc.
+      # dumped prior to `metrics_base`, etc.
       #
-      def miq_metric_table_contraints(stream)
+      def miq_metric_table_constraints(stream)
         inherited_metrics_tables.each do |(table, inherit_from)|
-          match             = table.match(METRIC_ROLLUP_TABLE_REGEXP)
+          child_table_num   = table.match(METRIC_ROLLUP_TABLE_REGEXP)[:CHILD_TABLE_NUM].to_i
           child_table       = remove_prefix_and_suffix(table).inspect
           primary_condition = if inherit_from.include?("rollup")
                                 "capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?"
                               else
                                 "capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?"
                               end
-          conditions        = [primary_condition, "realtime", match[:CHILD_TABLE_NUM]]
+          conditions        = [primary_condition, "realtime", child_table_num]
 
           stream.puts "  add_miq_metric_table_inheritance #{child_table}, " \
                           "#{inherit_from.inspect}, "                       \
