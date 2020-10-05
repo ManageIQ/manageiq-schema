@@ -1,2 +1,1 @@
-require "manageiq/schema/engine"
-require "manageiq/schema/version"
+require "manageiq/schema"
