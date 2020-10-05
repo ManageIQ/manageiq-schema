@@ -66,14 +66,12 @@ module ManageIQ
           # - Removes the "BEGIN" and "END;" stanzas
           # - Chomps the new lines from the beginning (keeps existing indent)
           # - Strips whitespace from the end (no need to worry about indent)
-          # - Indents by four spaces
           #
           # For formatting, we want to ensure at least some bit of an indent,
           # regardless of how the SQL string was originally added.
           #
           formatted_body = body.gsub(/(BEGIN$|^END;$)/, "")
                                .reverse.chomp.reverse.rstrip
-                               .indent(4)
 
           stream.puts "  add_trigger #{direction_key.inspect}, "       \
                                     "#{table.inspect}, "               \
