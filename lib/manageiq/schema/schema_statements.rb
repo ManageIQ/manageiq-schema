@@ -14,6 +14,10 @@ module ManageIQ
         execute("DROP FUNCTION IF EXISTS #{quoted_name}();", 'Drop trigger function')
       end
 
+      def drop_sequence(table)
+        execute("DROP SEQUENCE #{table}_id_seq CASCADE", 'Drop sequence')
+      end
+
       def create_miq_metric_view(name)
         execute("CREATE VIEW #{name} AS SELECT * FROM #{name}_base")
         execute("ALTER VIEW #{name} ALTER COLUMN id SET DEFAULT nextval('#{name}_base_id_seq')")
@@ -40,6 +44,11 @@ module ManageIQ
 
         execute("ALTER TABLE #{quoted_table} DROP CONSTRAINT #{quoted_constraint}", 'Drop inheritance check constraint')
         execute("ALTER TABLE #{quoted_table} NO INHERIT #{quoted_inherit}", 'Drop table inheritance')
+      end
+
+      def change_miq_metric_sequence(table, inherit_from)
+        drop_sequence(table)
+        change_column_default(table, :id, -> { "nextval('#{inherit_from}_id_seq')" })
       end
 
       # Fetch the direction, table, name, and body for all of the MIQ INSERT

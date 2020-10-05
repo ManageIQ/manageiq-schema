@@ -5,6 +5,7 @@ module ManageIQ
 
       def tables(stream)
         super
+        miq_metric_table_sequences(stream)
         miq_metric_table_constraints(stream)
         miq_metric_views(stream)
         triggers(stream)
@@ -24,6 +25,15 @@ module ManageIQ
         return unless comment
 
         stream.puts "  change_column_comment #{remove_prefix_and_suffix(table).inspect}, #{pk.inspect}, #{comment.inspect}"
+        stream.puts
+      end
+
+      def miq_metric_table_sequences(stream)
+        inherited_metrics_tables.each do |(table, inherit_from)|
+          stream.puts "  change_miq_metric_sequence #{table.inspect}, " \
+                          "#{inherit_from.inspect}"
+        end
+
         stream.puts
       end
 
