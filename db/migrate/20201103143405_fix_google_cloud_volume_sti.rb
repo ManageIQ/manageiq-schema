@@ -17,14 +17,18 @@ class FixGoogleCloudVolumeSti < ActiveRecord::Migration[5.2]
   GOOGLE_CLOUD_VOLUME_KLASS = "ManageIQ::Providers::Google::CloudManager::CloudVolume".freeze
 
   def up
-    gce_relation = ExtManagementSystem.in_my_region.where(:type => GOOGLE_CLOUD_KLASS)
-    CloudVolume.in_my_region.where(:type => nil, :ext_management_system => gce_relation)
-               .update_all(:type => GOOGLE_CLOUD_VOLUME_KLASS)
+    say_with_time("Fix GCE CloudVolumes STI Class") do
+      gce_relation = ExtManagementSystem.in_my_region.where(:type => GOOGLE_CLOUD_KLASS)
+      CloudVolume.in_my_region.where(:type => nil, :ext_management_system => gce_relation)
+                 .update_all(:type => GOOGLE_CLOUD_VOLUME_KLASS)
+    end
   end
 
   def down
-    gce_relation = ExtManagementSystem.in_my_region.where(:type => GOOGLE_CLOUD_KLASS)
-    CloudVolume.in_my_region.where(:type => GOOGLE_CLOUD_VOLUME_KLASS, :ext_management_system => gce_relation)
-               .update_all(:type => nil)
+    say_with_time("Fix GCE CloudVolumes STI Class") do
+      gce_relation = ExtManagementSystem.in_my_region.where(:type => GOOGLE_CLOUD_KLASS)
+      CloudVolume.in_my_region.where(:type => GOOGLE_CLOUD_VOLUME_KLASS, :ext_management_system => gce_relation)
+                 .update_all(:type => nil)
+    end
   end
 end
