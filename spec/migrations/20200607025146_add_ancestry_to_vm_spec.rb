@@ -69,8 +69,7 @@ describe AddAncestryToVm do
       end
 
       it 'vm without ancestry' do
-        tree = create_tree(:a => nil)
-        a = tree[:a]
+        create_tree(:a => nil)
 
         migrate
 
@@ -86,6 +85,7 @@ describe AddAncestryToVm do
 
         migrate
 
+        expect(vm.reload.ancestry).to eq(nil)
         expect(child.reload.ancestry).to eq(nil)
         expect(parent.reload.ancestry).to eq(nil)
         expect(rel_stub.count).to eq(2)
