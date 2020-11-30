@@ -9,7 +9,7 @@ class CreateAddresses < ActiveRecord::Migration[5.2]
       t.string :iqn
       t.string :wwpn
       t.string :port_type
-      t.references :storage_consumer, :type => :bigint, :index => true
+      t.references :physical_storage_consumer, :type => :bigint, :index => true
     end
   end
 end
