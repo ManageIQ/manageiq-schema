@@ -7,7 +7,7 @@ describe AddAncestryToVm do
   let(:default_rel_type) { 'genealogy' }
 
   migration_context :up do
-    context "single parent/child rel" do
+    context "parent/child/grandchild rel" do
       it 'updates ancestry' do
         tree = create_tree(:parent => {:child => :grandchild})
         parent, child, grandchild = tree[:parent], tree[:child], tree[:grandchild]
@@ -22,10 +22,6 @@ describe AddAncestryToVm do
     end
 
     context "complicated tree" do
-      #           a
-      #      b         c
-      #      d         g
-      #    e   f
       it 'updates ancestry' do
         tree = create_tree(:a => [{:c => :g}, {:b => {:d => [:e, :f]}}])
         a, b, c, d, e, f, g = tree[:a], tree[:b], tree[:c], tree[:d], tree[:e], tree[:f], tree[:g]
@@ -144,10 +140,6 @@ describe AddAncestryToVm do
 
   private
 
-  def ancestry_for(*nodes)
-    nodes.map(&:id).join("/").presence
-  end
-
   def find_rel(obj)
     rel_stub.all.detect { |r| r.resource_id == obj.id }
   end
@@ -182,5 +174,9 @@ describe AddAncestryToVm do
 
   def create_non_genealogy_rel(ancestors, resource, relationship = 'ems_metadata')
     rel_stub.create!(:relationship => relationship, :ancestry => ancestors, :resource_type => 'VmOrTemplate', :resource_id => resource.id)
+  end
+
+  def ancestry_for(*nodes)
+    nodes.map(&:id).join("/").presence
   end
 end
