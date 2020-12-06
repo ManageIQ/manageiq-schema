@@ -6,6 +6,7 @@ class CreatePhysicalStorageConsumers < ActiveRecord::Migration[5.2]
       t.string :ems_ref
       t.string :uid_ems
       t.references :physical_storage, :type => :bigint, :index => true
+      # t.references :addresses, :type => :bigint, :index => true
 
       t.timestamps
     end
