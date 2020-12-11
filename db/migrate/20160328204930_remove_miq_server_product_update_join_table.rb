@@ -17,8 +17,9 @@ class RemoveMiqServerProductUpdateJoinTable < ActiveRecord::Migration[5.0]
   end
 
   def down
-    create_join_table(:miq_servers, :product_updates) do |t|
-      t.bigint :miq_server_id, :null => false
+    # create_join_table(:miq_servers, :product_updates)
+    create_table(:miq_servers_product_updates, id: false) do |t|
+      t.bigint :miq_server_id,     :null => false
       t.bigint :product_update_id, :null => false
     end
 
