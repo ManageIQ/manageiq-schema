@@ -1,3 +1,5 @@
+require 'pp'
+
 # MigrationHelper is a module that can be included into migrations to add
 # additional helper methods, thus eliminating some duplication and database
 # specific coding.
