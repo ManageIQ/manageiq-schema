@@ -24,7 +24,7 @@ class MoveRepoDataFromDatabaseToSettings < ActiveRecord::Migration[5.0]
 
     say_with_time("Moving repo information from Settings to miq_databases") do
       db = MiqDatabase.first
-      db.update_attributes!(:update_repo_name => change.value.join(" ")) if db
+      db.update!(:update_repo_name => change.value.join(" ")) if db
       change.delete
     end
   end

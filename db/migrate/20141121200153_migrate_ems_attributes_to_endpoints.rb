@@ -30,7 +30,7 @@ class MigrateEmsAttributesToEndpoints < ActiveRecord::Migration[4.2]
       endpoints.each do |endpoint|
         ems = ExtManagementSystem.where(:id => endpoint.resource_id).first
 
-        ems.update_attributes!(
+        ems.update!(
           :ipaddress => endpoint.ipaddress,
           :hostname  => endpoint.hostname,
           :port      => endpoint.port && endpoint.port.to_s

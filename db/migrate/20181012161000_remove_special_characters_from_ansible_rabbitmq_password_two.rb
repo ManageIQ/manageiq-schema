@@ -18,6 +18,6 @@ class RemoveSpecialCharactersFromAnsibleRabbitmqPasswordTwo < ActiveRecord::Migr
     return unless auth
 
     current = ManageIQ::Password.decrypt(auth.password)
-    auth.update_attributes!(:password => ManageIQ::Password.encrypt(SecureRandom.hex(18))) unless current =~ /^[a-zA-Z0-9]+$/
+    auth.update!(:password => ManageIQ::Password.encrypt(SecureRandom.hex(18))) unless current =~ /^[a-zA-Z0-9]+$/
   end
 end

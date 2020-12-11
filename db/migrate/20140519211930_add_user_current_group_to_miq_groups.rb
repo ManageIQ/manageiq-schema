@@ -14,7 +14,7 @@ class AddUserCurrentGroupToMiqGroups < ActiveRecord::Migration[4.2]
           u.miq_groups << u.current_group unless u.miq_groups.include?(current)
         else
           # Fixes an issue where existing databases could have orphaned current_group_ids
-          u.update_attributes(:current_group_id => nil)
+          u.update(:current_group_id => nil)
         end
       end
     end

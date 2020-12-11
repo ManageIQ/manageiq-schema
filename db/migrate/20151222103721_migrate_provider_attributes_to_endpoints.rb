@@ -18,7 +18,7 @@ class MigrateProviderAttributesToEndpoints < ActiveRecord::Migration[4.2]
           :resource_type => "ExtManagementSystem",
           :resource_id   => ems.id).first_or_create
 
-        endpoint.update_attributes!(:verify_ssl => provider.verify_ssl)
+        endpoint.update!(:verify_ssl => provider.verify_ssl)
       end
     end
   end
@@ -34,7 +34,7 @@ class MigrateProviderAttributesToEndpoints < ActiveRecord::Migration[4.2]
         next if endpoint.verify_ssl.nil?
         ems = ExtManagementSystem.where(:id => endpoint.resource_id).first
         provider = Provider.where(:id => ems.provider_id).first
-        provider.update_attributes!(
+        provider.update!(
           :verify_ssl => endpoint.verify_ssl)
       end
 

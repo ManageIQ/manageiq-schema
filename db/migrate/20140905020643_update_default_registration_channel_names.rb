@@ -5,7 +5,7 @@ class UpdateDefaultRegistrationChannelNames < ActiveRecord::Migration[4.2]
     say_with_time("Updating Default Registration Channel Names for v5.3") do
       db = MiqDatabase.first
       if db.try(:update_repo_name) == "cf-me-5.2-for-rhel-6-rpms"
-        db.update_attributes(:update_repo_name => "cf-me-5.3-for-rhel-6-rpms rhel-server-rhscl-6-rpms")
+        db.update(:update_repo_name => "cf-me-5.3-for-rhel-6-rpms rhel-server-rhscl-6-rpms")
       end
     end
   end

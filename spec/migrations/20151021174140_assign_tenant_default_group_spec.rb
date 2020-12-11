@@ -28,7 +28,7 @@ describe AssignTenantDefaultGroup do
       it "skips tenants that already have a group" do
         g = group_stub.create!(:description => "custom group")
         t = tenant_stub.create!
-        t.update_attributes(:default_miq_group_id => g.id)
+        t.update(:default_miq_group_id => g.id)
 
         migrate
 

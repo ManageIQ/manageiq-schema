@@ -47,7 +47,7 @@ class CheckGuidUniqueness < ActiveRecord::Migration[5.0]
   def up
     [AutomateWorkspace, MiqAeWorkspace, MiqPolicy, MiqRegion, MiqWidget, Service, ServiceTemplate].each do |thing|
       say_with_time("Checking #{thing} for guid uniqueness") do
-        thing.in_my_region.where(:guid => thing.in_my_region.select(:guid).group(:guid).having("count(*) > 1").pluck(:guid)).order(:id).drop(1).each { |obj| obj.update_attributes!(:guid => SecureRandom.uuid) }
+        thing.in_my_region.where(:guid => thing.in_my_region.select(:guid).group(:guid).having("count(*) > 1").pluck(:guid)).order(:id).drop(1).each { |obj| obj.update!(:guid => SecureRandom.uuid) }
       end
     end
   end

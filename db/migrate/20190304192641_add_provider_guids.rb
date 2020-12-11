@@ -8,7 +8,7 @@ class AddProviderGuids < ActiveRecord::Migration[5.0]
   def up
     say_with_time("Update provider guid values") do
       Provider.in_my_region.where(:guid => nil).each do |provider|
-        provider.update_attributes!(:guid => SecureRandom.uuid)
+        provider.update!(:guid => SecureRandom.uuid)
       end
     end
   end

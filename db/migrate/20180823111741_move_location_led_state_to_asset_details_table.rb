@@ -39,6 +39,6 @@ class MoveLocationLedStateToAssetDetailsTable < ActiveRecord::Migration[5.0]
   private
 
   def move_location_led_state_to_asset_detail(class_name, asset)
-    AssetDetail.in_my_region.find_or_initialize_by(:resource_type => class_name, :resource_id => asset.id).update_attributes!(:location_led_state => asset.location_led_state)
+    AssetDetail.in_my_region.find_or_initialize_by(:resource_type => class_name, :resource_id => asset.id).update!(:location_led_state => asset.location_led_state)
   end
 end

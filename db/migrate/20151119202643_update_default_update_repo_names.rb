@@ -22,7 +22,7 @@ class UpdateDefaultUpdateRepoNames < ActiveRecord::Migration[4.2]
     db = MiqDatabase.first
     if db
       new_repo = hash[db.update_repo_name]
-      db.update_attributes(:update_repo_name => new_repo) if new_repo
+      db.update(:update_repo_name => new_repo) if new_repo
     end
   end
 end

@@ -30,7 +30,7 @@ class FixEventClassForEvmAlertEvent < ActiveRecord::Migration[4.2]
           attrs[:target_type] = 'Host'
           attrs[:target_id]   = event.host_id
         end
-        event.update_attributes(attrs)
+        event.update(attrs)
       end
     end
   end

@@ -36,7 +36,7 @@ class LeverageAuthenticationsForRegistrationHttpProxyCredentials < ActiveRecord:
           :resource_id   => db.id,
         ).first
 
-        db.update_attributes(
+        db.update(
           :registration_http_proxy_username => auth.userid,
           :registration_http_proxy_password => ManageIQ::Password.try_encrypt(auth.password)
         )

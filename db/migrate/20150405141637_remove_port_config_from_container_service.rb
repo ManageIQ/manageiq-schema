@@ -44,7 +44,7 @@ class RemovePortConfigFromContainerService < ActiveRecord::Migration[4.2]
     say_with_time("Moving container service port config records back to container service") do
       ContainerService.all.each do |service|
         port_config = service.container_service_port_configs.first
-        service.update_attributes!(:port           => port_config.port,
+        service.update!(:port           => port_config.port,
                                    :protocol       => port_config.protocol,
                                    :container_port => port_config.target_port)
       end

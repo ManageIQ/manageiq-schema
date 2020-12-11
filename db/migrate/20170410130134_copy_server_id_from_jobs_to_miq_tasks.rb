@@ -8,7 +8,7 @@ class CopyServerIdFromJobsToMiqTasks < ActiveRecord::Migration[5.0]
   def up
     say_with_time("Copying miq_server_id from jobs table to miq_tasks") do
       Job.where.not(:miq_task_id => nil).find_each do |job|
-        MiqTask.find(job.miq_task_id).update_attributes!(:miq_server_id => job.miq_server_id)
+        MiqTask.find(job.miq_task_id).update!(:miq_server_id => job.miq_server_id)
       end
     end
   end

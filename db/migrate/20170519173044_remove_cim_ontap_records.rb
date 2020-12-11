@@ -112,7 +112,7 @@ class RemoveCimOntapRecords < ActiveRecord::Migration[5.0]
       SettingsChange.where(:key => "/server/role").each do |change|
         role_list = change.value.split(",")
         new_role_list = (role_list - ROLES).join(",")
-        change.update_attributes!(:value => new_role_list)
+        change.update!(:value => new_role_list)
       end
     end
 

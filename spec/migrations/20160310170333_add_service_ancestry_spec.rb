@@ -18,7 +18,7 @@ describe AddServiceAncestry do
       s11  = service_stub.create!(:service_id => s1.id)
       s111 = service_stub.create!(:service_id => s11.id)
       s112 = service_stub.create!(:service_id => s11.id)
-      s21.update_attributes(:service_id => s2.id) # note: s21.id < s2.id
+      s21.update(:service_id => s2.id) # note: s21.id < s2.id
 
       migrate
 
@@ -40,7 +40,7 @@ describe AddServiceAncestry do
       s11  = service_stub.create!(:ancestry => s1.id.to_s)
       s111 = service_stub.create!(:ancestry => "#{s1.id}/#{s11.id}")
       s112 = service_stub.create!(:ancestry => "#{s1.id}/#{s11.id}")
-      s21.update_attributes(:ancestry => s2.id.to_s) # note: s21.id < s2.id
+      s21.update(:ancestry => s2.id.to_s) # note: s21.id < s2.id
 
       migrate
 

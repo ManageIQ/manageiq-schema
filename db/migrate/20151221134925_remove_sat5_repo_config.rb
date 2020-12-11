@@ -12,7 +12,7 @@ class RemoveSat5RepoConfig < ActiveRecord::Migration[4.2]
       new_repos = "cf-me-5.5-for-rhel-7-rpms rhel-server-rhscl-7-rpms"
 
       if db.registration_type == "rhn_satellite"
-        db.update_attributes(
+        db.update(
           :registration_type                      => nil,
           :registration_organization              => nil,
           :registration_server                    => nil,

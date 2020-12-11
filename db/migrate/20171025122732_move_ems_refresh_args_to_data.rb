@@ -10,7 +10,7 @@ class MoveEmsRefreshArgsToData < ActiveRecord::Migration[5.0]
           targets = queue_item.args.first
           data = Marshal.dump(targets) unless targets.nil?
 
-          queue_item.update_attributes(:msg_data => data, :args => [])
+          queue_item.update(:msg_data => data, :args => [])
         rescue
           # If Marshal.load fails we want to delete the queue item
           queue_item.delete
@@ -25,7 +25,7 @@ class MoveEmsRefreshArgsToData < ActiveRecord::Migration[5.0]
         begin
           args = queue_item.msg_data && Marshal.load(queue_item.msg_data)
 
-          queue_item.update_attributes(:args => args, :msg_data => nil)
+          queue_item.update(:args => args, :msg_data => nil)
         rescue
           # If Marshal.load fails we want to delete the queue item
           queue_item.delete

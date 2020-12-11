@@ -10,7 +10,7 @@ class MigrateOldConfigurationSettings < ActiveRecord::Migration[4.2]
       Configuration.where(:typ => "vmdb").each do |config|
         hash = config.settings.deep_symbolize_keys
         update_methods.each { |m| send(m, hash) }
-        config.update_attributes!(:settings => hash)
+        config.update!(:settings => hash)
       end
     end
   end
