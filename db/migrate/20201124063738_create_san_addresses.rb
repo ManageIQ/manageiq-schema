@@ -1,6 +1,6 @@
-class CreateAddresses < ActiveRecord::Migration[5.2]
+class CreateSanAddresses < ActiveRecord::Migration[5.2]
   def change
-    create_table :addresses do |t|
+    create_table :san_addresses do |t|
       t.references :ems, :type => :bigint, :index => true, :references => :ext_management_system
       t.string :ems_ref
       # t.references :physical_storage, :type => :bigint, :index => true
