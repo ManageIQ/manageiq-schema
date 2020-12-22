@@ -10,6 +10,8 @@ class CreateSanAddresses < ActiveRecord::Migration[5.2]
       t.string :wwpn
       t.string :wwnn
       t.string :type
+
+      t.timestamps
     end
   end
 end
