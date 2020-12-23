@@ -14,7 +14,7 @@ class AddAncestryToVm < ActiveRecord::Migration[5.2]
     add_index :vms, :ancestry
 
     say_with_time("set vm ancestry from existing genealogy relationship resource information") do
-      connection.execute(transfer_relationships_to_ancestry(VmOrTemplate, 'VmOrTemplate', 'genealogy'))
+      transfer_relationships_to_ancestry(VmOrTemplate, 'VmOrTemplate', 'genealogy')
     end
 
     Relationship.where(:relationship => 'genealogy', :resource_type => 'VmOrTemplate', :resource_id => VmOrTemplate.all.select(:id)).delete_all
@@ -33,7 +33,7 @@ class AddAncestryToVm < ActiveRecord::Migration[5.2]
     ancestry_resources = ancestry_resource_ids(relationship, resource_type, dest_model.rails_sequence_range(dest_model.my_region_number))
     ancestry_sources = ancestry_src_ids(ancestry_resources)
     new_ancestors = ancestry_of_src_ids_for_src(ancestry_sources)
-    update_src(new_ancestors, dest_model)
+    connection.execute(update_src(new_ancestors, dest_model))
   end
 
   # src is vm, dest is relationship
