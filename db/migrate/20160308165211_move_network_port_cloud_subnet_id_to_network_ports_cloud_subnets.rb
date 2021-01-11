@@ -27,7 +27,7 @@ class MoveNetworkPortCloudSubnetIdToNetworkPortsCloudSubnets < ActiveRecord::Mig
     NetworkPort.in_my_region.find_each do |network_port|
       cloud_subnet_network_port = CloudSubnetNetworkPort.find_by(:network_port_id => network_port.id)
       if cloud_subnet_network_port
-        network_port.update_attributes!(:cloud_subnet_id => cloud_subnet_network_port.cloud_subnet_id)
+        network_port.update!(:cloud_subnet_id => cloud_subnet_network_port.cloud_subnet_id)
         cloud_subnet_network_port.destroy
       end
     end

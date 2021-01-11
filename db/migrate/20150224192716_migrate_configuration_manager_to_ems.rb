@@ -33,11 +33,11 @@ class MigrateConfigurationManagerToEms < ActiveRecord::Migration[4.2]
         ems = ExtManagementSystem.create!(attrs)
 
         Array(systems.delete(manager.id)).each do |s|
-          s.update_attributes!(:configuration_manager_id => ems.id)
+          s.update!(:configuration_manager_id => ems.id)
         end
 
         Array(profiles.delete(manager.id)).each do |p|
-          p.update_attributes!(:configuration_manager_id => ems.id)
+          p.update!(:configuration_manager_id => ems.id)
         end
 
         manager.delete
@@ -58,11 +58,11 @@ class MigrateConfigurationManagerToEms < ActiveRecord::Migration[4.2]
         manager = ConfigurationManager.create!(attrs)
 
         Array(systems.delete(ems.id)).each do |s|
-          s.update_attributes!(:configuration_manager_id => manager.id)
+          s.update!(:configuration_manager_id => manager.id)
         end
 
         Array(profiles.delete(ems.id)).each do |p|
-          p.update_attributes!(:configuration_manager_id => manager.id)
+          p.update!(:configuration_manager_id => manager.id)
         end
 
         ems.delete

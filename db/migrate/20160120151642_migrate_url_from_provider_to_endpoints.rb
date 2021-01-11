@@ -20,7 +20,7 @@ class MigrateUrlFromProviderToEndpoints < ActiveRecord::Migration[4.2]
           :resource_type => "Provider",
           :resource_id   => ems.id).first_or_create
 
-        endpoint.update_attributes!(:url => provider.url)
+        endpoint.update!(:url => provider.url)
       end
     end
   end
@@ -36,7 +36,7 @@ class MigrateUrlFromProviderToEndpoints < ActiveRecord::Migration[4.2]
         next if endpoint.url.nil?
         ems = ExtManagementSystem.where(:id => endpoint.resource_id).first
         provider = Provider.where(:id => ems.provider_id).first
-        provider.update_attributes!(
+        provider.update!(
           :url => endpoint.url)
       end
 

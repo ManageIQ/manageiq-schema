@@ -31,11 +31,11 @@ class MigrateProvisioningManagerToEms < ActiveRecord::Migration[4.2]
         ems = ExtManagementSystem.create!(attrs)
 
         Array(os_flavors.delete(manager.id)).each do |f|
-          f.update_attributes!(:provisioning_manager_id => ems.id)
+          f.update!(:provisioning_manager_id => ems.id)
         end
 
         Array(scripts.delete(manager.id)).each do |s|
-          s.update_attributes!(:provisioning_manager_id => ems.id)
+          s.update!(:provisioning_manager_id => ems.id)
         end
 
         manager.delete
@@ -56,11 +56,11 @@ class MigrateProvisioningManagerToEms < ActiveRecord::Migration[4.2]
         manager = ProvisioningManager.create!(attrs)
 
         Array(os_flavors.delete(ems.id)).each do |f|
-          f.update_attributes!(:provisioning_manager_id => manager.id)
+          f.update!(:provisioning_manager_id => manager.id)
         end
 
         Array(scripts.delete(ems.id)).each do |s|
-          s.update_attributes!(:provisioning_manager_id => manager.id)
+          s.update!(:provisioning_manager_id => manager.id)
         end
 
         ems.delete

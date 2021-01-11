@@ -24,7 +24,7 @@ class ChangeCapacityToHashFromPersistentVolume < ActiveRecord::Migration[5.0]
             end
           end
         end
-        vol.update_attributes!(:capacity => result_hash)
+        vol.update!(:capacity => result_hash)
       end
     end
   end
@@ -35,7 +35,7 @@ class ChangeCapacityToHashFromPersistentVolume < ActiveRecord::Migration[5.0]
         next if vol.capacity.nil?
         capacity = vol.capacity.collect { |key, val| "#{key}=#{val}" }.join(",")
         capacity = nil if capacity.blank?
-        vol.update_attributes!(:capacity => capacity)
+        vol.update!(:capacity => capacity)
       end
     end
     change_column :container_volumes, :capacity, :string

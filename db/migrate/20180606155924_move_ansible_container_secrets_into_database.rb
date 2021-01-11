@@ -82,7 +82,7 @@ class MoveAnsibleContainerSecretsIntoDatabase < ActiveRecord::Migration[5.0]
 
   def update_or_create_authentication!(find_args, update_args)
     auth = Authentication.find_or_initialize_by(find_args)
-    auth.update_attributes!(update_args)
+    auth.update!(update_args)
   end
 
   def request_params

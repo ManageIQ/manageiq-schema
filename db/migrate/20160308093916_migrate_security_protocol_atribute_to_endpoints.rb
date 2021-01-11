@@ -14,7 +14,7 @@ class MigrateSecurityProtocolAtributeToEndpoints < ActiveRecord::Migration[5.0]
           :resource_id   => ems.id,
           :role          => "default").first_or_create
 
-        endpoint.update_attributes!(:security_protocol => ems.security_protocol)
+        endpoint.update!(:security_protocol => ems.security_protocol)
       end
     end
   end
@@ -29,7 +29,7 @@ class MigrateSecurityProtocolAtributeToEndpoints < ActiveRecord::Migration[5.0]
       endpoints.each do |endpoint|
         next if endpoint.security_protocol.nil?
         ems = ExtManagementSystem.where(:id => endpoint.resource_id).first
-        ems.update_attributes!(
+        ems.update!(
           :security_protocol => endpoint.security_protocol)
       end
 

@@ -9,7 +9,7 @@ class SubclassFileDepotByProtocol < ActiveRecord::Migration[4.2]
     say_with_time("Sub-classing all FileDepots") do
       FileDepot.all.each do |fd|
         new_type = type_from_uri(fd.uri.to_s)
-        new_type.blank? ? fd.destroy : fd.update_attributes(:type => new_type)
+        new_type.blank? ? fd.destroy : fd.update(:type => new_type)
       end
     end
   end

@@ -19,7 +19,7 @@ class AddDeletedOnToContainerQuotaAndItems < ActiveRecord::Migration[5.0]
           now = Time.zone.now
           ContainerQuotaItem.includes(:container_quota).find_each do |item|
             # This also sets updated_at to migration time.
-            item.update_attributes!(:created_at => item.container_quota.try(:created_on) || now)
+            item.update!(:created_at => item.container_quota.try(:created_on) || now)
           end
         end
       end

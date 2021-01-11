@@ -84,7 +84,7 @@ class MigrateOrchStacksToHaveOwnershipConcept < ActiveRecord::Migration[5.0]
     after_create :create_tenant_group
 
     def create_tenant_group
-      update_attributes!(:default_miq_group => MiqGroup.create_tenant_group(self)) unless default_miq_group_id
+      update!(:default_miq_group => MiqGroup.create_tenant_group(self)) unless default_miq_group_id
       self
     end
   end
@@ -119,7 +119,7 @@ class MigrateOrchStacksToHaveOwnershipConcept < ActiveRecord::Migration[5.0]
                else
                  User.super_admin
                end
-        stack.update_attributes(:evm_owner_id => user.id, :tenant_id => user.current_tenant.id, :miq_group_id => user.current_group.id)
+        stack.update(:evm_owner_id => user.id, :tenant_id => user.current_tenant.id, :miq_group_id => user.current_group.id)
       end
     end
   end

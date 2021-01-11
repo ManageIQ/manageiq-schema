@@ -11,7 +11,7 @@ class SplitWidgetSetNameToThreeColumns < ActiveRecord::Migration[4.2]
         items = ws.name.split("|")
         if items.size == 3
           userid, group_id, name = items
-          ws.update_attributes(:name => name, :userid => userid, :group_id => group_id)
+          ws.update(:name => name, :userid => userid, :group_id => group_id)
         else
           ws.destroy
         end
@@ -26,7 +26,7 @@ class SplitWidgetSetNameToThreeColumns < ActiveRecord::Migration[4.2]
     MiqSet.where(:set_type => 'MiqWidgetSet').each do |ws|
       next if ws.userid.nil? || ws.group_id.nil?
       name = "#{ws.userid}|#{ws.group_id}|#{ws.name}"
-      ws.update_attributes(:name => name)
+      ws.update(:name => name)
     end
 
     remove_index  :miq_sets, :userid

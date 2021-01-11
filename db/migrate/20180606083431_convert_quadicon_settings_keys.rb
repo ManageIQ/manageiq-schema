@@ -9,7 +9,7 @@ class ConvertQuadiconSettingsKeys < ActiveRecord::Migration[5.0]
         settings = user.settings
         next unless settings[:quadicons]
         settings[:quadicons][:ems_infra] = settings[:quadicons].delete(:ems)
-        user.update_attributes(:settings => settings)
+        user.update(:settings => settings)
       end
     end
   end
@@ -20,7 +20,7 @@ class ConvertQuadiconSettingsKeys < ActiveRecord::Migration[5.0]
         settings = user.settings
         next unless settings[:quadicons]
         settings[:quadicons][:ems] = settings[:quadicons].delete(:ems_infra)
-        user.update_attributes(:settings => settings)
+        user.update(:settings => settings)
       end
     end
   end

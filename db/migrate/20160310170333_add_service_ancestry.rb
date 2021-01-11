@@ -6,7 +6,7 @@ class AddServiceAncestry < ActiveRecord::Migration[5.0]
   def update_service_parent(parent)
     ancestry = [parent.ancestry.presence, parent.id].compact.join("/") if parent
     Service.where(:service_id => parent.try(:id)).each do |svc|
-      svc.update_attributes(:ancestry => ancestry) if ancestry
+      svc.update(:ancestry => ancestry) if ancestry
       update_service_parent(svc)
     end
   end
@@ -29,7 +29,7 @@ class AddServiceAncestry < ActiveRecord::Migration[5.0]
     say_with_time("Converting Services from ancestry to service_id") do
       Service.all.each do |service|
         parent_service_id = service.ancestry.split("/").last.to_i if service.ancestry.present?
-        service.update_attributes(:service_id => parent_service_id)
+        service.update(:service_id => parent_service_id)
       end
     end
 

@@ -51,14 +51,14 @@ class MigrateAutomateToCustomerDomain < ActiveRecord::Migration[4.2]
 
     inherited_miq_ae_classes.each do |ae_class|
       next if domain_names.include?(ae_class.inherits.split("/").first)
-      ae_class.update_attributes(:inherits => File.join(CUSTOMER_DOMAIN, ae_class.inherits))
+      ae_class.update(:inherits => File.join(CUSTOMER_DOMAIN, ae_class.inherits))
     end
   end
 
   def revert_miq_ae_class
     inherited_miq_ae_classes.each do |ae_class|
       if ae_class.inherits.starts_with?("#{CUSTOMER_DOMAIN}/")
-        ae_class.update_attributes(:inherits => ae_class.inherits.sub("#{CUSTOMER_DOMAIN}/", ''))
+        ae_class.update(:inherits => ae_class.inherits.sub("#{CUSTOMER_DOMAIN}/", ''))
       end
     end
   end

@@ -103,7 +103,11 @@ module Spec
 
       def migrate_to(version)
         suppress_migration_messages do
-          if ActiveRecord::VERSION::STRING >= "5.2.0"
+          if ActiveRecord::VERSION::STRING >= "6.0.0"
+            migration_dir  = Rails.application.config.paths["db/migrate"]
+            migration_conn = ::ActiveRecord::Base.connection.schema_migration
+            ActiveRecord::MigrationContext.new(migration_dir, migration_conn).migrate(version)
+          elsif ActiveRecord::VERSION::STRING >= "5.2.0"
             ActiveRecord::MigrationContext.new('db/migrate').migrate(version)
           else
             ActiveRecord::Migrator.migrate('db/migrate', version)
@@ -123,7 +127,13 @@ module Spec
       end
 
       def run_migrate
-        if ActiveRecord::VERSION::STRING >= "5.2.0"
+        if ActiveRecord::VERSION::STRING >= "6.0.0"
+          migration_dir  = Rails.application.config.paths["db/migrate"]
+          migration_conn = ::ActiveRecord::Base.connection.schema_migration
+          context        = ActiveRecord::MigrationContext.new(migration_dir, migration_conn)
+
+          context.run(migration_direction, this_migration_version)
+        elsif ActiveRecord::VERSION::STRING >= "5.2.0"
           ActiveRecord::MigrationContext.new('db/migrate').run(migration_direction, this_migration_version)
         else
           described_class.migrate(migration_direction)
@@ -131,7 +141,11 @@ module Spec
       end
 
       def schema_migrations
-        if ActiveRecord::VERSION::STRING >= "5.2.0"
+        if ActiveRecord::VERSION::STRING >= "6.0.0"
+          migration_dir  = Rails.application.config.paths["db/migrate"]
+          migration_conn = ::ActiveRecord::Base.connection.schema_migration
+          ActiveRecord::MigrationContext.new(migration_dir, migration_conn).migrations
+        elsif ActiveRecord::VERSION::STRING >= "5.2.0"
           ActiveRecord::MigrationContext.new('db/migrate').migrations
         else
           ActiveRecord::Migrator.migrations('db/migrate')

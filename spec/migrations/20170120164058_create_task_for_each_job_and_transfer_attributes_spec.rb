@@ -53,7 +53,7 @@ describe CreateTaskForEachJobAndTransferAttributes do
     it "delete all tasks associated with jobs" do
       job = jobs_stub.create!(:name => "Hello Test Job")
       task_with_job = miq_tasks_stub.create!(:name => "Hello Test Job")
-      job.update_attributes(:miq_task_id => task_with_job.id)
+      job.update(:miq_task_id => task_with_job.id)
       miq_tasks_stub.create!(:name => "Task without Job")
       miq_tasks_stub.create!(:name => "Another Task without Job")
 

@@ -13,7 +13,7 @@ class RemoveSystemAddSourceToMiqAeNamespace < ActiveRecord::Migration[5.0]
                  else
                    'user'
                  end
-        obj.update_attributes!(:source => source)
+        obj.update!(:source => source)
       end
     end
 
@@ -26,7 +26,7 @@ class RemoveSystemAddSourceToMiqAeNamespace < ActiveRecord::Migration[5.0]
     say_with_time('Migrating source attribute to system in MiqAeNamespace') do
       MiqAeNamespace.where(:parent_id => nil).each do |obj|
         system = (obj.source == 'system' || obj.source == 'user_locked')
-        obj.update_attributes!(:system => system)
+        obj.update!(:system => system)
       end
     end
 

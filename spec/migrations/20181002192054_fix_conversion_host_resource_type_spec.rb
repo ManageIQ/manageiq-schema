@@ -20,7 +20,7 @@ describe FixConversionHostResourceType do
 
   migration_context :up do
     it "Updates invalid resource_types" do
-      conversion_host.update_attributes!(
+      conversion_host.update!(
         :resource_id   => host.id,
         :resource_type => "AddConversionHostIdToMiqRequestTasks::Host"
       )
@@ -31,7 +31,7 @@ describe FixConversionHostResourceType do
     end
 
     it "Doesn't update valid resource_types" do
-      conversion_host.update_attributes!(
+      conversion_host.update!(
         :resource_id   => vm.id,
         :resource_type => "Vm"
       )

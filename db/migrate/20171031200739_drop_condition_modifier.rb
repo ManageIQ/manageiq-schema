@@ -12,7 +12,7 @@ class DropConditionModifier < ActiveRecord::Migration[5.0]
       raw_hash = YAML.safe_load(val)
       raw_hash["exp"] = { "not" => raw_hash["exp"]}
       new_hash = YAML.dump(raw_hash).sub(/---/, "--- !ruby/object:MiqExpression")
-      update_attributes(:expression => new_hash)
+      update(:expression => new_hash)
     end
   end
 
