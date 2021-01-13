@@ -119,7 +119,7 @@ module ManageIQ
 
       def column_spec_for_primary_key(column)
         result = super
-        result.delete(:default) if column.table_name.match?(METRIC_ROLLUP_TABLE_REGEXP)
+        result.delete(:default) if table_name.match?(METRIC_ROLLUP_TABLE_REGEXP)
         result
       end
     end
