@@ -9,11 +9,4 @@ class SubclassCinderManagerOpenstack < ActiveRecord::Migration[6.0]
                          .update_all(:type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager")
     end
   end
-
-  def down
-    say_with_time("Move CinderManager from Openstack") do
-      ExtManagementSystem.where(:type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager")
-                         .update_all(:type => "ManageIQ::Providers::StorageManager::CinderManager")
-    end
-  end
 end
