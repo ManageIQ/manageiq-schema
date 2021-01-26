@@ -38,7 +38,7 @@ class AddAncestryToVm < ActiveRecord::Migration[5.2]
 
   # src is vm, dest is relationship
   def create_relationships_from_ancestry(src_model, dest_model, resource_type, relationship)
-    children = src_model.select("ancestry::bigint").where("ancestry not like '%/%'")
+    children = src_model.select("ancestry::bigint").where("ancestry NOT LIKE '%/%'")
     rels = src_model.where.not(:ancestry => nil).or(src_model.where(:id => children)).map do |obj|
       dest_model.create!(:relationship  => relationship,
                          :resource_type => resource_type,

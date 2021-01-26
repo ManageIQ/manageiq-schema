@@ -167,8 +167,9 @@ describe AddAncestryToVm do
         yield(parent, key)
         traverse(children, parent + [key], &block)
       end
+    when nil
     else
-      puts "curious type: #{tree.class.name}"
+      raise StandardError, "curious type: #{tree.class.name}"
     end
   end
 
