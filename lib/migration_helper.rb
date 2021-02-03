@@ -20,7 +20,6 @@ module MigrationHelper
 
   def say_batch_started(count)
     say "Processing #{count} rows", :subitem
-    require 'thread'
     @batch_mutex ||= Mutex.new
     @batch_total_started = Time.now.utc
     @batch_started = Time.now.utc
