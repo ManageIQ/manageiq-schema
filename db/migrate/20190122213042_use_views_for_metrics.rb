@@ -41,21 +41,6 @@ class UseViewsForMetrics < ActiveRecord::Migration[5.0]
 
   private
 
-  def create_view(name)
-    execute(<<-SQL)
-      CREATE VIEW #{name} AS SELECT * FROM #{name}_base
-    SQL
-    execute(<<-SQL)
-      ALTER VIEW #{name} ALTER COLUMN id SET DEFAULT nextval('#{name}_base_id_seq')
-    SQL
-  end
-
-  def drop_view(name)
-    execute(<<-SQL)
-      DROP VIEW #{name}
-    SQL
-  end
-
   def metrics_trigger_sql
     <<-SQL
       CASE EXTRACT(HOUR FROM NEW.timestamp)

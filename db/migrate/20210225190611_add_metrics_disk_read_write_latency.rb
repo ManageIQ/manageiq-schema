@@ -1,4 +1,6 @@
 class AddMetricsDiskReadWriteLatency < ActiveRecord::Migration[6.0]
+  include MigrationHelper
+
   DISK_LATENCY_METRIC_COLUMNS = %i[
     disk_devicereadlatency_absolute_average
     disk_kernelreadlatency_absolute_average
@@ -10,15 +12,34 @@ class AddMetricsDiskReadWriteLatency < ActiveRecord::Migration[6.0]
     disk_queuewritelatency_absolute_average
   ].freeze
 
-  def change
+  def up
     add_disk_latency_metric_columns("metrics_base")
     add_disk_latency_metric_columns("metric_rollups_base")
+
+    recreate_view("metrics")
+    recreate_view("metric_rollups")
+  end
+
+  def down
+    remove_disk_latency_metric_columns("metrics_base")
+    remove_disk_latency_metric_columns("metric_rollups_base")
+
+    recreate_view("metrics")
+    recreate_view("metric_rollups")
   end
 
   def add_disk_latency_metric_columns(table_name)
     say_with_time("Adding disk read/write latency to #{table_name}") do
       DISK_LATENCY_METRIC_COLUMNS.each do |column_name|
         add_column table_name, column_name, :float
+      end
+    end
+  end
+
+  def remove_disk_latency_metric_columns(table_name)
+    say_with_time("Adding disk read/write latency to #{table_name}") do
+      DISK_LATENCY_METRIC_COLUMNS.each do |column_name|
+        remove_column table_name, column_name
       end
     end
   end

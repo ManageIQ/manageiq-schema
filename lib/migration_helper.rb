@@ -52,6 +52,30 @@ module MigrationHelper
   private :estimate_batch_complete
 
   #
+  # Views
+  #
+
+  def create_view(name, base = "#{name}_base")
+    execute(<<-SQL)
+      CREATE VIEW #{name} AS SELECT * FROM #{base}
+    SQL
+    execute(<<-SQL)
+      ALTER VIEW #{name} ALTER COLUMN id SET DEFAULT nextval('#{base}_id_seq')
+    SQL
+  end
+
+  def drop_view(name)
+    execute(<<-SQL)
+      DROP VIEW #{name}
+    SQL
+  end
+
+  def recreate_view(name)
+    drop_view(name)
+    create_view(name)
+  end
+
+  #
   # Triggers
   #
 
