@@ -2,14 +2,8 @@ class AddMetricsDiskReadWriteLatency < ActiveRecord::Migration[6.0]
   include MigrationHelper
 
   DISK_LATENCY_METRIC_COLUMNS = %i[
-    disk_devicereadlatency_absolute_average
-    disk_kernelreadlatency_absolute_average
     disk_totalreadlatency_absolute_average
-    disk_queuereadlatency_absolute_average
-    disk_devicewritelatency_absolute_average
-    disk_kernelwritelatency_absolute_average
     disk_totalwritelatency_absolute_average
-    disk_queuewritelatency_absolute_average
   ].freeze
 
   def up
