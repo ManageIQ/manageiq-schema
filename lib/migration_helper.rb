@@ -70,11 +70,6 @@ module MigrationHelper
     SQL
   end
 
-  def recreate_view(name)
-    drop_view(name)
-    create_view(name)
-  end
-
   #
   # Triggers
   #

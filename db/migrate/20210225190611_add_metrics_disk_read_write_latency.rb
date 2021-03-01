@@ -13,19 +13,25 @@ class AddMetricsDiskReadWriteLatency < ActiveRecord::Migration[6.0]
   ].freeze
 
   def up
+    drop_view("metrics")
+    drop_view("metric_rollups")
+
     add_disk_latency_metric_columns("metrics_base")
     add_disk_latency_metric_columns("metric_rollups_base")
 
-    recreate_view("metrics")
-    recreate_view("metric_rollups")
+    create_view("metrics")
+    create_view("metric_rollups")
   end
 
   def down
+    drop_view("metrics")
+    drop_view("metric_rollups")
+
     remove_disk_latency_metric_columns("metrics_base")
     remove_disk_latency_metric_columns("metric_rollups_base")
 
-    recreate_view("metrics")
-    recreate_view("metric_rollups")
+    create_view("metrics")
+    create_view("metric_rollups")
   end
 
   def add_disk_latency_metric_columns(table_name)
