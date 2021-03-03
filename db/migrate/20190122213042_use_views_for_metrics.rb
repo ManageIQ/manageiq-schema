@@ -13,8 +13,8 @@ class UseViewsForMetrics < ActiveRecord::Migration[5.0]
     rename_table :metric_rollups, :metric_rollups_base
 
     # Create the view with the new table name
-    create_view "metrics"
-    create_view "metric_rollups"
+    create_metrics_view "metrics"
+    create_metrics_view "metric_rollups"
 
     # Add the new trigger on the view
     add_trigger "insteadof", "metrics", "metrics_partition", metrics_trigger_sql

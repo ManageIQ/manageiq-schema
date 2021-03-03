@@ -7,40 +7,28 @@ class AddMetricsDiskReadWriteLatency < ActiveRecord::Migration[6.0]
   ].freeze
 
   def up
-    drop_view("metrics")
-    drop_view("metric_rollups")
-
-    add_disk_latency_metric_columns("metrics_base")
-    add_disk_latency_metric_columns("metric_rollups_base")
-
-    create_view("metrics")
-    create_view("metric_rollups")
+    recreate_metrics_views do
+      add_disk_latency_metric_columns("metrics_base")
+      add_disk_latency_metric_columns("metric_rollups_base")
+    end
   end
 
   def down
-    drop_view("metrics")
-    drop_view("metric_rollups")
-
-    remove_disk_latency_metric_columns("metrics_base")
-    remove_disk_latency_metric_columns("metric_rollups_base")
-
-    create_view("metrics")
-    create_view("metric_rollups")
+    recreate_metrics_views do
+      remove_disk_latency_metric_columns("metrics_base")
+      remove_disk_latency_metric_columns("metric_rollups_base")
+    end
   end
 
   def add_disk_latency_metric_columns(table_name)
-    say_with_time("Adding disk read/write latency to #{table_name}") do
-      DISK_LATENCY_METRIC_COLUMNS.each do |column_name|
-        add_column table_name, column_name, :float
-      end
+    DISK_LATENCY_METRIC_COLUMNS.each do |column_name|
+      add_column table_name, column_name, :float
     end
   end
 
   def remove_disk_latency_metric_columns(table_name)
-    say_with_time("Adding disk read/write latency to #{table_name}") do
-      DISK_LATENCY_METRIC_COLUMNS.each do |column_name|
-        remove_column table_name, column_name
-      end
+    DISK_LATENCY_METRIC_COLUMNS.each do |column_name|
+      remove_column table_name, column_name
     end
   end
 end

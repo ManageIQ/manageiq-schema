@@ -55,19 +55,33 @@ module MigrationHelper
   # Views
   #
 
-  def create_view(name, base = "#{name}_base")
+  def create_view(name, query, sequence)
     execute(<<-SQL)
-      CREATE VIEW #{name} AS SELECT * FROM #{base}
+      CREATE VIEW #{name} AS #{query}
     SQL
     execute(<<-SQL)
-      ALTER VIEW #{name} ALTER COLUMN id SET DEFAULT nextval('#{base}_id_seq')
+      ALTER VIEW #{name} ALTER COLUMN id SET DEFAULT nextval('#{sequence}')
     SQL
+  end
+
+  def create_metrics_view(name)
+    create_view(name, "SELECT * FROM #{name}_base", "#{name}_base_id_seq")
   end
 
   def drop_view(name)
     execute(<<-SQL)
       DROP VIEW #{name}
     SQL
+  end
+
+  def recreate_metrics_views
+    drop_view("metrics")
+    drop_view("metric_rollups")
+
+    yield
+
+    create_metrics_view("metrics")
+    create_metrics_view("metric_rollups")
   end
 
   #
