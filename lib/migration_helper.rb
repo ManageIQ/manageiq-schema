@@ -56,12 +56,10 @@ module MigrationHelper
   #
 
   def create_view(name, query, sequence)
-    execute(<<-SQL)
-      CREATE VIEW #{name} AS #{query}
-    SQL
-    execute(<<-SQL)
-      ALTER VIEW #{name} ALTER COLUMN id SET DEFAULT nextval('#{sequence}')
-    SQL
+    say_with_time("create_view(:#{name}, :#{sequence})") do
+      execute("CREATE VIEW #{name} AS #{query}")
+      execute("ALTER VIEW #{name} ALTER COLUMN id SET DEFAULT nextval('#{sequence}')")
+    end
   end
 
   def create_metrics_view(name)
@@ -69,9 +67,9 @@ module MigrationHelper
   end
 
   def drop_view(name)
-    execute(<<-SQL)
-      DROP VIEW #{name}
-    SQL
+    say_with_time("drop_view(:#{name})") do
+      execute("DROP VIEW #{name}")
+    end
   end
 
   def recreate_metrics_views
