@@ -29,6 +29,7 @@ class EnsureEmsStorageFeatures < ActiveRecord::Migration[6.0]
         next if storage_feature.nil?
 
         block_storage_feature.miq_user_roles.each do |user_role|
+          # Skip if the user already has the role enabled
           next if user_role.miq_product_features.include?(storage_feature)
 
           user_role.miq_product_features << storage_feature
@@ -37,4 +38,7 @@ class EnsureEmsStorageFeatures < ActiveRecord::Migration[6.0]
       end
     end
   end
+
+  # There is no down migration because there is no way to tell if the ems_storage_* features
+  # were enabled for a user previously or not.
 end
