@@ -29,6 +29,61 @@ RSpec.describe FixFlavorCpuAttributes do
         :cpu_cores_per_socket => nil
       )
     end
+
+    it "migrates azure_stack with incorrect cpu_cores_per_socket value" do
+      expected_cpu_total_cores = 4
+      expected_cpu_cores_per_socket = 2
+      expected_cpu_sockets = 2
+
+      azure_stack_flavor = flavor_stub.create!(
+        :type                 => "ManageIQ::Providers::AzureStack::CloudManager::Flavor",
+        :cpu_total_cores      => expected_cpu_total_cores,
+        :cpu_cores_per_socket => expected_cpu_total_cores / expected_cpu_cores_per_socket
+      )
+
+      migrate
+
+      expect(azure_stack_flavor.reload).to have_attributes(
+        :cpu_total_cores      => expected_cpu_total_cores,
+        :cpu_cores_per_socket => expected_cpu_cores_per_socket,
+        :cpu_sockets          => expected_cpu_sockets
+      )
+    end
+
+    it "doesn't fail with nil cpu_cores_per_socket on azure_stack flavors" do
+      expected_cpu_total_cores = 4
+
+      azure_stack_flavor = flavor_stub.create!(
+        :type                 => "ManageIQ::Providers::AzureStack::CloudManager::Flavor",
+        :cpu_total_cores      => expected_cpu_total_cores,
+        :cpu_cores_per_socket => nil
+      )
+
+      migrate
+
+      expect(azure_stack_flavor.reload).to have_attributes(
+        :cpu_total_cores      => expected_cpu_total_cores,
+        :cpu_cores_per_socket => nil,
+        :cpu_sockets          => 1
+      )
+    end
+
+    it "doesn't migrate other provider's flavors" do
+      flavor = flavor_stub.create!(
+        :type                 => "ManageIQ::Providers::OracleCloud::CloudManager::Flavor",
+        :cpu_total_cores      => 4,
+        :cpu_cores_per_socket => 2,
+        :cpu_sockets          => 2
+      )
+
+      migrate
+
+      expect(flavor.reload).to have_attributes(
+        :cpu_total_cores      => 4,
+        :cpu_cores_per_socket => 2,
+        :cpu_sockets          => 2
+      )
+    end
   end
 
   migration_context :down do
@@ -55,6 +110,23 @@ RSpec.describe FixFlavorCpuAttributes do
       expect(vpc_flavor.reload).to have_attributes(
         :cpu_total_cores      => 2,
         :cpu_cores_per_socket => 1
+      )
+    end
+
+    it "doesn't migrate other provider's flavors" do
+      flavor = flavor_stub.create!(
+        :type                 => "ManageIQ::Providers::OracleCloud::CloudManager::Flavor",
+        :cpu_total_cores      => 4,
+        :cpu_cores_per_socket => 2,
+        :cpu_sockets          => 2
+      )
+
+      migrate
+
+      expect(flavor.reload).to have_attributes(
+        :cpu_total_cores      => 4,
+        :cpu_cores_per_socket => 2,
+        :cpu_sockets          => 2
       )
     end
   end

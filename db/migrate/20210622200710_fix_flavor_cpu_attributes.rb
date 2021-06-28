@@ -1,5 +1,6 @@
 class FixFlavorCpuAttributes < ActiveRecord::Migration[6.0]
   class Flavor < ActiveRecord::Base
+    include ActiveRecord::IdRegions
     self.inheritance_column = :_type_disabled
   end
 
@@ -13,10 +14,38 @@ class FixFlavorCpuAttributes < ActiveRecord::Migration[6.0]
   ].freeze
 
   def up
-    Flavor.where(:type => FLAVOR_TYPES_NO_SOCKETS).update_all(:cpu_cores_per_socket => nil)
+    say_with_time("Migrating flavors with no socket information") do
+      Flavor.in_my_region.where(:type => FLAVOR_TYPES_NO_SOCKETS).update_all(:cpu_cores_per_socket => nil)
+    end
+
+    say_with_time("Migrating Azure Stack flavors") do
+      Flavor.in_my_region.where(:type => "ManageIQ::Providers::AzureStack::CloudManager::Flavor").find_each do |flavor|
+        # Don't want any ZeroDivisionErrors or NoMethodErrors when taking the inverse
+        next if flavor.cpu_cores_per_socket.nil? || flavor.cpu_cores_per_socket.zero?
+
+        # AzureStack parser set the old cpu_cores column to
+        # :cpu_cores => flavor.number_of_cores / vcpus_per_socket(flavor.name)
+        # which is really the number of sockets
+        flavor.cpu_cores_per_socket = flavor.cpu_total_cores / flavor.cpu_cores_per_socket
+        flavor.cpu_sockets          = flavor.cpu_cores_per_socket
+        flavor.save
+      end
+    end
   end
 
   def down
-    Flavor.where(:type => FLAVOR_TYPES_NO_SOCKETS).update_all(:cpu_cores_per_socket => 1)
+    say_with_time("Migrating flavors with no socket information") do
+      Flavor.in_my_region.where(:type => FLAVOR_TYPES_NO_SOCKETS).update_all(:cpu_cores_per_socket => 1)
+    end
+
+    say_with_time("Migrating Azure Stack flavors") do
+      Flavor.in_my_region.where(:type => "ManageIQ::Providers::AzureStack::CloudManager::Flavor").find_each do |flavor|
+        # Don't want any ZeroDivisionErrors or NoMethodErrors when taking the inverse
+        next if flavor.cpu_cores_per_socket.nil? || flavor.cpu_cores_per_socket.zero?
+
+        flavor.cpu_cores_per_socket = flavor.cpu_total_cores / flavor.cpu_cores_per_socket
+        flavor.save
+      end
+    end
   end
 end
