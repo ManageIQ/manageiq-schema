@@ -1,5 +1,13 @@
 class CollapsedInitialMigration < ActiveRecord::Migration[5.0]
   def up
+    # This collapsed initial migration is partly generated from Rails' schema
+    #   dumper, so we will ignore rubocop warnings.
+    # rubocop:disable Lint/EmptyBlock
+    # rubocop:disable Rails/CreateTableWithTimestamps
+    # rubocop:disable Rails/SquishedSQLHeredocs
+    # rubocop:disable Style/HashSyntax
+    # rubocop:disable Style/MethodCallWithArgsParentheses
+
     # These are extensions that must be enabled in order to support this database
     enable_extension "plpgsql"
 
@@ -7408,9 +7416,17 @@ class CollapsedInitialMigration < ActiveRecord::Migration[5.0]
       DELETE FROM ONLY metric_rollups WHERE id = NEW.id;
       RETURN NEW;
     SQL
+
+    # rubocop:enable Lint/EmptyBlock
+    # rubocop:enable Rails/CreateTableWithTimestamps
+    # rubocop:enable Rails/SquishedSQLHeredocs
+    # rubocop:enable Style/HashSyntax
+    # rubocop:enable Style/MethodCallWithArgsParentheses
   end
 
   def down
+    # rubocop:disable Style/MethodCallWithArgsParentheses
+
     drop_trigger "metric_rollups", "metric_rollups_inheritance_after"
     drop_trigger "metric_rollups", "metric_rollups_inheritance_before"
     drop_trigger "metrics", "metrics_inheritance_after"
@@ -7774,5 +7790,7 @@ class CollapsedInitialMigration < ActiveRecord::Migration[5.0]
     drop_table "asset_details"
     drop_table "advanced_settings"
     drop_table "accounts"
+
+    # rubocop:enable Style/MethodCallWithArgsParentheses
   end
 end
