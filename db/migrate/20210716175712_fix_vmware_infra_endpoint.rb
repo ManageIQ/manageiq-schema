@@ -1,4 +1,4 @@
-class SetVmwareInfraPort < ActiveRecord::Migration[6.0]
+class FixVmwareInfraEndpoint < ActiveRecord::Migration[6.0]
   class ExtManagementSystem < ActiveRecord::Base
     include ActiveRecord::IdRegions
     self.inheritance_column = :_type_disabled
@@ -15,10 +15,11 @@ class SetVmwareInfraPort < ActiveRecord::Migration[6.0]
     vmware_default_endpoints = Endpoint.in_my_region.where(
       :role          => "default",
       :resource_type => "ExtManagementSystem",
-      :resource_id   => vmware_infra_managers,
-      :port          => nil
+      :resource_id   => vmware_infra_managers
     )
-    vmware_default_endpoints.update_all(:port => 443)
+
+    vmware_default_endpoints.update_all(:verify_ssl => 0)
+    vmware_default_endpoints.where(:port => nil).update_all(:port => 443)
   end
 
   def down
@@ -28,6 +29,6 @@ class SetVmwareInfraPort < ActiveRecord::Migration[6.0]
       :resource_type => "ExtManagementSystem",
       :resource_id   => vmware_infra_managers
     )
-    vmware_default_endpoints.update_all(:port => nil)
+    vmware_default_endpoints.update_all(:port => nil, :verify_ssl => 1)
   end
 end

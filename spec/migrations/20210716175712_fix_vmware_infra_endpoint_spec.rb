@@ -1,6 +1,6 @@
 require_migration
 
-RSpec.describe SetVmwareInfraPort do
+RSpec.describe FixVmwareInfraEndpoint do
   let(:ems_stub)      { migration_stub(:ExtManagementSystem) }
   let(:endpoint_stub) { migration_stub(:Endpoint) }
 
