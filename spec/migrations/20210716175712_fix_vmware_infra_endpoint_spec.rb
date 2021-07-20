@@ -31,6 +31,24 @@ RSpec.describe FixVmwareInfraEndpoint do
 
       expect(default_endpoint.reload).to have_attributes(:verify_ssl => 0)
     end
+
+    it "doesn't change other providers' endpoints" do
+      ovirt_infra      = ems_stub.create!(:type => "ManageIQ::Providers::Redhat::InfraManager")
+      default_endpoint = endpoint_stub.create!(:role => "default", :resource_type => "ExtManagementSystem", :resource_id => ovirt_infra.id, :port => 1234, :verify_ssl => 1)
+
+      migrate
+
+      expect(default_endpoint.reload).to have_attributes(:port => 1234, :verify_ssl => 1)
+    end
+
+    it "doesn't change non-default vmware endpoints" do
+      vmware_infra     = ems_stub.create!(:type => "ManageIQ::Providers::Vmware::InfraManager")
+      console_endpoint = endpoint_stub.create!(:role => "console", :resource_type => "ExtManagementSystem", :resource_id => vmware_infra.id, :port => 1234, :verify_ssl => 1)
+
+      migrate
+
+      expect(console_endpoint.reload).to have_attributes(:port => 1234, :verify_ssl => 1)
+    end
   end
 
   migration_context :down do
@@ -50,6 +68,24 @@ RSpec.describe FixVmwareInfraEndpoint do
       migrate
 
       expect(default_endpoint.reload).to have_attributes(:verify_ssl => 1)
+    end
+
+    it "doesn't change other providers' endpoints" do
+      ovirt_infra      = ems_stub.create!(:type => "ManageIQ::Providers::Redhat::InfraManager")
+      default_endpoint = endpoint_stub.create!(:role => "default", :resource_type => "ExtManagementSystem", :resource_id => ovirt_infra.id, :port => 1234, :verify_ssl => 1)
+
+      migrate
+
+      expect(default_endpoint.reload).to have_attributes(:port => 1234, :verify_ssl => 1)
+    end
+
+    it "doesn't change non-default vmware endpoints" do
+      vmware_infra     = ems_stub.create!(:type => "ManageIQ::Providers::Vmware::InfraManager")
+      console_endpoint = endpoint_stub.create!(:role => "console", :resource_type => "ExtManagementSystem", :resource_id => vmware_infra.id, :port => 1234, :verify_ssl => 1)
+
+      migrate
+
+      expect(console_endpoint.reload).to have_attributes(:port => 1234, :verify_ssl => 1)
     end
   end
 end
