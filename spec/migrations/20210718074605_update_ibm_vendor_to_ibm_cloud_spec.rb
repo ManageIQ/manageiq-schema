@@ -44,8 +44,8 @@ RSpec.describe UpdateIbmVendorToIbmCloud do
       powervc_vm = vm_stub.create!(:type => "ManageIQ::Providers::IbmPowerVc::CloudManager::Vm", :vendor => "ibm_power_vc")
       powervc_template = vm_stub.create!(:type => "ManageIQ::Providers::IbmPowerVc::CloudManager::Template", :vendor => "ibm_power_vc")
 
-      openstack_vm = vm_stub.create!(:type => "ManageIQ::Providers::Openstack::CloudManager::Vm", :vendor => "ibm")
-      openstack_template = vm_stub.create!(:type => "ManageIQ::Providers::Openstack::CloudManager::Template", :vendor => "ibm")
+      openstack_vm = vm_stub.create!(:type => "ManageIQ::Providers::Openstack::CloudManager::Vm", :vendor => "openstack")
+      openstack_template = vm_stub.create!(:type => "ManageIQ::Providers::Openstack::CloudManager::Template", :vendor => "openstack")
 
       migrate
 
@@ -58,8 +58,8 @@ RSpec.describe UpdateIbmVendorToIbmCloud do
       expect(powervc_vm.reload).to have_attributes(:vendor => "ibm_power_vc")
       expect(powervc_template.reload).to have_attributes(:vendor => "ibm_power_vc")
 
-      expect(openstack_vm.reload).to have_attributes(:vendor => "ibm")
-      expect(openstack_template.reload).to have_attributes(:vendor => "ibm")
+      expect(openstack_vm.reload).to have_attributes(:vendor => "openstack")
+      expect(openstack_template.reload).to have_attributes(:vendor => "openstack")
     end
   end
 end
