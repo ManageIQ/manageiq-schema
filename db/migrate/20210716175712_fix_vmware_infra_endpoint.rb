@@ -11,24 +11,28 @@ class FixVmwareInfraEndpoint < ActiveRecord::Migration[6.0]
   VMWARE_INFRA_MANAGER = "ManageIQ::Providers::Vmware::InfraManager".freeze
 
   def up
-    vmware_infra_managers    = ExtManagementSystem.in_my_region.where(:type => VMWARE_INFRA_MANAGER).pluck(:id)
-    vmware_default_endpoints = Endpoint.in_my_region.where(
-      :role          => "default",
-      :resource_type => "ExtManagementSystem",
-      :resource_id   => vmware_infra_managers
-    )
+    say_with_time("Updating VMware endpoint port and verify_ssl") do
+      vmware_infra_managers    = ExtManagementSystem.in_my_region.where(:type => VMWARE_INFRA_MANAGER).pluck(:id)
+      vmware_default_endpoints = Endpoint.in_my_region.where(
+        :role          => "default",
+        :resource_type => "ExtManagementSystem",
+        :resource_id   => vmware_infra_managers
+      )
 
-    vmware_default_endpoints.update_all(:verify_ssl => 0)
-    vmware_default_endpoints.where(:port => nil).update_all(:port => 443)
+      vmware_default_endpoints.update_all(:verify_ssl => 0)
+      vmware_default_endpoints.where(:port => nil).update_all(:port => 443)
+    end
   end
 
   def down
-    vmware_infra_managers    = ExtManagementSystem.in_my_region.where(:type => VMWARE_INFRA_MANAGER).pluck(:id)
-    vmware_default_endpoints = Endpoint.in_my_region.where(
-      :role          => "default",
-      :resource_type => "ExtManagementSystem",
-      :resource_id   => vmware_infra_managers
-    )
-    vmware_default_endpoints.update_all(:port => nil, :verify_ssl => 1)
+    say_with_time("Updating VMware endpoint port and verify_ssl") do
+      vmware_infra_managers    = ExtManagementSystem.in_my_region.where(:type => VMWARE_INFRA_MANAGER).pluck(:id)
+      vmware_default_endpoints = Endpoint.in_my_region.where(
+        :role          => "default",
+        :resource_type => "ExtManagementSystem",
+        :resource_id   => vmware_infra_managers
+      )
+      vmware_default_endpoints.update_all(:port => nil, :verify_ssl => 1)
+    end
   end
 end
