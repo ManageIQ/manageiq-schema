@@ -22,6 +22,15 @@ RSpec.describe FixVmwareInfraEndpoint do
 
       expect(default_endpoint.reload).to have_attributes(:port => 8443)
     end
+
+    it "sets verify_ssl to 0" do
+      vmware_infra     = ems_stub.create!(:type => "ManageIQ::Providers::Vmware::InfraManager")
+      default_endpoint = endpoint_stub.create!(:role => "default", :resource_type => "ExtManagementSystem", :resource_id => vmware_infra.id, :verify_ssl => 1)
+
+      migrate
+
+      expect(default_endpoint.reload).to have_attributes(:verify_ssl => 0)
+    end
   end
 
   migration_context :down do
@@ -32,6 +41,15 @@ RSpec.describe FixVmwareInfraEndpoint do
       migrate
 
       expect(default_endpoint.reload).to have_attributes(:port => nil)
+    end
+
+    it "sets verify_ssl to 1" do
+      vmware_infra     = ems_stub.create!(:type => "ManageIQ::Providers::Vmware::InfraManager")
+      default_endpoint = endpoint_stub.create!(:role => "default", :resource_type => "ExtManagementSystem", :resource_id => vmware_infra.id, :verify_ssl => 0)
+
+      migrate
+
+      expect(default_endpoint.reload).to have_attributes(:verify_ssl => 1)
     end
   end
 end
