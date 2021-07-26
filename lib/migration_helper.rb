@@ -219,30 +219,40 @@ module MigrationHelper
     reversible do |dir|
       dir.down { mapping = mapping.invert }
 
-      condition_list = mapping.keys.map { |s| connection.quote(s) }.join(',')
-      when_clauses = mapping.map { |before, after| "WHEN #{connection.quote before} THEN #{connection.quote after}" }.join(' ')
+      condition_list = ""
+      mapping.keys.each { |s| condition_list << connection.quote(s) << "," }
+      condition_list.chomp!(",")
+      when_clauses = ""
+      mapping.each { |before, after| when_clauses << "WHEN #{connection.quote(before)} THEN #{connection.quote(after)} " }
+      condition_list.chomp!(" ")
 
       say "Renaming class references:\n#{mapping.pretty_inspect}"
 
       rows = say_with_time("Determining tables and columns for update") do
-        connection.select_rows(<<-SQL
-          SELECT pg_class.oid::regclass::text, quote_ident(attname)
-          FROM pg_class JOIN pg_attribute ON pg_class.oid = attrelid
-          WHERE relkind = 'r'
-            AND (attname = 'type' OR attname LIKE '%\\_type')
-            AND atttypid IN ('text'::regtype, 'varchar'::regtype)
-          ORDER BY relname, attname
+        connection.select_rows(
+          <<-SQL
+            SELECT pg_class.oid::regclass::text, quote_ident(attname)
+            FROM pg_class JOIN pg_attribute ON pg_class.oid = attrelid
+            WHERE relkind = 'r'
+              AND (attname = 'type' OR attname LIKE '%\\_type')
+              AND atttypid IN ('text'::regtype, 'varchar'::regtype)
+            ORDER BY relname, attname
           SQL
         )
       end
 
-      rows.each do |quoted_table, quoted_column|
+      rows.each do |table, column|
+        quoted_table  = connection.quote_table_name(table)
+        quoted_column = connection.quote_column_name(column)
+
         say_with_time("Renaming class reference in #{quoted_table}.#{quoted_column}") do
-          connection.execute <<-SQL
-            UPDATE #{quoted_table}
-            SET #{quoted_column} = CASE #{quoted_column} #{when_clauses} END
-            WHERE #{quoted_column} IN (#{condition_list})
-          SQL
+          connection.execute(
+            <<-SQL
+              UPDATE #{quoted_table}
+              SET #{quoted_column} = CASE #{quoted_column} #{when_clauses} END
+              WHERE #{quoted_column} IN (#{condition_list})
+            SQL
+          )
         end
       end
     end
