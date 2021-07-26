@@ -237,7 +237,10 @@ module MigrationHelper
         )
       end
 
-      rows.each do |quoted_table, quoted_column|
+      rows.each do |table, column|
+        quoted_table  = connection.quote_table_name(table)
+        quoted_column = connection.quote_column_name(column)
+
         say_with_time("Renaming class reference in #{quoted_table}.#{quoted_column}") do
           connection.execute(
             <<-SQL
