@@ -220,7 +220,7 @@ module MigrationHelper
       dir.down { mapping = mapping.invert }
 
       condition_list = ""
-      mapping.keys.each { |s| condition_list << connection.quote(s) << "," }
+      mapping.each_key { |s| condition_list << connection.quote(s) << "," }
       condition_list.chomp!(",")
       when_clauses = ""
       mapping.each { |before, after| when_clauses << "WHEN #{connection.quote(before)} THEN #{connection.quote(after)} " }
