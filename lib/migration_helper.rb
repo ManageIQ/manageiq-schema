@@ -219,8 +219,12 @@ module MigrationHelper
     reversible do |dir|
       dir.down { mapping = mapping.invert }
 
-      condition_list = mapping.keys.map { |s| connection.quote(s) }.join(',')
-      when_clauses = mapping.map { |before, after| "WHEN #{connection.quote before} THEN #{connection.quote after}" }.join(' ')
+      condition_list = ""
+      mapping.keys.each { |s| condition_list << connection.quote(s) << "," }
+      condition_list.chomp!(",")
+      when_clauses = ""
+      mapping.each { |before, after| when_clauses << "WHEN #{connection.quote(before)} THEN #{connection.quote(after)} " }
+      condition_list.chomp!(" ")
 
       say "Renaming class references:\n#{mapping.pretty_inspect}"
 
