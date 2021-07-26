@@ -224,7 +224,7 @@ module MigrationHelper
       condition_list.chomp!(",")
       when_clauses = ""
       mapping.each { |before, after| when_clauses << "WHEN #{connection.quote(before)} THEN #{connection.quote(after)} " }
-      condition_list.chomp!(" ")
+      when_clauses.chomp!(" ")
 
       say "Renaming class references:\n#{mapping.pretty_inspect}"
 
