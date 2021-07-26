@@ -225,24 +225,27 @@ module MigrationHelper
       say "Renaming class references:\n#{mapping.pretty_inspect}"
 
       rows = say_with_time("Determining tables and columns for update") do
-        connection.select_rows(<<-SQL
-          SELECT pg_class.oid::regclass::text, quote_ident(attname)
-          FROM pg_class JOIN pg_attribute ON pg_class.oid = attrelid
-          WHERE relkind = 'r'
-            AND (attname = 'type' OR attname LIKE '%\\_type')
-            AND atttypid IN ('text'::regtype, 'varchar'::regtype)
-          ORDER BY relname, attname
+        connection.select_rows(
+          <<-SQL
+            SELECT pg_class.oid::regclass::text, quote_ident(attname)
+            FROM pg_class JOIN pg_attribute ON pg_class.oid = attrelid
+            WHERE relkind = 'r'
+              AND (attname = 'type' OR attname LIKE '%\\_type')
+              AND atttypid IN ('text'::regtype, 'varchar'::regtype)
+            ORDER BY relname, attname
           SQL
         )
       end
 
       rows.each do |quoted_table, quoted_column|
         say_with_time("Renaming class reference in #{quoted_table}.#{quoted_column}") do
-          connection.execute <<-SQL
-            UPDATE #{quoted_table}
-            SET #{quoted_column} = CASE #{quoted_column} #{when_clauses} END
-            WHERE #{quoted_column} IN (#{condition_list})
-          SQL
+          connection.execute(
+            <<-SQL
+              UPDATE #{quoted_table}
+              SET #{quoted_column} = CASE #{quoted_column} #{when_clauses} END
+              WHERE #{quoted_column} IN (#{condition_list})
+            SQL
+          )
         end
       end
     end
