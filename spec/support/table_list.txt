@@ -123,7 +123,6 @@ hardwares
 host_aggregate_hosts
 host_aggregates
 host_initiators
-volume_mappings
 host_service_groups
 host_storages
 host_switches
@@ -332,6 +331,7 @@ users
 vim_performance_operating_ranges
 vim_performance_states
 vms
+volume_mappings
 volumes
 windows_images
 zones
