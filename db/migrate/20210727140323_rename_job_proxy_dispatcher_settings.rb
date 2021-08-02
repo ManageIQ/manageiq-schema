@@ -3,23 +3,21 @@ class RenameJobProxyDispatcherSettings < ActiveRecord::Migration[6.0]
     include ActiveRecord::IdRegions
   end
 
+    KEY_SUFFIXES = %w[
+    dispatcher_interval
+    dispatcher_stale_message_timeout
+    dispatcher_stale_message_check_interval
+  ].freeze
+
   def up
-    %w[
-      job_proxy_dispatcher_interval
-      job_proxy_dispatcher_stale_message_timeout
-      job_proxy_dispatcher_stale_message_check_interval
-    ].each do |old_name|
-      rename_schedule_worker_settings_change(old_name, old_name.gsub(/^job_proxy/, "vm_scan"))
+    KEY_SUFFIXES.each do |suffix|
+      rename_schedule_worker_settings_change("job_proxy_#{suffix}", "vm_scan_#{suffix}")
     end
   end
 
   def down
-    %w[
-      vm_scan_dispatcher_interval
-      vm_scan_dispatcher_stale_message_timeout
-      vm_scan_dispatcher_stale_message_check_interval
-    ].each do |old_name|
-      rename_schedule_worker_settings_change(old_name, old_name.gsub(/^vm_scan/, "job_proxy"))
+    KEY_SUFFIXES.each do |suffix|
+      rename_schedule_worker_settings_change("vm_scan_#{suffix}", "job_proxy_#{suffix}")
     end
   end
 
