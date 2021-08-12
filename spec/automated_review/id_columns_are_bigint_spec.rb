@@ -2,8 +2,6 @@ require 'set'
 describe "*_id columns" do
   EXCEPTIONS_LIST = Set.new(
     [
-      "authentications.ldap_id",
-      "authentications.rhsm_pool_id",
       "cloud_networks.provider_segmentation_id",
       "container_volumes.common_volume_id",
       "miq_queue.task_id",
