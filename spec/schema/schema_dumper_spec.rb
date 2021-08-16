@@ -17,47 +17,43 @@ describe "SchemaDumper" do
   end
 
   it "includes all of the manageiq tables" do
-    create_table_lines = schema.lines.grep(/^\s*create_table/)
+    create_tables = schema.scan(/^\s*create_table "([^"]+)"/).flatten
 
-    expect(create_table_lines.count).to eq(table_list.count), missing_table_failure_message
+    expect(create_tables.count).to eq(table_list.count), missing_table_failure_message
 
     table_list.each do |table_name|
-      has_table = create_table_lines.detect { |l| l.include?(table_name) }
-      expect(has_table).to be_truthy, "Table '#{table_name}' not found in schema\n#{missing_table_failure_message}"
+      expect(create_tables).to include(table_name), "Table '#{table_name}' not found in schema\n#{missing_table_failure_message}"
     end
   end
 
   it "includes all id column comments" do
-    id_comment_list  = %w[conversion_hosts miq_tasks vms]
-    id_comment_lines = schema.lines.grep(/^\s*change_column_comment/)
+    id_comment_list = %w[conversion_hosts miq_tasks vms]
+    id_comments     = schema.scan(/^\s*change_column_comment "([^"]+)"/).flatten
 
-    expect(id_comment_lines.count).to eq(id_comment_list.count)
+    expect(id_comments.count).to eq(id_comment_list.count)
 
     id_comment_list.each do |table_name|
-      has_table = id_comment_lines.detect { |l| l.include?(table_name) }
-      expect(has_table).to be_truthy, "comment not added for id in schema for '#{table_name}'"
+      expect(id_comments).to include(table_name), "comment not added for id in schema for '#{table_name}'"
     end
   end
 
   it "includes all metrics sequences" do
-    miq_metric_sequences = schema.lines.grep(/^\s*change_miq_metric_sequence/)
+    metric_sequences = schema.scan(/^\s*change_miq_metric_sequence "([^"]+)"/).flatten
 
-    expect(miq_metric_sequences.count).to eq(metric_list.count + metric_rollup_list.count)
+    expect(metric_sequences.count).to eq(metric_list.count + metric_rollup_list.count)
 
     combined_metric_list.each do |metric_subdivision|
-      has_definition = miq_metric_sequences.detect { |l| l.include?(metric_subdivision) }
-      expect(has_definition).to be_truthy, "change_miq_metric_sequence not defined for #{metric_subdivision}"
+      expect(metric_sequences).to include(metric_subdivision), "change_miq_metric_sequence not defined for #{metric_subdivision}"
     end
   end
 
   it "includes all metrics table inheritence" do
-    miq_metric_inheritances = schema.lines.grep(/^\s*add_miq_metric_table_inheritance/)
+    metric_inheritances = schema.scan(/^\s*add_miq_metric_table_inheritance "([^"]+)"/).flatten
 
-    expect(miq_metric_inheritances.count).to eq(metric_list.count + metric_rollup_list.count)
+    expect(metric_inheritances.count).to eq(metric_list.count + metric_rollup_list.count)
 
     combined_metric_list.each do |metric_subdivision|
-      has_definition = miq_metric_inheritances.detect { |l| l.include?(metric_subdivision) }
-      expect(has_definition).to be_truthy, "add_miq_metric_table_inheritance not defined for #{metric_subdivision}"
+      expect(metric_inheritances).to include(metric_subdivision), "add_miq_metric_table_inheritance not defined for #{metric_subdivision}"
     end
   end
 
