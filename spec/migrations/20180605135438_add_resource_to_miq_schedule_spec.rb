@@ -3,7 +3,7 @@ require_migration
 describe AddResourceToMiqSchedule do
   let(:reserve_stub)      { Spec::Support::MigrationStubs.reserved_stub }
   let(:miq_schedule_stub) { migration_stub(:MiqSchedule) }
-  let(:resource_id)       { anonymous_class_with_id_regions.id_in_region(1, anonymous_class_with_id_regions.my_region_number) }
+  let(:resource_id)       { id_in_current_region(1) }
 
   migration_context :up do
     it "Migrates Reserve data to MiqSchedule" do

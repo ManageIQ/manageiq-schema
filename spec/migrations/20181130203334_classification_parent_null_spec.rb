@@ -1,7 +1,7 @@
 require_migration
 
 describe ClassificationParentNull do
-  let(:parent_id) { anonymous_class_with_id_regions.id_in_region(1, anonymous_class_with_id_regions.my_region_number) }
+  let(:parent_id) { id_in_current_region(1) }
   let(:classification_stub) { migration_stub(:Classification) }
 
   migration_context :up do
