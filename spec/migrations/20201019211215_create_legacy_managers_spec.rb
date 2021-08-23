@@ -5,6 +5,8 @@ RSpec.describe CreateLegacyManagers do
   let(:cinder_ems_class)     { "ManageIQ::Providers::Openstack::StorageManager::CinderManager" }
   let(:swift_ems_class)      { "ManageIQ::Providers::StorageManager::SwiftManager" }
 
+  let(:zone_id)              { anonymous_class_with_id_regions.id_in_region(1, anonymous_class_with_id_regions.my_region_number) }
+
   let(:ems_stub)             { migration_stub(:ExtManagementSystem) }
   let(:volume_stub)          { migration_stub(:CloudVolume) }
   let(:backup_stub)          { migration_stub(:CloudVolumeBackup) }
@@ -16,7 +18,7 @@ RSpec.describe CreateLegacyManagers do
     ems_stub.create!(
       :type            => os_provider_class,
       :name            => "sample",
-      :zone_id         => 99,
+      :zone_id         => zone_id,
       :provider_region => "ne-dc1"
     )
   end
@@ -38,7 +40,7 @@ RSpec.describe CreateLegacyManagers do
       expect(cinder_manager).to have_attributes(
         :type            => cinder_ems_class,
         :name            => /sample Cinder Manager/i,
-        :zone_id         => 99,
+        :zone_id         => zone_id,
         :parent_ems_id   => provider.id,
         :provider_region => "ne-dc1"
       )
@@ -46,7 +48,7 @@ RSpec.describe CreateLegacyManagers do
       expect(swift_manager).to have_attributes(
         :type            => swift_ems_class,
         :name            => /sample swift manager/i,
-        :zone_id         => 99,
+        :zone_id         => zone_id,
         :parent_ems_id   => provider.id,
         :provider_region => "ne-dc1"
       )
@@ -80,7 +82,7 @@ RSpec.describe CreateLegacyManagers do
       ems_stub.create!(
         :type            => cinder_ems_class,
         :name            => /sample Cinder/i,
-        :zone_id         => 99,
+        :zone_id         => zone_id,
         :parent_ems_id   => provider.id,
         :provider_region => "ne-dc1"
       )
@@ -94,7 +96,7 @@ RSpec.describe CreateLegacyManagers do
       ems_stub.create!(
         :type            => swift_ems_class,
         :name            => /sample swift/i,
-        :zone_id         => 99,
+        :zone_id         => zone_id,
         :parent_ems_id   => provider.id,
         :provider_region => "ne-dc1"
       )
@@ -110,7 +112,7 @@ RSpec.describe CreateLegacyManagers do
       ems_stub.create!(
         :type            => cinder_ems_class,
         :name            => /sample Cinder/i,
-        :zone_id         => 99,
+        :zone_id         => zone_id,
         :parent_ems_id   => provider.id,
         :provider_region => "ne-dc1"
       )
@@ -118,7 +120,7 @@ RSpec.describe CreateLegacyManagers do
       ems_stub.create!(
         :type            => swift_ems_class,
         :name            => /sample swift/i,
-        :zone_id         => 99,
+        :zone_id         => zone_id,
         :parent_ems_id   => provider.id,
         :provider_region => "ne-dc1"
       )
