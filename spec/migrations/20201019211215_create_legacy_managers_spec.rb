@@ -5,7 +5,7 @@ RSpec.describe CreateLegacyManagers do
   let(:cinder_ems_class)     { "ManageIQ::Providers::Openstack::StorageManager::CinderManager" }
   let(:swift_ems_class)      { "ManageIQ::Providers::StorageManager::SwiftManager" }
 
-  let(:zone_id)              { anonymous_class_with_id_regions.id_in_region(1, anonymous_class_with_id_regions.my_region_number) }
+  let(:zone_id)              { id_in_current_region(1) }
 
   let(:ems_stub)             { migration_stub(:ExtManagementSystem) }
   let(:volume_stub)          { migration_stub(:CloudVolume) }

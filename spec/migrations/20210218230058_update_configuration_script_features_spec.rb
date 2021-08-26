@@ -1,7 +1,7 @@
 require_migration
 
 describe UpdateConfigurationScriptFeatures do
-  let(:user_role_id) { anonymous_class_with_id_regions.id_in_region(1, anonymous_class_with_id_regions.my_region_number) }
+  let(:user_role_id) { id_in_current_region(1) }
   let(:feature_stub) { migration_stub :MiqProductFeature }
   let(:roles_feature_stub) { migration_stub :MiqRolesFeature }
 

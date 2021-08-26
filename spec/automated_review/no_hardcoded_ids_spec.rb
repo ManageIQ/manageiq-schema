@@ -10,7 +10,7 @@ describe "Hardcoded ids" do
       use the following helper to generate ids in the correct region:
 
           # Example, in region 1, requesting id number 2
-          anonymous_class_with_id_regions.id_in_region(2, anonymous_class_with_id_regions.my_region_number)
+          id_in_current_region(2)
           # => 1000000000002
 
       If you believe this file is a false postive, add the following as a
