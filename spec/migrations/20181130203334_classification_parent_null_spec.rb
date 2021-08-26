@@ -1,21 +1,22 @@
 require_migration
 
 describe ClassificationParentNull do
+  let(:parent_id) { anonymous_class_with_id_regions.id_in_region(1, anonymous_class_with_id_regions.my_region_number) }
   let(:classification_stub) { migration_stub(:Classification) }
 
   migration_context :up do
     it 'changes parent to nil when parent is 0' do
-      c = classification_stub.create(:parent_id => 0)
+      c = classification_stub.create(:parent_id => 0) # manageiq:disable HardcodedIds
       migrate
       c.reload
       expect(c.parent_id).to be_nil
     end
 
     it 'leaves other parents alone' do
-      c = classification_stub.create(:parent_id => 1)
+      c = classification_stub.create(:parent_id => parent_id)
       migrate
       c.reload
-      expect(c.parent_id).to eq(1)
+      expect(c.parent_id).to eq(parent_id)
     end
   end
 
