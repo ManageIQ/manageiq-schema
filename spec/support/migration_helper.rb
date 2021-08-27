@@ -59,6 +59,10 @@ module Spec
         stub
       end
 
+      def new_migration_stub(table_name)
+        Class.new(ActiveRecord::Base) { self.table_name = table_name.to_s }
+      end
+
       private
 
       # Clears any cached column information on stubs, since the migrations
