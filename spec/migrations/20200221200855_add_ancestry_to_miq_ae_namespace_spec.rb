@@ -1,7 +1,7 @@
 require_migration
 
 describe AddAncestryToMiqAeNamespace do
-  let(:ns_stub) { Class.new(ActiveRecord::Base) { self.table_name = "miq_ae_namespaces" } }
+  let(:ns_stub) { new_migration_stub(:miq_ae_namespaces) }
 
   migration_context :up do
     # nodes:
