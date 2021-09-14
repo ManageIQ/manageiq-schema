@@ -4,9 +4,9 @@ require_migration
 describe MoveMiqSetMemberships do
   let(:rel_stub)        { migration_stub(:Relationship) }
   let(:membership_stub) { migration_stub(:MiqSetMembership) }
-  let(:set_stub)        { Class.new(ActiveRecord::Base) { self.table_name = "miq_sets" } }
-  let(:item_stub)       { Class.new(ActiveRecord::Base) { self.table_name = "scan_items" } }
-  let(:rp_stub)         { Class.new(ActiveRecord::Base) { self.table_name = "resource_pools" } }
+  let(:set_stub)        { new_migration_stub(:miq_sets) }
+  let(:item_stub)       { new_migration_stub(:scan_items) }
+  let(:rp_stub)         { new_migration_stub(:resource_pools) }
 
   migration_context :up do
     it 'converts relationship records to set membership table records' do
