@@ -1,6 +1,6 @@
-class CreateStorageHostsWwpnCandidates < ActiveRecord::Migration[6.0]
+class CreateWwpnCandidates < ActiveRecord::Migration[6.0]
   def change
-    create_table :storage_hosts_wwpn_candidates do |t|
+    create_table :wwpn_candidates do |t|
       # stores WWPN candidate
       t.string :candidate
 
