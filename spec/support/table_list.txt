@@ -309,7 +309,6 @@ showback_rates
 showback_tiers
 snapshots
 storage_files
-storage_hosts_wwpn_candidates
 storage_profile_storages
 storage_profiles
 storage_resources
@@ -335,4 +334,5 @@ vms
 volume_mappings
 volumes
 windows_images
+wwpn_candidates
 zones
