@@ -334,4 +334,5 @@ vms
 volume_mappings
 volumes
 windows_images
+wwpn_candidates
 zones
