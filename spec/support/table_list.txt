@@ -123,6 +123,7 @@ hardwares
 host_aggregate_hosts
 host_aggregates
 host_initiators
+host_initiator_groups
 host_service_groups
 host_storages
 host_switches
