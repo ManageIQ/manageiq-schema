@@ -54,7 +54,7 @@ class RemoveMigrationFeature < ActiveRecord::Migration[5.2]
         :resource_type => chost.resource_type,
         :name          => 'TransformationIPAddress'
       ).delete_all
-    end    
+    end
 
     # These tables are used only by Migration feature, so we can drop them.
     drop_table :conversion_hosts
