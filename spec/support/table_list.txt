@@ -75,7 +75,6 @@ container_template_parameters
 container_templates
 container_volumes
 containers
-conversion_hosts
 currencies
 custom_attributes
 custom_buttons
@@ -122,8 +121,8 @@ guest_devices
 hardwares
 host_aggregate_hosts
 host_aggregates
-host_initiators
 host_initiator_groups
+host_initiators
 host_service_groups
 host_storages
 host_switches
@@ -326,8 +325,6 @@ tags
 tenant_quotas
 tenants
 time_profiles
-transformation_mapping_items
-transformation_mappings
 users
 vim_performance_operating_ranges
 vim_performance_states

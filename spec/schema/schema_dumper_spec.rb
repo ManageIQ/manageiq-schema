@@ -27,7 +27,7 @@ describe "SchemaDumper" do
   end
 
   it "includes all id column comments" do
-    id_comment_list = %w[conversion_hosts miq_tasks vms]
+    id_comment_list = %w[miq_tasks vms]
     id_comments     = schema.scan(/^\s*change_column_comment "([^"]+)"/).flatten
 
     expect(id_comments.count).to eq(id_comment_list.count)

@@ -6,6 +6,7 @@ describe RemoveMigrationFeature do
     let(:miq_request) { migration_stub(:MiqRequest) }
     let(:miq_request_task) { migration_stub(:MiqRequestTask) }
     let(:job) { migration_stub(:Job) }
+    let(:service_order) { migration_stub(:ServiceOrder) }
     let(:conversion_host) { migration_stub(:ConversionHost) }
     let(:tag) { migration_stub(:Tag) }
     let(:tagging) { migration_stub(:Tagging) }
@@ -16,6 +17,8 @@ describe RemoveMigrationFeature do
     it "cleans the database and removes the tables" do
       service_template.create!(:type => "ServiceTemplate")
       service_template.create!(:type => "ServiceTemplateTransformationPlan")
+      service_template.create!(:type => "ManageIQ::Providers::Openstack::CloudManager::ServiceTemplateTransformationPlan")
+      service_template.create!(:type => "ManageIQ::Providers::Redhat::InfraManager::ServiceTemplateTransformationPlan")
 
       miq_request.create!(:type => "MiqRequest")
       miq_request.create!(:type => "ServiceTemplateTransformationPlanRequest")
@@ -25,6 +28,9 @@ describe RemoveMigrationFeature do
 
       job.create!(:type => "Job")
       job.create!(:type => "InfraConversionJob")
+
+      service_order.create!(:type => "ServiceOrder")
+      service_order.create!(:type => "ServiceOrderV2V")
 
       tag_1 = tag.create!(:name => "/managed/v2v_transformation_host/false")
       tag_2 = tag.create!(:name => "/managed/v2v_transformation_host/true")
@@ -56,6 +62,9 @@ describe RemoveMigrationFeature do
 
       expect(job.count).to eq(1)
       expect(job.first.type).to eq("Job")
+
+      expect(service_order.count).to eq(1)
+      expect(service_order.first.type).to eq("ServiceOrder")
 
       expect(tag.count).to eq(1)
       expect(tag.first.name).to eq("/managed/stub/dummy")

@@ -1,4 +1,4 @@
-class RemoveMigrationFeature < ActiveRecord::Migration[5.2]
+class RemoveMigrationFeature < ActiveRecord::Migration[6.0]
   class ServiceTemplate < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
   end
@@ -15,6 +15,10 @@ class RemoveMigrationFeature < ActiveRecord::Migration[5.2]
     self.inheritance_column = :_type_disabled
   end
 
+  class ServiceOrder < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled
+  end
+
   class Vm < ActiveRecord::Base
     self.inheritance_column = :_type_disabled
   end
@@ -27,13 +31,20 @@ class RemoveMigrationFeature < ActiveRecord::Migration[5.2]
   class Tag < ActiveRecord::Base; end
   class Tagging < ActiveRecord::Base; end
 
+  TRANSFORMATION_PLAN_CLASSES = %w[
+    ServiceTemplateTransformationPlan
+    ManageIQ::Providers::Openstack::CloudManager::ServiceTemplateTransformationPlan
+    ManageIQ::Providers::Redhat::InfraManager::ServiceTemplateTransformationPlan
+  ]
+
   def up
     # These classes inherit from core classes, so we don't drop the tables.
     # Instead we remove the records.
-    ServiceTemplate.where(:type => "ServiceTemplateTransformationPlan").delete_all
+    ServiceTemplate.where(:type => TRANSFORMATION_PLAN_CLASSES).delete_all
     MiqRequest.where(:type => "ServiceTemplateTransformationPlanRequest").delete_all
     MiqRequestTask.where(:type => "ServiceTemplateTransformationPlanTask").delete_all
     Job.where(:type => "InfraConversionJob").delete_all
+    ServiceOrder.where(:type => "ServiceOrderV2V").delete_all
 
     # Conversion hosts can be either a RHV host or VM, or an OpenStack VM
     # We need to clean the resources, i.e. remove tags and custom attributes

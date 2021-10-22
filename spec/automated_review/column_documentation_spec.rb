@@ -1,6 +1,6 @@
 describe "Column documentation" do
   # Documented tables
-  %w[conversion_hosts miq_tasks].each do |table_name|
+  %w[miq_tasks].each do |table_name|
     it "#{table_name} columns are documented" do
       klass = Class.new(ActiveRecord::Base) do
         self.table_name = table_name
