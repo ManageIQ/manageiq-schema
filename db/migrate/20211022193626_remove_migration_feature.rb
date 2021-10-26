@@ -27,6 +27,14 @@ class RemoveMigrationFeature < ActiveRecord::Migration[6.0]
     self.inheritance_column = :_type_disabled
   end
 
+  class NotificationType < ActiveRecord::Base; end
+  class Notification < ActiveRecord::Base; end
+  class Authentication < ActiveRecord::Base
+    self.inheritance_column = :_type_disabled
+  end
+
+  class SettingsChange < ActiveRecord::Base; end
+
   class CustomAttribute < ActiveRecord::Base; end
   class Tag < ActiveRecord::Base; end
   class Tagging < ActiveRecord::Base; end
@@ -45,6 +53,14 @@ class RemoveMigrationFeature < ActiveRecord::Migration[6.0]
     MiqRequestTask.where(:type => "ServiceTemplateTransformationPlanTask").delete_all
     Job.where(:type => "InfraConversionJob").delete_all
     ServiceOrder.where(:type => "ServiceOrderV2V").delete_all
+
+    ids = NotificationType.where(:name => %w[transformation_plan_request_succeeded transformation_plan_request_failed]).pluck(:id)
+    NotificationType.where(:id => ids).delete_all
+    Notification.where(:notification_type_id => ids).delete_all
+
+    Authentication.where(:authtype => "v2v").delete_all
+    SettingsChange.where("key LIKE '/transformation/%'").delete_all
+    SettingsChange.where("key LIKE '%/infra_conversion_dispatcher_interval'").delete_all
 
     # Conversion hosts can be either a RHV host or VM, or an OpenStack VM
     # We need to clean the resources, i.e. remove tags and custom attributes
