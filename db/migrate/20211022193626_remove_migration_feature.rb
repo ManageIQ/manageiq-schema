@@ -48,39 +48,49 @@ class RemoveMigrationFeature < ActiveRecord::Migration[6.0]
   def up
     # These classes inherit from core classes, so we don't drop the tables.
     # Instead we remove the records.
-    ServiceTemplate.where(:type => TRANSFORMATION_PLAN_CLASSES).delete_all
-    MiqRequest.where(:type => "ServiceTemplateTransformationPlanRequest").delete_all
-    MiqRequestTask.where(:type => "ServiceTemplateTransformationPlanTask").delete_all
-    Job.where(:type => "InfraConversionJob").delete_all
-    ServiceOrder.where(:type => "ServiceOrderV2V").delete_all
-
-    ids = NotificationType.where(:name => %w[transformation_plan_request_succeeded transformation_plan_request_failed]).pluck(:id)
-    NotificationType.where(:id => ids).delete_all
-    Notification.where(:notification_type_id => ids).delete_all
-
-    Authentication.where(:authtype => "v2v").delete_all
-    SettingsChange.where("key LIKE '/transformation/%'").delete_all
-    SettingsChange.where("key LIKE '%/infra_conversion_dispatcher_interval'").delete_all
-
-    # Conversion hosts can be either a RHV host or VM, or an OpenStack VM
-    # We need to clean the resources, i.e. remove tags and custom attributes
-    tag_ids = [
-      Tag.find_by(:name => '/managed/v2v_transformation_host/false')&.id,
-      Tag.find_by(:name => '/managed/v2v_transformation_host/true')&.id,
-      Tag.find_by(:name => '/managed/v2v_transformation_method/ssh')&.id,
-      Tag.find_by(:name => '/managed/v2v_transformation_method/vddk')&.id
-    ].compact
-    tag_ids.each do |tag_id|
-      Tagging.where(:tag_id => tag_id).delete_all
-      Tag.find(tag_id).delete
+    say_with_time("Removing v2v state data") do
+      ServiceTemplate.where(:type => TRANSFORMATION_PLAN_CLASSES).delete_all
+      MiqRequest.where(:type => "ServiceTemplateTransformationPlanRequest").delete_all
+      MiqRequestTask.where(:type => "ServiceTemplateTransformationPlanTask").delete_all
+      Job.where(:type => "InfraConversionJob").delete_all
+      ServiceOrder.where(:type => "ServiceOrderV2V").delete_all
     end
 
-    ConversionHost.all.each do |chost|
-      CustomAttribute.where(
-        :resource_id   => chost.resource_id,
-        :resource_type => chost.resource_type,
-        :name          => 'TransformationIPAddress'
-      ).delete_all
+    say_with_time("Removing v2v notification data") do
+      ids = NotificationType.where(:name => %w[transformation_plan_request_succeeded transformation_plan_request_failed]).pluck(:id)
+      NotificationType.where(:id => ids).delete_all
+      Notification.where(:notification_type_id => ids).delete_all
+    end
+
+    say_with_time("Removing v2v configuration") do
+      Authentication.where(:authtype => "v2v").delete_all
+      SettingsChange.where("key LIKE '/transformation/%'").delete_all
+      SettingsChange.where("key LIKE '%/infra_conversion_dispatcher_interval'").delete_all
+    end
+
+    say_with_time("Removing v2v tags") do
+      # Conversion hosts can be either a RHV host or VM, or an OpenStack VM
+      # We need to clean the resources, i.e. remove tags and custom attributes
+      tag_ids = [
+        Tag.find_by(:name => '/managed/v2v_transformation_host/false')&.id,
+        Tag.find_by(:name => '/managed/v2v_transformation_host/true')&.id,
+        Tag.find_by(:name => '/managed/v2v_transformation_method/ssh')&.id,
+        Tag.find_by(:name => '/managed/v2v_transformation_method/vddk')&.id
+      ].compact
+      tag_ids.each do |tag_id|
+        Tagging.where(:tag_id => tag_id).delete_all
+        Tag.find(tag_id).delete
+      end
+    end
+
+    say_with_time("Removing v2v custom attributes") do
+      ConversionHost.all.each do |chost|
+        CustomAttribute.where(
+          :resource_id   => chost.resource_id,
+          :resource_type => chost.resource_type,
+          :name          => 'TransformationIPAddress'
+        ).delete_all
+      end
     end
 
     # These tables are used only by Migration feature, so we can drop them.
