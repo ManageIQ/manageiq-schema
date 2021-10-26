@@ -55,10 +55,15 @@ describe RemoveMigrationFeature do
 
       nt_1 = notification_type.create!(:name => "transformation_plan_request_succeeded")
       nt_2 = notification_type.create!(:name => "transformation_plan_request_failed")
-      nt_3 = notification_type.create!(:name => "other")
+      nt_3 = notification_type.create!(:name => "conversion_host_config_success")
+      nt_4 = notification_type.create!(:name => "conversion_host_config_failure")
+      nt_5 = notification_type.create!(:name => "other")
+
       notification.create!(:notification_type_id => nt_1.id)
       notification.create!(:notification_type_id => nt_2.id)
       notification.create!(:notification_type_id => nt_3.id)
+      notification.create!(:notification_type_id => nt_4.id)
+      notification.create!(:notification_type_id => nt_5.id)
 
       authentication.create!(:authtype => "v2v")
       authentication.create!(:authtype => "other")
@@ -98,7 +103,7 @@ describe RemoveMigrationFeature do
       expect(notification_type.count).to eq(1)
       expect(notification_type.first.name).to eq("other")
       expect(notification.count).to eq(1)
-      expect(notification.first.notification_type_id).to eq(nt_3.id)
+      expect(notification.first.notification_type_id).to eq(nt_5.id)
 
       expect(authentication.count).to eq(1)
       expect(authentication.first.authtype).to eq("other")

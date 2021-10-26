@@ -45,6 +45,13 @@ class RemoveMigrationFeature < ActiveRecord::Migration[6.0]
     ManageIQ::Providers::Redhat::InfraManager::ServiceTemplateTransformationPlan
   ]
 
+  V2V_NOTIFICATION_TYPE_NAMES = %w[
+    transformation_plan_request_succeeded
+    transformation_plan_request_failed
+    conversion_host_config_success
+    conversion_host_config_failure
+  ]
+
   def up
     # These classes inherit from core classes, so we don't drop the tables.
     # Instead we remove the records.
@@ -57,7 +64,7 @@ class RemoveMigrationFeature < ActiveRecord::Migration[6.0]
     end
 
     say_with_time("Removing v2v notification data") do
-      ids = NotificationType.where(:name => %w[transformation_plan_request_succeeded transformation_plan_request_failed]).pluck(:id)
+      ids = NotificationType.where(:name => V2V_NOTIFICATION_TYPE_NAMES).pluck(:id)
       NotificationType.where(:id => ids).delete_all
       Notification.where(:notification_type_id => ids).delete_all
     end
