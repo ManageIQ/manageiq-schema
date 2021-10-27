@@ -10,6 +10,7 @@ describe RemoveMigrationFeature do
     let(:conversion_host) { migration_stub(:ConversionHost) }
     let(:tag) { migration_stub(:Tag) }
     let(:tagging) { migration_stub(:Tagging) }
+    let(:classification) { migration_stub(:Classification) }
     let(:custom_attribute) { migration_stub(:CustomAttribute) }
     let(:vm) { migration_stub(:Vm) }
     let(:host) { migration_stub(:Host) }
@@ -47,6 +48,11 @@ describe RemoveMigrationFeature do
       tagging.create!(:tag_id => tag_3.id)
       tagging.create!(:tag_id => tag_4.id)
       tagging.create!(:tag_id => tag_5.id)
+
+      classification_1 = classification.create!(:description => "V2V - Transformation Host", :tag_id => tag_1)
+      classification.create!(:description => "V2V - Transformation Method", :tag_id => tag_3, :parent_id => classification_1)
+      classification.create!(:description => "Transformation Status", :parent_id => classification_1)
+      classification.create!(:description => "Other", :tag_id => tag_5)
 
       vm_1 = vm.create!(:type => "Vm")
       custom_attribute.create!(:resource_id => vm_1.id, :resource_type => "Vm", :name => "TransformationIPAddress", :value => "10.0.0.1")
@@ -95,6 +101,8 @@ describe RemoveMigrationFeature do
 
       expect(tagging.count).to eq(1)
       expect(tagging.first.tag_id).to eq(tag_5.id)
+      expect(classification.count).to eq(1)
+      expect(classification.first.description).to eq("Other")
 
       expect(custom_attribute.count).to eq(1)
       expect(custom_attribute.first.name).to eq("stub")

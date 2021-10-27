@@ -38,6 +38,7 @@ class RemoveMigrationFeature < ActiveRecord::Migration[6.0]
   class CustomAttribute < ActiveRecord::Base; end
   class Tag < ActiveRecord::Base; end
   class Tagging < ActiveRecord::Base; end
+  class Classification < ActiveRecord::Base; end
 
   TRANSFORMATION_PLAN_CLASSES = %w[
     ServiceTemplateTransformationPlan
@@ -76,18 +77,24 @@ class RemoveMigrationFeature < ActiveRecord::Migration[6.0]
     end
 
     say_with_time("Removing v2v tags") do
+      parents = Classification.where("description LIKE '%Transformation%'")
+      parent_ids = parents.pluck(:id)
+      entries = Classification.where(:parent_id => parent_ids)
+      entry_ids = entries.pluck(:id)
+
+      Classification.where(:id => parent_ids + entry_ids).delete_all
+
+      tag_ids = Set.new
+      tag_ids += parents.pluck(:tag_id)
+      tag_ids += entries.pluck(:tag_id)
+
       # Conversion hosts can be either a RHV host or VM, or an OpenStack VM
       # We need to clean the resources, i.e. remove tags and custom attributes
-      tag_ids = [
-        Tag.find_by(:name => '/managed/v2v_transformation_host/false')&.id,
-        Tag.find_by(:name => '/managed/v2v_transformation_host/true')&.id,
-        Tag.find_by(:name => '/managed/v2v_transformation_method/ssh')&.id,
-        Tag.find_by(:name => '/managed/v2v_transformation_method/vddk')&.id
-      ].compact
-      tag_ids.each do |tag_id|
-        Tagging.where(:tag_id => tag_id).delete_all
-        Tag.find(tag_id).delete
-      end
+      tag_ids += Tag.where("name LIKE '/managed/v2v_transformation_host%'").pluck(:id)
+      tag_ids += Tag.where("name LIKE '/managed/v2v_transformation_method%'").pluck(:id)
+
+      Tagging.where(:tag_id => tag_ids).delete_all
+      Tag.where(:id => tag_ids).delete_all
     end
 
     say_with_time("Removing v2v custom attributes") do
