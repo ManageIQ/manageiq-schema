@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module Dummy
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults Rails::VERSION::STRING.to_f
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -18,5 +18,11 @@ module Dummy
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # HACK: Temporary override of the default setting until we can update the
+    # migration specs to honor it.
+    config.active_record.belongs_to_required_by_default = false
+
+    config.active_record.use_yaml_unsafe_load = true
   end
 end
