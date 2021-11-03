@@ -9,7 +9,7 @@ require File.expand_path("../dummy/config/environment", __FILE__)
 require 'rspec/rails'
 
 require "manageiq/password/rspec_matchers"
-ManageIQ::Password.v2_key = ManageIQ::Password::Key.new
+ManageIQ::Password.key_root = File.expand_path("dummy/certs", __dir__)
 
 Dir[File.expand_path("support/**/*.rb", __dir__)].each { |f| require f }
 

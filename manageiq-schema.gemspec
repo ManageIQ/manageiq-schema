@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "ancestry"
   spec.add_dependency "activerecord-id_regions", "~> 0.3.0"
   spec.add_dependency "linux_admin",             "~> 2.0"
-  spec.add_dependency "manageiq-password",       "~> 0.3"
+  spec.add_dependency "manageiq-password",       "< 2"
   spec.add_dependency "more_core_extensions",    ">= 3.5", "< 5"
   spec.add_dependency "pg"
   spec.add_dependency "pg-pglogical",            "~> 2.1.1"
