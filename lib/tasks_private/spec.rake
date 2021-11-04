@@ -36,7 +36,8 @@ namespace :spec do
 
   desc "Run all non-migration specs"
   RSpec::Core::RakeTask.new(:non_migration => :initialize) do |t|
-    t.pattern = FileList["spec/**/*_spec.rb"].exclude("spec/migrations/**/*_spec.rb")
+    t.pattern = FileList["spec/**/*_spec.rb"].exclude("spec/dummy/**/*_spec.rb")
+                                             .exclude("spec/migrations/**/*_spec.rb")
                                              .exclude("spec/schema/**/*_spec.rb")
   end
 

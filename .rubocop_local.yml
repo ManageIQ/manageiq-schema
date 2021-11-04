@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+  - 'spec/dummy/**/*'
+
 Rails/ApplicationRecord:
   Enabled: false
 
