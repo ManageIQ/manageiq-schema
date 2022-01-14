@@ -7,8 +7,8 @@ describe "Replication" do
 
       #{no_pk.join("\n")}
 
-      All tables must have a primary key called "id"
-      Replication with pglogical requires all tables to have a primary key
+      All tables must have a primary key called "id".
+      Logical replication requires all tables to have a primary key.
       We have chosen to use "id" rather than a composite key to avoid future migration
       problems should a table need to move away from a composite key in the future.
     EOS
