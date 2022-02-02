@@ -97,7 +97,7 @@ describe MoveAwxCredentialsToAuthentications do
         :type => "ManageIQ::Providers::EmbeddedAnsible::AutomationManager::VaultCredential"
       )
       expect(auth.manager_ref).to be_nil
-      expect(PG::Connection).to_not receive(:new)
+      expect(described_class).to_not receive(:pg_connection)
 
       migrate
     end
@@ -108,7 +108,7 @@ describe MoveAwxCredentialsToAuthentications do
         :type        => "ManageIQ::Providers::AnsibleTower::AutomationManager::GoogleCredential",
         :manager_ref => "1"
       )
-      expect(PG::Connection).to_not receive(:new)
+      expect(described_class).to_not receive(:pg_connection)
 
       migrate
     end
@@ -121,14 +121,14 @@ describe MoveAwxCredentialsToAuthentications do
         :options     => {:become_method => ""},
         :manager_ref => "1"
       )
-      expect(PG::Connection).to receive(:new).and_raise(PG::ConnectionBad)
+      expect(described_class).to receive(:pg_connection).and_raise(PG::ConnectionBad)
 
       migrate
     end
 
     context "with an awx database connection" do
       before do
-        allow(PG::Connection).to receive(:new).with(a_hash_including(:dbname => "awx")).and_return(awx_conn)
+        allow(described_class).to receive(:pg_connection).with(a_hash_including(:dbname => "awx")).and_return(awx_conn)
       end
 
       it "removes unwanted data from options when the credential doesn't exist in the awx database" do
