@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "manageiq-password",       "< 2"
   spec.add_dependency "more_core_extensions",    ">= 3.5", "< 5"
   spec.add_dependency "pg"
-  spec.add_dependency "rails",                   "~>6.0.0"
+  spec.add_dependency "rails",                   ">=6.0.4", "<7.0"
 
   spec.add_development_dependency "manageiq-style"
   spec.add_development_dependency "rspec"

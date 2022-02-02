@@ -12,3 +12,11 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 # your gemspec. These might include edge Rails or gems from your path or
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
+
+case ENV['TEST_RAILS_VERSION']
+when "6.1"
+  gem "rails",  "~>6.1.4"
+else
+  # Default local bundling to use 6.0 for generating migrations
+  gem "rails",  "~>6.0.4"
+end
