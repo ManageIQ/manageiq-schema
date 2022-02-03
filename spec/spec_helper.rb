@@ -22,3 +22,7 @@ RSpec.configure do |config|
   config.include Spec::Support::MigrationHelper, :migrations => :down
   config.include Spec::Support::MigrationIdRegionsHelper, :migrations => :down
 end
+
+require "rails"
+puts
+puts "\e[93mUsing Rails #{Rails.version}\e[0m"

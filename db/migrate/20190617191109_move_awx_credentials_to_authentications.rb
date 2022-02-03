@@ -285,6 +285,10 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
     raise
   end
 
+  def self.pg_connection(options)
+    PG::Connection.new(options)
+  end
+
   private
 
   def embedded_ansible_authentications
@@ -314,7 +318,7 @@ class MoveAwxCredentialsToAuthentications < ActiveRecord::Migration[5.0]
   end
 
   def awx_connection
-    @awx_connection ||= PG::Connection.new(ApplicationRecord.connection.raw_connection.conninfo_hash.merge(:dbname => "awx").delete_blanks)
+    @awx_connection ||= self.class.pg_connection(ApplicationRecord.connection.raw_connection.conninfo_hash.merge(:dbname => "awx").delete_blanks)
   end
 
   def update_authentication(auth, awx_info)
