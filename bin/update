@@ -1,4 +1,1 @@
-#!/bin/bash
-
-bundle update --jobs=3
-bundle exec rake spec:setup
+./setup
