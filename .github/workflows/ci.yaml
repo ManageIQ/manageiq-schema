@@ -24,6 +24,7 @@ jobs:
         ports:
         - 5432:5432
     env:
+      PGHOST: localhost
       TEST_RAILS_VERSION: ${{ matrix.rails-version }}
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
     steps:
