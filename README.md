@@ -6,6 +6,8 @@
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-schema?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Build history for master branch](https://buildstats.info/github/chart/ManageIQ/manageiq-schema?branch=master&buildCount=50&includeBuildsFromPullRequest=false&showstats=false)](https://github.com/ManageIQ/manageiq-schema/actions?query=branch%3Amaster)
+
 SQL Schema and migrations for ManageIQ.
 
 ## Development
