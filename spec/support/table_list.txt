@@ -256,6 +256,7 @@ physical_racks
 physical_servers
 physical_storage_families
 physical_storages
+physical_server_profiles
 pictures
 policy_event_contents
 policy_events
