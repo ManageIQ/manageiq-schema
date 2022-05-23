@@ -258,6 +258,7 @@ physical_storage_families
 physical_storages
 physical_server_profiles
 pictures
+placement_groups
 policy_event_contents
 policy_events
 provider_tag_mappings
