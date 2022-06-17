@@ -8,7 +8,7 @@ class MoveBecomeMethodFromOptions < ActiveRecord::Migration[6.0]
 
   def up
     say_with_time("Move Authentication become_method out of options text field") do
-      Authentication.in_my_region.find_each do |authentication|
+      Authentication.in_my_region.where("options LIKE '%become_method%'").find_each do |authentication|
         next unless authentication.options&.key?(:become_method)
 
         authentication.become_method = authentication.options.delete(:become_method)
