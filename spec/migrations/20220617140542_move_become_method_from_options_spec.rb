@@ -25,6 +25,16 @@ describe MoveBecomeMethodFromOptions do
       expect(authentication.become_method).to eq("su")
       expect(authentication.options.keys).not_to include(:become_method)
     end
+
+    it "clears invalid values" do
+      authentication = authentication_stub.create!(:options => {:become_method => "rm -rf"})
+
+      migrate
+
+      authentication.reload
+      expect(authentication.become_method).to be_nil
+      expect(authentication.options.keys).not_to include(:become_method)
+    end
   end
 
   migration_context :down do
