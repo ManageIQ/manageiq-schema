@@ -20,6 +20,7 @@ chargeback_rates
 chargeback_tiers
 classifications
 cloud_database_flavors
+cloud_database_servers
 cloud_databases
 cloud_networks
 cloud_object_store_containers
@@ -253,10 +254,10 @@ physical_chassis
 physical_disks
 physical_network_ports
 physical_racks
+physical_server_profiles
 physical_servers
 physical_storage_families
 physical_storages
-physical_server_profiles
 pictures
 placement_groups
 policy_event_contents
