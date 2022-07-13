@@ -19,5 +19,7 @@ module Dummy
     # HACK: Temporary override of the default setting until we can update the
     # migration specs to honor it.
     config.active_record.belongs_to_required_by_default = false
+
+    config.active_record.use_yaml_unsafe_load = true
   end
 end
