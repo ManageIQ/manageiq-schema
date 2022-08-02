@@ -271,6 +271,7 @@ pxe_servers
 registry_items
 relationships
 repositories
+request_logs
 reserves
 resource_actions
 resource_groups
