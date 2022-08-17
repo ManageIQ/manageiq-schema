@@ -1,12 +1,12 @@
 # ManageIQ::Schema
 
-[![CI](https://github.com/ManageIQ/manageiq-schema/actions/workflows/ci.yaml/badge.svg)](https://github.com/ManageIQ/manageiq-schema/actions/workflows/ci.yaml)
+[![CI](https://github.com/ManageIQ/manageiq-schema/actions/workflows/ci.yaml/badge.svg?branch=oparin)](https://github.com/ManageIQ/manageiq-schema/actions/workflows/ci.yaml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f7888b08eb72806b2860/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-schema/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f7888b08eb72806b2860/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-schema/test_coverage)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-schema?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build history for master branch](https://buildstats.info/github/chart/ManageIQ/manageiq-schema?branch=master&buildCount=50&includeBuildsFromPullRequest=false&showstats=false)](https://github.com/ManageIQ/manageiq-schema/actions?query=branch%3Amaster)
+[![Build history for oparin branch](https://buildstats.info/github/chart/ManageIQ/manageiq-schema?branch=oparin&buildCount=50&includeBuildsFromPullRequest=false&showstats=false)](https://github.com/ManageIQ/manageiq-schema/actions?query=branch%3Amaster)
 
 SQL Schema and migrations for ManageIQ.
 
