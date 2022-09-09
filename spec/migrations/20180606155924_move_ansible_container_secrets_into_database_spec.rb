@@ -61,11 +61,11 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
       before do
         stub_const("MoveAnsibleContainerSecretsIntoDatabase::TOKEN_FILE", token_path)
         stub_const("MoveAnsibleContainerSecretsIntoDatabase::CA_CERT_FILE", cert_path)
-        expect(URI::HTTPS).to receive(:build).with(
+        expect(URI::HTTPS).to receive(:build).with({
           :host => kube_host,
           :port => kube_port,
           :path => "/api/v1/namespaces/#{namespace}/secrets/ansible-secrets"
-        ).and_return(uri_stub)
+        }).and_return(uri_stub)
       end
 
       it "doesn't add any authentications if the secret is not found" do
@@ -113,12 +113,12 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
   def expect_request
     expect(File).to receive(:read).with(token_path).and_return("totally-a-token")
     response = double("RequestIO", :read => secret_json)
-    expect(uri_stub).to receive(:open).with(
+    expect(uri_stub).to receive(:open).with({
       'Accept'         => "application/json",
       'Authorization'  => "Bearer totally-a-token",
       :ssl_ca_cert     => cert_path,
       :ssl_verify_mode => OpenSSL::SSL::VERIFY_PEER
-    ).and_yield(response)
+    }).and_yield(response)
   end
 
   def database_authentications
