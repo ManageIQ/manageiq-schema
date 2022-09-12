@@ -16,7 +16,6 @@ jobs:
         - '2.6'
         - '2.7'
         rails-version:
-        - '6.0'
         - '6.1'
     services:
       postgres:
