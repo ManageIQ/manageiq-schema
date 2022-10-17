@@ -32,7 +32,7 @@ jobs:
       TEST_RAILS_VERSION: "${{ matrix.rails-version }}"
       CC_TEST_REPORTER_ID: "${{ secrets.CC_TEST_REPORTER_ID }}"
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
