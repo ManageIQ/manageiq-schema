@@ -128,7 +128,6 @@ host_storages
 host_switches
 hosts
 import_file_uploads
-iso_datastores
 iso_images
 jobs
 key_pairs_vms
