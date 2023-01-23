@@ -10,7 +10,7 @@ describe RemoveTransformationProductSetting do
 
       migrate
 
-      expect { setting_changed.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(setting_changed).to be_deleted
       expect(setting_ignored.reload.value).to eq(true)
     end
   end

@@ -12,6 +12,7 @@ require "manageiq/password/rspec_matchers"
 ManageIQ::Password.key_root = File.expand_path("dummy/certs", __dir__)
 
 Dir[File.expand_path("support/**/*.rb", __dir__)].each { |f| require f }
+Dir[Rails.root.join('spec', 'shared', '**', '*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true

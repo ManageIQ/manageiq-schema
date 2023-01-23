@@ -52,7 +52,7 @@ describe AddConversionHostIdToMiqRequestTasks do
 
       task.reload
       expect(task.options[:transformation_host_id]).to eq(host.id)
-      expect { conversion_host.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      expect(conversion_host).to be_deleted
     end
   end
 end
