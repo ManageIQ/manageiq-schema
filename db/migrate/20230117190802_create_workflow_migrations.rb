@@ -22,6 +22,7 @@ class CreateWorkflowMigrations < ActiveRecord::Migration[6.1]
       t.jsonb :workflow_content, :default => {}
       t.jsonb :credentials, :default => {}
       t.jsonb :context, :default => {}
+      t.jsonb :output, :default => {}
 
       t.timestamps
     end
