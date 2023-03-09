@@ -16,6 +16,7 @@ class CreateWorkflowMigrations < ActiveRecord::Migration[6.1]
       t.references :ems,      :type => :bigint, :index => true, :references => :ext_management_system
       t.references :workflow, :type => :bigint, :index => true
       t.references :tenant,   :type => :bigint, :index => true
+      t.references :miq_task, :type => :bigint, :index => true
       t.string :type, :index => true
       t.string :userid
       t.string :status
