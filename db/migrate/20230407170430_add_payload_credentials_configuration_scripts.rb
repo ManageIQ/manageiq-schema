@@ -2,7 +2,7 @@ class AddPayloadCredentialsConfigurationScripts < ActiveRecord::Migration[6.1]
   def change
     change_table :configuration_scripts do |t|
       t.string     :run_by_userid
-      t.jsonb      :payload
+      t.string     :payload
       t.string     :payload_type
       t.jsonb      :credentials
       t.jsonb      :context
