@@ -253,8 +253,8 @@ physical_chassis
 physical_disks
 physical_network_ports
 physical_racks
-physical_server_profiles
 physical_server_profile_templates
+physical_server_profiles
 physical_servers
 physical_storage_families
 physical_storages
