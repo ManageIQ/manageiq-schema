@@ -76,7 +76,6 @@ describe "foreign key (*_id) columns" do
       container_groups.container_node_id
       container_groups.container_project_id
       container_groups.container_replicator_id
-      container_groups.old_container_project_id
       container_groups_container_services.container_group_id
       container_groups_container_services.container_service_id
       container_image_registries.ems_id
