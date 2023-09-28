@@ -9,30 +9,10 @@ class RemoveVimStringFromMiqRequestTaskOptions < ActiveRecord::Migration[6.1]
   end
 
   def up
-    say_with_time("Removing VimStrings from MiqRequestTask") do
-      base_relation = MiqRequestTask.in_my_region.where("options LIKE ?", "%ruby/string:VimString%")
-      say_batch_started(base_relation.size)
-
-      loop do
-        count = base_relation.limit(50_000).update_all("options = REGEXP_REPLACE(options, '!ruby/string:VimString', '!ruby/string:String', 'g')")
-        break if count == 0
-
-        say_batch_processed(count)
-      end
-    end
+    regex_replace_column_value(MiqRequestTask, 'options', '!ruby/string:VimString', '!ruby/string:String')
   end
 
   def down
-    say_with_time("Restoring VimStrings from MiqRequestTask") do
-      base_relation = MiqRequestTask.in_my_region.where("options LIKE ?", "%ruby/string:String%")
-      say_batch_started(base_relation.size)
-
-      loop do
-        count = base_relation.limit(50_000).update_all("options = REGEXP_REPLACE(options, '!ruby/string:String', '!ruby/string:VimString', 'g')")
-        break if count == 0
-
-        say_batch_processed(count)
-      end
-    end
+    regex_replace_column_value(MiqRequestTask, 'options', '!ruby/string:String', '!ruby/string:VimString')
   end
 end

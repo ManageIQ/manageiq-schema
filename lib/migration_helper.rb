@@ -265,4 +265,24 @@ module MigrationHelper
       "DELETE FROM schema_migrations WHERE version = #{connection.quote(bad_date)}"
     ) > 0
   end
+
+  # sometimes a string in a column needs to be renamed to another value
+  # this uses update_all and regex REPLACE to do it database side
+  #
+  # @param model     model with the values
+  # @param column    column with the values
+  # @param old_value previous string that wants to be changed
+  # @param new_value new string that the value will be changed to
+  def regex_replace_column_value(model, column, old_value, new_value, batch_size: 50_000)
+    say_with_time("Removing #{old_value} from #{model.name}.#{column}") do
+      base_relation = model.where("#{column} LIKE ?", "%#{old_value}%")
+      say_batch_started(base_relation.size)
+      loop do
+        count = base_relation.limit(batch_size).update_all("#{column} = REGEXP_REPLACE(#{column}, '#{old_value}', '#{new_value}', 'g')")
+        break if count < batch_size
+
+        say_batch_processed(count)
+      end
+    end
+  end
 end
