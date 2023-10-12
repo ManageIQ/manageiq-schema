@@ -111,7 +111,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
   end
 
   def expect_request
-    expect(File).to receive(:read).with(token_path).and_return("totally-a-token")
+    expect(described_class).to receive(:read_token).with(token_path).and_return("totally-a-token")
     response = double("RequestIO", :read => secret_json)
     expect(uri_stub).to receive(:open).with({
       'Accept'         => "application/json",

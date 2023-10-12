@@ -14,6 +14,10 @@ class MoveAnsibleContainerSecretsIntoDatabase < ActiveRecord::Migration[5.0]
     update_authentications
   end
 
+  def self.read_token(file)
+    File.read(file)
+  end
+
   private
 
   def containerized?
@@ -88,7 +92,7 @@ class MoveAnsibleContainerSecretsIntoDatabase < ActiveRecord::Migration[5.0]
   def request_params
     {
       'Accept'         => "application/json",
-      'Authorization'  => "Bearer #{File.read(TOKEN_FILE)}",
+      'Authorization'  => "Bearer #{self.class.read_token(TOKEN_FILE)}",
       :ssl_ca_cert     => CA_CERT_FILE,
       :ssl_verify_mode => OpenSSL::SSL::VERIFY_PEER
     }
