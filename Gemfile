@@ -16,7 +16,7 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 case ENV['TEST_RAILS_VERSION']
 when "6.0"
   # Default local bundling to use 6.0 for generating migrations
-  gem "rails",  "~>6.0.4"
+  gem "rails",  "~>6.1.0"
 else
   gem "rails",  "~>6.1.6"
 end
