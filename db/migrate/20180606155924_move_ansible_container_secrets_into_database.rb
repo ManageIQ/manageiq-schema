@@ -54,7 +54,7 @@ class MoveAnsibleContainerSecretsIntoDatabase < ActiveRecord::Migration[5.0]
     database_auth_find_args = db_args.merge(
       :name     => "Ansible Database Authentication",
       :authtype => "ansible_database_password",
-      :userid   => ApplicationRecord.configurations[Rails.env]["username"],
+      :userid   => ApplicationRecord.configurations.configs_for(:env_name => Rails.env, :name => "primary").configuration_hash["username"],
       :type     => "AuthUseridPassword"
     )
 
@@ -78,7 +78,7 @@ class MoveAnsibleContainerSecretsIntoDatabase < ActiveRecord::Migration[5.0]
       decoded_data["secret-key"],
       decoded_data["rabbit-password"],
       decoded_data["admin-password"],
-      ApplicationRecord.configurations[Rails.env]["password"]
+      ApplicationRecord.configurations.configs_for(:env_name => Rails.env, :name => "primary").configuration_hash["password"]
     ].map { |v| ManageIQ::Password.encrypt(v) }
   rescue OpenURI::HTTPError
     nil

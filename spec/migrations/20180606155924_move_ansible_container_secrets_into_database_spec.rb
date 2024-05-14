@@ -85,7 +85,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
         expect(database_authentications.count).to eq(4)
         expect(ansible_secret_key).to eq("secretkey")
         expect(ansible_rabbitmq_password).to eq("rabbitpassword")
-        expect(ansible_database_password).to eq(ApplicationRecord.configurations[Rails.env]["password"])
+        expect(ansible_database_password).to eq(ApplicationRecord.configurations.configs_for(:env_name => Rails.env, :name => "primary").configuration_hash["password"])
       end
 
       it "updates authentications with the secret values" do
@@ -105,7 +105,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
         expect(ansible_secret_key).to eq("secretkey")
         expect(ansible_rabbitmq_password).to eq("rabbitpassword")
         expect(ansible_admin_password).to eq("adminpassword")
-        expect(ansible_database_password).to eq(ApplicationRecord.configurations[Rails.env]["password"])
+        expect(ansible_database_password).to eq(ApplicationRecord.configurations.configs_for(:env_name => Rails.env, :name => "primary").configuration_hash["password"])
       end
     end
   end
@@ -161,7 +161,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
     auths = database_authentications.where(
       :name     => "Ansible Database Authentication",
       :authtype => "ansible_database_password",
-      :userid   => ApplicationRecord.configurations[Rails.env]["username"],
+      :userid   => ApplicationRecord.configurations.configs_for(:env_name => Rails.env, :name => "primary").configuration_hash["username"],
       :type     => "AuthUseridPassword"
     )
     expect(auths.count).to eq(1)
