@@ -15,7 +15,7 @@ describe UpdateServiceUserRoles do
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to match_array([other])
+      expect(user_role.miq_product_feature_ids).to match_array([other.id])
     end
 
     it "converts service_accord to service" do
@@ -24,7 +24,7 @@ describe UpdateServiceUserRoles do
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to match_array([service])
+      expect(user_role.miq_product_feature_ids).to match_array([service.id])
     end
 
     it "converts service_accord to service without duplicate" do
@@ -33,7 +33,7 @@ describe UpdateServiceUserRoles do
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to match_array([other, service])
+      expect(user_role.miq_product_feature_ids).to match_array([other.id, service.id])
     end
 
     it "leaves service alone" do
@@ -42,7 +42,7 @@ describe UpdateServiceUserRoles do
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to match_array([other, service])
+      expect(user_role.miq_product_feature_ids).to match_array([other.id, service.id])
     end
   end
 end

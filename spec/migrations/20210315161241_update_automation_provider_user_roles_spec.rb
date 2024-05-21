@@ -39,10 +39,10 @@ describe UpdateAutomationProviderUserRoles do
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).not_to include(automation_manager)
-      expect(user_role.miq_product_features).to include(ems_automation)
-      expect(user_role.miq_product_features).to include(automation_manager_configured_system)
-      expect(user_role.miq_product_features).to include(configuration_script)
+      expect(user_role.miq_product_feature_ids).not_to include(automation_manager.id)
+      expect(user_role.miq_product_feature_ids).to include(ems_automation.id)
+      expect(user_role.miq_product_feature_ids).to include(automation_manager_configured_system.id)
+      expect(user_role.miq_product_feature_ids).to include(configuration_script.id)
     end
   end
 
@@ -85,10 +85,10 @@ describe UpdateAutomationProviderUserRoles do
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to include(automation_manager)
-      expect(user_role.miq_product_features).not_to include(ems_automation)
-      expect(user_role.miq_product_features).not_to include(automation_manager_configured_system)
-      expect(user_role.miq_product_features).not_to include(configuration_script)
+      expect(user_role.miq_product_feature_ids).to include(automation_manager.id)
+      expect(user_role.miq_product_feature_ids).not_to include(ems_automation.id)
+      expect(user_role.miq_product_feature_ids).not_to include(automation_manager_configured_system.id)
+      expect(user_role.miq_product_feature_ids).not_to include(configuration_script.id)
     end
   end
 end

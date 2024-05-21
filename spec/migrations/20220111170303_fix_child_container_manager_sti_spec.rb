@@ -20,10 +20,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     eq("ManageIQ::Providers::Amazon::ContainerManager::ContainerTemplate")
-      expect(service_instance.reload.type).to       eq("ManageIQ::Providers::Amazon::ContainerManager::ServiceInstance")
-      expect(service_offering.reload.type).to       eq("ManageIQ::Providers::Amazon::ContainerManager::ServiceOffering")
-      expect(service_parameters_set.reload.type).to eq("ManageIQ::Providers::Amazon::ContainerManager::ServiceParametersSet")
+      expect(container_template_stub.first.type).to     eq("ManageIQ::Providers::Amazon::ContainerManager::ContainerTemplate")
+      expect(service_instance_stub.first.type).to       eq("ManageIQ::Providers::Amazon::ContainerManager::ServiceInstance")
+      expect(service_offering_stub.first.type).to       eq("ManageIQ::Providers::Amazon::ContainerManager::ServiceOffering")
+      expect(service_parameters_set_stub.first.type).to eq("ManageIQ::Providers::Amazon::ContainerManager::ServiceParametersSet")
     end
 
     it "fixes STI class for AKS providers" do
@@ -36,10 +36,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     eq("ManageIQ::Providers::Azure::ContainerManager::ContainerTemplate")
-      expect(service_instance.reload.type).to       eq("ManageIQ::Providers::Azure::ContainerManager::ServiceInstance")
-      expect(service_offering.reload.type).to       eq("ManageIQ::Providers::Azure::ContainerManager::ServiceOffering")
-      expect(service_parameters_set.reload.type).to eq("ManageIQ::Providers::Azure::ContainerManager::ServiceParametersSet")
+      expect(container_template_stub.first.type).to     eq("ManageIQ::Providers::Azure::ContainerManager::ContainerTemplate")
+      expect(service_instance_stub.first.type).to       eq("ManageIQ::Providers::Azure::ContainerManager::ServiceInstance")
+      expect(service_offering_stub.first.type).to       eq("ManageIQ::Providers::Azure::ContainerManager::ServiceOffering")
+      expect(service_parameters_set_stub.first.type).to eq("ManageIQ::Providers::Azure::ContainerManager::ServiceParametersSet")
     end
 
     it "fixes STI class for GKE providers" do
@@ -52,10 +52,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     eq("ManageIQ::Providers::Google::ContainerManager::ContainerTemplate")
-      expect(service_instance.reload.type).to       eq("ManageIQ::Providers::Google::ContainerManager::ServiceInstance")
-      expect(service_offering.reload.type).to       eq("ManageIQ::Providers::Google::ContainerManager::ServiceOffering")
-      expect(service_parameters_set.reload.type).to eq("ManageIQ::Providers::Google::ContainerManager::ServiceParametersSet")
+      expect(container_template_stub.first.type).to     eq("ManageIQ::Providers::Google::ContainerManager::ContainerTemplate")
+      expect(service_instance_stub.first.type).to       eq("ManageIQ::Providers::Google::ContainerManager::ServiceInstance")
+      expect(service_offering_stub.first.type).to       eq("ManageIQ::Providers::Google::ContainerManager::ServiceOffering")
+      expect(service_parameters_set_stub.first.type).to eq("ManageIQ::Providers::Google::ContainerManager::ServiceParametersSet")
     end
 
     it "fixes STI class for IKS providers" do
@@ -68,10 +68,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     eq("ManageIQ::Providers::IbmCloud::ContainerManager::ContainerTemplate")
-      expect(service_instance.reload.type).to       eq("ManageIQ::Providers::IbmCloud::ContainerManager::ServiceInstance")
-      expect(service_offering.reload.type).to       eq("ManageIQ::Providers::IbmCloud::ContainerManager::ServiceOffering")
-      expect(service_parameters_set.reload.type).to eq("ManageIQ::Providers::IbmCloud::ContainerManager::ServiceParametersSet")
+      expect(container_template_stub.first.type).to     eq("ManageIQ::Providers::IbmCloud::ContainerManager::ContainerTemplate")
+      expect(service_instance_stub.first.type).to       eq("ManageIQ::Providers::IbmCloud::ContainerManager::ServiceInstance")
+      expect(service_offering_stub.first.type).to       eq("ManageIQ::Providers::IbmCloud::ContainerManager::ServiceOffering")
+      expect(service_parameters_set_stub.first.type).to eq("ManageIQ::Providers::IbmCloud::ContainerManager::ServiceParametersSet")
     end
 
     it "fixes STI class for OKE providers" do
@@ -84,10 +84,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     eq("ManageIQ::Providers::OracleCloud::ContainerManager::ContainerTemplate")
-      expect(service_instance.reload.type).to       eq("ManageIQ::Providers::OracleCloud::ContainerManager::ServiceInstance")
-      expect(service_offering.reload.type).to       eq("ManageIQ::Providers::OracleCloud::ContainerManager::ServiceOffering")
-      expect(service_parameters_set.reload.type).to eq("ManageIQ::Providers::OracleCloud::ContainerManager::ServiceParametersSet")
+      expect(container_template_stub.first.type).to     eq("ManageIQ::Providers::OracleCloud::ContainerManager::ContainerTemplate")
+      expect(service_instance_stub.first.type).to       eq("ManageIQ::Providers::OracleCloud::ContainerManager::ServiceInstance")
+      expect(service_offering_stub.first.type).to       eq("ManageIQ::Providers::OracleCloud::ContainerManager::ServiceOffering")
+      expect(service_parameters_set_stub.first.type).to eq("ManageIQ::Providers::OracleCloud::ContainerManager::ServiceParametersSet")
     end
 
     it "fixes STI class for Tanzu providers" do
@@ -100,10 +100,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     eq("ManageIQ::Providers::Vmware::ContainerManager::ContainerTemplate")
-      expect(service_instance.reload.type).to       eq("ManageIQ::Providers::Vmware::ContainerManager::ServiceInstance")
-      expect(service_offering.reload.type).to       eq("ManageIQ::Providers::Vmware::ContainerManager::ServiceOffering")
-      expect(service_parameters_set.reload.type).to eq("ManageIQ::Providers::Vmware::ContainerManager::ServiceParametersSet")
+      expect(container_template_stub.first.type).to     eq("ManageIQ::Providers::Vmware::ContainerManager::ContainerTemplate")
+      expect(service_instance_stub.first.type).to       eq("ManageIQ::Providers::Vmware::ContainerManager::ServiceInstance")
+      expect(service_offering_stub.first.type).to       eq("ManageIQ::Providers::Vmware::ContainerManager::ServiceOffering")
+      expect(service_parameters_set_stub.first.type).to eq("ManageIQ::Providers::Vmware::ContainerManager::ServiceParametersSet")
     end
   end
 
@@ -118,10 +118,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     be_nil
-      expect(service_instance.reload.type).to       be_nil
-      expect(service_offering.reload.type).to       be_nil
-      expect(service_parameters_set.reload.type).to be_nil
+      expect(container_template_stub.first.type).to     be_nil
+      expect(service_instance_stub.first.type).to       be_nil
+      expect(service_offering_stub.first.type).to       be_nil
+      expect(service_parameters_set_stub.first.type).to be_nil
     end
 
     it "resets STI class for AKS providers" do
@@ -134,10 +134,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     be_nil
-      expect(service_instance.reload.type).to       be_nil
-      expect(service_offering.reload.type).to       be_nil
-      expect(service_parameters_set.reload.type).to be_nil
+      expect(container_template_stub.first.type).to     be_nil
+      expect(service_instance_stub.first.type).to       be_nil
+      expect(service_offering_stub.first.type).to       be_nil
+      expect(service_parameters_set_stub.first.type).to be_nil
     end
 
     it "resets STI class for GKE providers" do
@@ -150,10 +150,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     be_nil
-      expect(service_instance.reload.type).to       be_nil
-      expect(service_offering.reload.type).to       be_nil
-      expect(service_parameters_set.reload.type).to be_nil
+      expect(container_template_stub.first.type).to     be_nil
+      expect(service_instance_stub.first.type).to       be_nil
+      expect(service_offering_stub.first.type).to       be_nil
+      expect(service_parameters_set_stub.first.type).to be_nil
     end
 
     it "resets STI class for IKS providers" do
@@ -166,10 +166,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     be_nil
-      expect(service_instance.reload.type).to       be_nil
-      expect(service_offering.reload.type).to       be_nil
-      expect(service_parameters_set.reload.type).to be_nil
+      expect(container_template_stub.first.type).to     be_nil
+      expect(service_instance_stub.first.type).to       be_nil
+      expect(service_offering_stub.first.type).to       be_nil
+      expect(service_parameters_set_stub.first.type).to be_nil
     end
 
     it "resets STI class for OKE providers" do
@@ -182,10 +182,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     be_nil
-      expect(service_instance.reload.type).to       be_nil
-      expect(service_offering.reload.type).to       be_nil
-      expect(service_parameters_set.reload.type).to be_nil
+      expect(container_template_stub.first.type).to     be_nil
+      expect(service_instance_stub.first.type).to       be_nil
+      expect(service_offering_stub.first.type).to       be_nil
+      expect(service_parameters_set_stub.first.type).to be_nil
     end
 
     it "resets STI class for Tanzu providers" do
@@ -198,10 +198,10 @@ describe FixChildContainerManagerSti do
 
       migrate
 
-      expect(container_template.reload.type).to     be_nil
-      expect(service_instance.reload.type).to       be_nil
-      expect(service_offering.reload.type).to       be_nil
-      expect(service_parameters_set.reload.type).to be_nil
+      expect(container_template_stub.first.type).to     be_nil
+      expect(service_instance_stub.first.type).to       be_nil
+      expect(service_offering_stub.first.type).to       be_nil
+      expect(service_parameters_set_stub.first.type).to be_nil
     end
   end
 end

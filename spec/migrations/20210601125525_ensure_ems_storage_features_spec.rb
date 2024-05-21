@@ -39,7 +39,7 @@ RSpec.describe EnsureEmsStorageFeatures do
 
       migrate
 
-      expect(user_role.reload.miq_product_features).to include(ems_storage_view)
+      expect(user_role.reload.miq_product_feature_ids).to include(ems_storage_view.id)
     end
 
     it "adds ems_storage* feature if ems_object_storage* feature is enabled" do
@@ -50,7 +50,7 @@ RSpec.describe EnsureEmsStorageFeatures do
 
       migrate
 
-      expect(user_role.reload.miq_product_features).to include(ems_storage_view)
+      expect(user_role.reload.miq_product_feature_ids).to include(ems_storage_view.id)
     end
 
     it "doesn't duplicate if ems_storage* feature already enabled" do
@@ -59,11 +59,11 @@ RSpec.describe EnsureEmsStorageFeatures do
         :read_only            => false
       )
 
-      expect(user_role.miq_product_features).to match_array([ems_storage_view, ems_object_storage_view, ems_block_storage_view])
+      expect(user_role.miq_product_feature_ids).to match_array([ems_storage_view.id, ems_object_storage_view.id, ems_block_storage_view.id])
 
       migrate
 
-      expect(user_role.reload.miq_product_features).to match_array([ems_storage_view, ems_object_storage_view, ems_block_storage_view])
+      expect(user_role.reload.miq_product_feature_ids).to match_array([ems_storage_view.id, ems_object_storage_view.id, ems_block_storage_view.id])
     end
 
     it "skips user roles without any ems_(block|object)_storage* features" do
@@ -81,7 +81,7 @@ RSpec.describe EnsureEmsStorageFeatures do
 
       migrate
 
-      expect(user_role.reload.miq_product_features).to match_array([ems_cloud_view])
+      expect(user_role.reload.miq_product_feature_ids).to match_array([ems_cloud_view.id])
     end
   end
 end
