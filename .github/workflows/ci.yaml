@@ -46,4 +46,4 @@ jobs:
       if: "${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '3.0' &&
         matrix.rails-version == '6.1' }}"
       continue-on-error: true
-      uses: paambaati/codeclimate-action@v5
+      uses: paambaati/codeclimate-action@v6
