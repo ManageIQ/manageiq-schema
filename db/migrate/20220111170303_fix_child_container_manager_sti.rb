@@ -46,18 +46,17 @@ class FixChildContainerManagerSti < ActiveRecord::Migration[6.0]
         ServiceParametersSet.in_my_region.where(:ext_management_system => managers).update_all(:type => "#{provider_klass}::ServiceParametersSet")
       end
     end
+  end
 
-    def down
-      PROVIDERS.each do |provider|
-        provider_klass = "ManageIQ::Providers::#{provider}::ContainerManager"
-        say_with_time("Resetting STI class for #{provider_klass}") do
-          managers = ExtManagementSystem.in_my_region.where(:type => provider_klass)
-
-          ContainerTemplate.in_my_region.where(:ext_management_system => managers).update_all(:type => nil)
-          ServiceInstance.in_my_region.where(:ext_management_system => managers).update_all(:type => nil)
-          ServiceOffering.in_my_region.where(:ext_management_system => managers).update_all(:type => nil)
-          ServiceParametersSet.in_my_region.where(:ext_management_system => managers).update_all(:type => nil)
-        end
+  def down
+    PROVIDERS.each do |provider|
+      provider_klass = "ManageIQ::Providers::#{provider}::ContainerManager"
+      say_with_time("Resetting STI class for #{provider_klass}") do
+        managers = ExtManagementSystem.in_my_region.where(:type => provider_klass)
+        ContainerTemplate.in_my_region.where(:ext_management_system => managers).update_all(:type => nil)
+        ServiceInstance.in_my_region.where(:ext_management_system => managers).update_all(:type => nil)
+        ServiceOffering.in_my_region.where(:ext_management_system => managers).update_all(:type => nil)
+        ServiceParametersSet.in_my_region.where(:ext_management_system => managers).update_all(:type => nil)
       end
     end
   end
