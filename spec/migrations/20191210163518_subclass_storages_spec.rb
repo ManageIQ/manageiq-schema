@@ -11,7 +11,7 @@ describe SubclassStorages do
       end
 
       storages = emss.map do |ems|
-        storage_stub.create!(:ext_management_system => ems)
+        storage_stub.create!(:ems_id => ems.id)
       end
 
       migrate
@@ -23,7 +23,7 @@ describe SubclassStorages do
 
     it "doesn't migrate storages from other providers" do
       ems = ext_management_system_stub.create!(:type => "ManageIQ::Providers::AnotherManager::InfraManager")
-      storage = storage_stub.create!(:ext_management_system => ems)
+      storage = storage_stub.create!(:ems_id => ems.id)
 
       migrate
 
@@ -38,7 +38,7 @@ describe SubclassStorages do
       end
 
       storages = emss.map do |ems|
-        storage_stub.create!(:ext_management_system => ems, :type => "#{ems.type}::Storage")
+        storage_stub.create!(:ems_id => ems.id, :type => "#{ems.type}::Storage")
       end
 
       migrate
@@ -50,7 +50,7 @@ describe SubclassStorages do
 
     it "doesn't migrate storages from other providers" do
       ems = ext_management_system_stub.create!(:type => "ManageIQ::Providers::AnotherManager::InfraManager")
-      storage = storage_stub.create!(:ext_management_system => ems)
+      storage = storage_stub.create!(:ems_id => ems.id)
 
       migrate
 

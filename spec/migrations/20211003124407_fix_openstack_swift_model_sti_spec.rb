@@ -9,8 +9,8 @@ describe FixOpenstackSwiftModelSti do
     it "fixes OpenStack Swift models' STI class" do
       swift_manager = ems_stub.create(:type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager")
 
-      cloud_object_store_container = cloud_object_store_container_stub.create(:ext_management_system => swift_manager, :type => nil)
-      cloud_object_store_object    = cloud_object_store_object_stub.create(:ext_management_system => swift_manager, :type => nil)
+      cloud_object_store_container = cloud_object_store_container_stub.create(:ems_id => swift_manager.id, :type => nil)
+      cloud_object_store_object    = cloud_object_store_object_stub.create(:ems_id => swift_manager.id, :type => nil)
 
       migrate
 
@@ -23,8 +23,8 @@ describe FixOpenstackSwiftModelSti do
     it "resets OpenStack Swift models' STI class" do
       swift_manager = ems_stub.create(:type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager")
 
-      cloud_object_store_container = cloud_object_store_container_stub.create(:ext_management_system => swift_manager, :type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectStoreContainer")
-      cloud_object_store_object    = cloud_object_store_object_stub.create(:ext_management_system => swift_manager, :type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectStoreObject")
+      cloud_object_store_container = cloud_object_store_container_stub.create(:ems_id => swift_manager.id, :type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectStoreContainer")
+      cloud_object_store_object    = cloud_object_store_object_stub.create(:ems_id => swift_manager.id, :type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectStoreObject")
 
       migrate
 

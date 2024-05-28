@@ -6,7 +6,7 @@ describe FixUnserializableNotificationOptions do
 
   migration_context :up do
     it "fixes options[:subject] classes that don't exist" do
-      notification1 = notification_stub.create!(:notification_type => notification_type_stub.create!)
+      notification1 = notification_stub.create!(:notification_type_id => notification_type_stub.create!.id)
       notification1.update(
         :options =>
           <<~OPTIONS
@@ -35,7 +35,7 @@ describe FixUnserializableNotificationOptions do
     end
 
     it "Sets options[:subject] where the record no longer exists" do
-      notification1 = notification_stub.create!(:notification_type => notification_type_stub.create!)
+      notification1 = notification_stub.create!(:notification_type_id => notification_type_stub.create!.id)
       notification1.update(
         :options =>
           <<~OPTIONS

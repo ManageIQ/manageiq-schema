@@ -33,7 +33,7 @@ RSpec.describe EnsureEmsStorageFeatures do
 
     it "adds ems_storage* feature if ems_block_storage* feature is enabled" do
       user_role = user_role_stub.create!(
-        :miq_product_features => [ems_block_storage_view],
+        :miq_product_feature_ids => [ems_block_storage_view.id],
         :read_only            => false
       )
 
@@ -44,7 +44,7 @@ RSpec.describe EnsureEmsStorageFeatures do
 
     it "adds ems_storage* feature if ems_object_storage* feature is enabled" do
       user_role = user_role_stub.create!(
-        :miq_product_features => [ems_object_storage_view],
+        :miq_product_feature_ids => [ems_object_storage_view.id],
         :read_only            => false
       )
 
@@ -55,7 +55,7 @@ RSpec.describe EnsureEmsStorageFeatures do
 
     it "doesn't duplicate if ems_storage* feature already enabled" do
       user_role = user_role_stub.create!(
-        :miq_product_features => [ems_block_storage_view, ems_object_storage_view, ems_storage_view],
+        :miq_product_feature_ids => [ems_block_storage_view.id, ems_object_storage_view.id, ems_storage_view.id],
         :read_only            => false
       )
 
@@ -75,7 +75,7 @@ RSpec.describe EnsureEmsStorageFeatures do
       )
 
       user_role = user_role_stub.create!(
-        :miq_product_features => [ems_cloud_view],
+        :miq_product_feature_ids => [ems_cloud_view.id],
         :read_only            => false
       )
 

@@ -13,10 +13,10 @@ describe FixChildContainerManagerSti do
     it "fixes STI class for EKS providers" do
       eks = ext_management_system_stub.create(:type => "ManageIQ::Providers::Amazon::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => eks)
-      service_instance       = service_instance_stub.create(:ext_management_system => eks)
-      service_offering       = service_offering_stub.create(:ext_management_system => eks)
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => eks)
+      container_template_stub.create(:ems_id => eks.id)
+      service_instance_stub.create(:ems_id => eks.id)
+      service_offering_stub.create(:ems_id => eks.id)
+      service_parameters_set_stub.create(:ems_id => eks.id)
 
       migrate
 
@@ -29,10 +29,10 @@ describe FixChildContainerManagerSti do
     it "fixes STI class for AKS providers" do
       aks = ext_management_system_stub.create(:type => "ManageIQ::Providers::Azure::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => aks)
-      service_instance       = service_instance_stub.create(:ext_management_system => aks)
-      service_offering       = service_offering_stub.create(:ext_management_system => aks)
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => aks)
+      container_template_stub.create(:ems_id => aks.id)
+      service_instance_stub.create(:ems_id => aks.id)
+      service_offering_stub.create(:ems_id => aks.id)
+      service_parameters_set_stub.create(:ems_id => aks.id)
 
       migrate
 
@@ -45,10 +45,10 @@ describe FixChildContainerManagerSti do
     it "fixes STI class for GKE providers" do
       gke = ext_management_system_stub.create(:type => "ManageIQ::Providers::Google::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => gke)
-      service_instance       = service_instance_stub.create(:ext_management_system => gke)
-      service_offering       = service_offering_stub.create(:ext_management_system => gke)
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => gke)
+      container_template_stub.create(:ems_id => gke.id)
+      service_instance_stub.create(:ems_id => gke.id)
+      service_offering_stub.create(:ems_id => gke.id)
+      service_parameters_set_stub.create(:ems_id => gke.id)
 
       migrate
 
@@ -61,10 +61,10 @@ describe FixChildContainerManagerSti do
     it "fixes STI class for IKS providers" do
       iks = ext_management_system_stub.create(:type => "ManageIQ::Providers::IbmCloud::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => iks)
-      service_instance       = service_instance_stub.create(:ext_management_system => iks)
-      service_offering       = service_offering_stub.create(:ext_management_system => iks)
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => iks)
+      container_template_stub.create(:ems_id => iks.id)
+      service_instance_stub.create(:ems_id => iks.id)
+      service_offering_stub.create(:ems_id => iks.id)
+      service_parameters_set_stub.create(:ems_id => iks.id)
 
       migrate
 
@@ -77,10 +77,10 @@ describe FixChildContainerManagerSti do
     it "fixes STI class for OKE providers" do
       oke = ext_management_system_stub.create(:type => "ManageIQ::Providers::OracleCloud::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => oke)
-      service_instance       = service_instance_stub.create(:ext_management_system => oke)
-      service_offering       = service_offering_stub.create(:ext_management_system => oke)
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => oke)
+      container_template_stub.create(:ems_id => oke.id)
+      service_instance_stub.create(:ems_id => oke.id)
+      service_offering_stub.create(:ems_id => oke.id)
+      service_parameters_set_stub.create(:ems_id => oke.id)
 
       migrate
 
@@ -93,10 +93,10 @@ describe FixChildContainerManagerSti do
     it "fixes STI class for Tanzu providers" do
       tanzu = ext_management_system_stub.create(:type => "ManageIQ::Providers::Vmware::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => tanzu)
-      service_instance       = service_instance_stub.create(:ext_management_system => tanzu)
-      service_offering       = service_offering_stub.create(:ext_management_system => tanzu)
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => tanzu)
+      container_template_stub.create(:ems_id => tanzu.id)
+      service_instance_stub.create(:ems_id => tanzu.id)
+      service_offering_stub.create(:ems_id => tanzu.id)
+      service_parameters_set_stub.create(:ems_id => tanzu.id)
 
       migrate
 
@@ -111,10 +111,10 @@ describe FixChildContainerManagerSti do
     it "resets STI class for EKS providers" do
       eks = ext_management_system_stub.create(:type => "ManageIQ::Providers::Amazon::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => eks, :type => "ManageIQ::Providers::Amazon::ContainerManager::ContainerTemplate")
-      service_instance       = service_instance_stub.create(:ext_management_system => eks, :type => "ManageIQ::Providers::Amazon::ContainerManager::ServiceInstance")
-      service_offering       = service_offering_stub.create(:ext_management_system => eks, :type => "ManageIQ::Providers::Amazon::ContainerManager::ServiceOffering")
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => eks, :type => "ManageIQ::Providers::Amazon::ContainerManager::ServiceParametersSet")
+      container_template_stub.create(:ems_id => eks.id, :type => "ManageIQ::Providers::Amazon::ContainerManager::ContainerTemplate")
+      service_instance_stub.create(:ems_id => eks.id, :type => "ManageIQ::Providers::Amazon::ContainerManager::ServiceInstance")
+      service_offering_stub.create(:ems_id => eks.id, :type => "ManageIQ::Providers::Amazon::ContainerManager::ServiceOffering")
+      service_parameters_set_stub.create(:ems_id => eks.id, :type => "ManageIQ::Providers::Amazon::ContainerManager::ServiceParametersSet")
 
       migrate
 
@@ -127,10 +127,10 @@ describe FixChildContainerManagerSti do
     it "resets STI class for AKS providers" do
       aks = ext_management_system_stub.create(:type => "ManageIQ::Providers::Azure::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => aks, :type => "ManageIQ::Providers::Azure::ContainerManager::ContainerTemplate")
-      service_instance       = service_instance_stub.create(:ext_management_system => aks, :type => "ManageIQ::Providers::Azure::ContainerManager::ServiceInstance")
-      service_offering       = service_offering_stub.create(:ext_management_system => aks, :type => "ManageIQ::Providers::Azure::ContainerManager::ServiceOffering")
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => aks, :type => "ManageIQ::Providers::Azure::ContainerManager::ServiceParametersSet")
+      container_template_stub.create(:ems_id => aks.id, :type => "ManageIQ::Providers::Azure::ContainerManager::ContainerTemplate")
+      service_instance_stub.create(:ems_id => aks.id, :type => "ManageIQ::Providers::Azure::ContainerManager::ServiceInstance")
+      service_offering_stub.create(:ems_id => aks.id, :type => "ManageIQ::Providers::Azure::ContainerManager::ServiceOffering")
+      service_parameters_set_stub.create(:ems_id => aks.id, :type => "ManageIQ::Providers::Azure::ContainerManager::ServiceParametersSet")
 
       migrate
 
@@ -143,10 +143,10 @@ describe FixChildContainerManagerSti do
     it "resets STI class for GKE providers" do
       gke = ext_management_system_stub.create(:type => "ManageIQ::Providers::Google::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => gke, :type => "ManageIQ::Providers::Google::ContainerManager::ContainerTemplate")
-      service_instance       = service_instance_stub.create(:ext_management_system => gke, :type => "ManageIQ::Providers::Google::ContainerManager::ServiceInstance")
-      service_offering       = service_offering_stub.create(:ext_management_system => gke, :type => "ManageIQ::Providers::Google::ContainerManager::ServiceOffering")
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => gke, :type => "ManageIQ::Providers::Google::ContainerManager::ServiceParametersSet")
+      container_template_stub.create(:ems_id => gke.id, :type => "ManageIQ::Providers::Google::ContainerManager::ContainerTemplate")
+      service_instance_stub.create(:ems_id => gke.id, :type => "ManageIQ::Providers::Google::ContainerManager::ServiceInstance")
+      service_offering_stub.create(:ems_id => gke.id, :type => "ManageIQ::Providers::Google::ContainerManager::ServiceOffering")
+      service_parameters_set_stub.create(:ems_id => gke.id, :type => "ManageIQ::Providers::Google::ContainerManager::ServiceParametersSet")
 
       migrate
 
@@ -159,10 +159,10 @@ describe FixChildContainerManagerSti do
     it "resets STI class for IKS providers" do
       iks = ext_management_system_stub.create(:type => "ManageIQ::Providers::IbmCloud::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => iks, :type => "ManageIQ::Providers::IbmCloud::ContainerManager::ContainerTemplate")
-      service_instance       = service_instance_stub.create(:ext_management_system => iks, :type => "ManageIQ::Providers::IbmCloud::ContainerManager::ServiceInstance")
-      service_offering       = service_offering_stub.create(:ext_management_system => iks, :type => "ManageIQ::Providers::IbmCloud::ContainerManager::ServiceOffering")
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => iks, :type => "ManageIQ::Providers::IbmCloud::ContainerManager::ServiceParametersSet")
+      container_template_stub.create(:ems_id => iks.id, :type => "ManageIQ::Providers::IbmCloud::ContainerManager::ContainerTemplate")
+      service_instance_stub.create(:ems_id => iks.id, :type => "ManageIQ::Providers::IbmCloud::ContainerManager::ServiceInstance")
+      service_offering_stub.create(:ems_id => iks.id, :type => "ManageIQ::Providers::IbmCloud::ContainerManager::ServiceOffering")
+      service_parameters_set_stub.create(:ems_id => iks.id, :type => "ManageIQ::Providers::IbmCloud::ContainerManager::ServiceParametersSet")
 
       migrate
 
@@ -175,10 +175,10 @@ describe FixChildContainerManagerSti do
     it "resets STI class for OKE providers" do
       oke = ext_management_system_stub.create(:type => "ManageIQ::Providers::OracleCloud::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => oke, :type => "ManageIQ::Providers::OracleCloud::ContainerManager::ContainerTemplate")
-      service_instance       = service_instance_stub.create(:ext_management_system => oke, :type => "ManageIQ::Providers::OracleCloud::ContainerManager::ServiceInstance")
-      service_offering       = service_offering_stub.create(:ext_management_system => oke, :type => "ManageIQ::Providers::OracleCloud::ContainerManager::ServiceOffering")
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => oke, :type => "ManageIQ::Providers::OracleCloud::ContainerManager::ServiceParametersSet")
+      container_template_stub.create(:ems_id => oke.id, :type => "ManageIQ::Providers::OracleCloud::ContainerManager::ContainerTemplate")
+      service_instance_stub.create(:ems_id => oke.id, :type => "ManageIQ::Providers::OracleCloud::ContainerManager::ServiceInstance")
+      service_offering_stub.create(:ems_id => oke.id, :type => "ManageIQ::Providers::OracleCloud::ContainerManager::ServiceOffering")
+      service_parameters_set_stub.create(:ems_id => oke.id, :type => "ManageIQ::Providers::OracleCloud::ContainerManager::ServiceParametersSet")
 
       migrate
 
@@ -191,10 +191,10 @@ describe FixChildContainerManagerSti do
     it "resets STI class for Tanzu providers" do
       tanzu = ext_management_system_stub.create(:type => "ManageIQ::Providers::Vmware::ContainerManager")
 
-      container_template     = container_template_stub.create(:ext_management_system => tanzu, :type => "ManageIQ::Providers::Vmware::ContainerManager::ContainerTemplate")
-      service_instance       = service_instance_stub.create(:ext_management_system => tanzu, :type => "ManageIQ::Providers::Vmware::ContainerManager::ServiceInstance")
-      service_offering       = service_offering_stub.create(:ext_management_system => tanzu, :type => "ManageIQ::Providers::Vmware::ContainerManager::ServiceOffering")
-      service_parameters_set = service_parameters_set_stub.create(:ext_management_system => tanzu, :type => "ManageIQ::Providers::Vmware::ContainerManager::ServiceParametersSet")
+      container_template_stub.create(:ems_id => tanzu.id, :type => "ManageIQ::Providers::Vmware::ContainerManager::ContainerTemplate")
+      service_instance_stub.create(:ems_id => tanzu.id, :type => "ManageIQ::Providers::Vmware::ContainerManager::ServiceInstance")
+      service_offering_stub.create(:ems_id => tanzu.id, :type => "ManageIQ::Providers::Vmware::ContainerManager::ServiceOffering")
+      service_parameters_set_stub.create(:ems_id => tanzu.id, :type => "ManageIQ::Providers::Vmware::ContainerManager::ServiceParametersSet")
 
       migrate
 

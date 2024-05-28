@@ -10,9 +10,9 @@ describe SubclassEmsFolders do
         ext_management_system_stub.create!(:type => "ManageIQ::Providers::#{vendor}::InfraManager")
       end
 
-      folders          = emss.map { |ems| ems_folder_stub.create!(:ext_management_system => ems) }
-      datacenters      = emss.map { |ems| ems_folder_stub.create!(:ext_management_system => ems, :type => "Datacenter") }
-      storage_clusters = emss.map { |ems| ems_folder_stub.create!(:ext_management_system => ems, :type => "StorageCluster") }
+      folders          = emss.map { |ems| ems_folder_stub.create!(:ems_id => ems.id) }
+      datacenters      = emss.map { |ems| ems_folder_stub.create!(:ems_id => ems.id, :type => "Datacenter") }
+      storage_clusters = emss.map { |ems| ems_folder_stub.create!(:ems_id => ems.id, :type => "StorageCluster") }
 
       migrate
 
@@ -24,7 +24,7 @@ describe SubclassEmsFolders do
     it "doesn't migrate an unrelated folder" do
       ems = ext_management_system_stub.create!(:type => "ManageIQ::Providers::AutomationManager")
       inventory_group = ems_folder_stub.create!(
-        :ext_management_system => ems,
+        :ems_id => ems.id,
         :type                  => "ManageIQ::Providers::AutomationManager::InventoryGroup"
       )
 
@@ -41,10 +41,10 @@ describe SubclassEmsFolders do
       end
 
       folders = emss.map do |ems|
-        ems_folder_stub.create!(:ext_management_system => ems, :type => "#{ems.type}::Folder")
+        ems_folder_stub.create!(:ems_id => ems.id, :type => "#{ems.type}::Folder")
       end
       datacenters = emss.map do |ems|
-        ems_folder_stub.create!(:ext_management_system => ems, :type => "#{ems.type}::Datacenter")
+        ems_folder_stub.create!(:ems_id => ems.id, :type => "#{ems.type}::Datacenter")
       end
 
       migrate
@@ -56,7 +56,7 @@ describe SubclassEmsFolders do
     it "doesn't migrate an unrelated folder" do
       ems = ext_management_system_stub.create!(:type => "ManageIQ::Providers::AutomationManager")
       inventory_group = ems_folder_stub.create!(
-        :ext_management_system => ems,
+        :ems_id => ems.id,
         :type                  => "ManageIQ::Providers::AutomationManager::InventoryGroup"
       )
 

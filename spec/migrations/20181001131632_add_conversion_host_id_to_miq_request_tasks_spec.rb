@@ -44,8 +44,8 @@ describe AddConversionHostIdToMiqRequestTasks do
       host = host_stub.create!
       conversion_host = conversion_host_stub.create!(:resource => host)
       task = task_stub.create!(
-        :type            => 'ServiceTemplateTransformationPlanTask',
-        :conversion_host => conversion_host
+        :type               => 'ServiceTemplateTransformationPlanTask',
+        :conversion_host_id => conversion_host.id
       )
 
       migrate
