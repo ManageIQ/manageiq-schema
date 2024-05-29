@@ -34,6 +34,7 @@ describe AddMissingEmsIdToSwitch do
   let(:switch_stub) { migration_stub(:Switch) }
   let(:host_stub) { migration_stub(:Host) }
   let(:ems_stub) { migration_stub(:ExtManagementSystem) }
+  let(:host_switch_stub) { migration_stub(:HostSwitch) }
 
   migration_context :up do
     it "migrates a series of representative rows" do
@@ -73,11 +74,11 @@ describe AddMissingEmsIdToSwitch do
                                                  :type      => "ManageIQ::Providers::Lenovo::PhysicalInfraManager::PhysicalSwitch",
                                                  :ems_id => nil)
       # Host -> switches mapping
-      host_esx.host_switches.create!(:host_id => host_esx.id, :switch_id => dvswitch.id)
-      host_esx.host_switches.create!(:host_id => host_esx.id, :switch_id => host_switch.id)
-      host_esx_archived.host_switches.create!(:host_id => host_esx_archived.id, :switch_id => host_switch_archived.id)
-      host_esx_archived.host_switches.create!(:host_id => host_esx_archived.id, :switch_id => dvswitch_archived.id)
-      host_redhat.host_switches.create!(:host_id => host_redhat.id, :switch_id => redhat_switch.id)
+      host_switch_stub.create!(:host_id => host_esx.id, :switch_id => dvswitch.id)
+      host_switch_stub.create!(:host_id => host_esx.id, :switch_id => host_switch.id)
+      host_switch_stub.create!(:host_id => host_esx_archived.id, :switch_id => host_switch_archived.id)
+      host_switch_stub.create!(:host_id => host_esx_archived.id, :switch_id => dvswitch_archived.id)
+      host_switch_stub.create!(:host_id => host_redhat.id, :switch_id => redhat_switch.id)
 
       migrate
 
