@@ -12,7 +12,7 @@ describe MoveExistingIsoDatastoreRecords do
         ext_management_system_stub.create!(:type => "ManageIQ::Providers::#{vendor}::InfraManager")
       end
 
-      emss.each { |ems| datastore_stub.create!(:ext_management_system => ems) }
+      emss.each { |ems| datastore_stub.create!(:ems_id => ems.id) }
 
       migrate
 
@@ -27,7 +27,7 @@ describe MoveExistingIsoDatastoreRecords do
       end
 
       emss.each do |ems|
-        datastore = datastore_stub.create!(:ext_management_system => ems)
+        datastore = datastore_stub.create!(:ems_id => ems.id)
         iso_image_stub.create!(:iso_datastore_id => datastore.id)
       end
 

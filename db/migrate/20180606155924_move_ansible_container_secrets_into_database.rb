@@ -14,14 +14,26 @@ class MoveAnsibleContainerSecretsIntoDatabase < ActiveRecord::Migration[5.0]
     update_authentications
   end
 
-  def self.read_token(file)
-    File.read(file)
-  end
-
   private
 
+  def token_file
+    if Rails.env.test? && ENV['TOKEN_FILE']
+      ENV['TOKEN_FILE']
+    else
+      TOKEN_FILE
+    end
+  end
+
+  def ca_cert_file
+    if Rails.env.test? && ENV['CA_CERT_FILE']
+      ENV['CA_CERT_FILE']
+    else
+      CA_CERT_FILE
+    end
+  end
+
   def containerized?
-    File.exist?(TOKEN_FILE) && File.exist?(CA_CERT_FILE)
+    File.exist?(token_file) && File.exist?(ca_cert_file)
   end
 
   def update_authentications
@@ -92,8 +104,8 @@ class MoveAnsibleContainerSecretsIntoDatabase < ActiveRecord::Migration[5.0]
   def request_params
     {
       'Accept'         => "application/json",
-      'Authorization'  => "Bearer #{self.class.read_token(TOKEN_FILE)}",
-      :ssl_ca_cert     => CA_CERT_FILE,
+      'Authorization'  => "Bearer #{File.read(token_file)}",
+      :ssl_ca_cert     => ca_cert_file,
       :ssl_verify_mode => OpenSSL::SSL::VERIFY_PEER
     }
   end

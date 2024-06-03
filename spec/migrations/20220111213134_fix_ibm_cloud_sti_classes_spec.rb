@@ -16,9 +16,9 @@ describe FixIbmCloudStiClasses do
       power_cloud   = ems_stub.create(:type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::CloudManager")
       power_network = ems_stub.create(:type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::NetworkManager")
 
-      availabiity_zone = availabiity_zone_stub.create(:ext_management_system => power_cloud)
-      flavor           = flavor_stub.create(:ext_management_system => power_cloud)
-      load_balancer    = load_balancer_stub.create(:ext_management_system => power_network)
+      availabiity_zone = availabiity_zone_stub.create(:ems_id => power_cloud.id)
+      flavor           = flavor_stub.create(:ems_id => power_cloud.id)
+      load_balancer    = load_balancer_stub.create(:ems_id => power_network.id)
 
       migrate
 
@@ -30,7 +30,7 @@ describe FixIbmCloudStiClasses do
     it "Fixes IBM VPC STI classes" do
       vpc_network = ems_stub.create(:type => "ManageIQ::Providers::IbmCloud::VPC::NetworkManager")
 
-      network_port = network_port_stub.create(:ext_management_system => vpc_network)
+      network_port = network_port_stub.create(:ems_id => vpc_network.id)
 
       migrate
 
@@ -40,8 +40,8 @@ describe FixIbmCloudStiClasses do
     it "Fixes IBM Cloud Object Storage" do
       ibm_object_storage = ems_stub.create(:type => "ManageIQ::Providers::IbmCloud::ObjectStorage::StorageManager")
 
-      cloud_object_store_container = cloud_object_store_container_stub.create(:ext_management_system => ibm_object_storage)
-      cloud_object_store_object    = cloud_object_store_object_stub.create(:ext_management_system => ibm_object_storage)
+      cloud_object_store_container = cloud_object_store_container_stub.create(:ems_id => ibm_object_storage.id)
+      cloud_object_store_object    = cloud_object_store_object_stub.create(:ems_id => ibm_object_storage.id)
 
       migrate
 
@@ -55,9 +55,9 @@ describe FixIbmCloudStiClasses do
       power_cloud   = ems_stub.create(:type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::CloudManager")
       power_network = ems_stub.create(:type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::NetworkManager")
 
-      availabiity_zone = availabiity_zone_stub.create(:ext_management_system => power_cloud, :type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::CloudManager::AvailabilityZone")
-      flavor           = flavor_stub.create(:ext_management_system => power_cloud, :type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::CloudManager::Flavor")
-      load_balancer    = load_balancer_stub.create(:ext_management_system => power_network, :type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::NetworkManager::LoadBalancer")
+      availabiity_zone = availabiity_zone_stub.create(:ems_id => power_cloud.id, :type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::CloudManager::AvailabilityZone")
+      flavor           = flavor_stub.create(:ems_id => power_cloud.id, :type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::CloudManager::Flavor")
+      load_balancer    = load_balancer_stub.create(:ems_id => power_network.id, :type => "ManageIQ::Providers::IbmCloud::PowerVirtualServers::NetworkManager::LoadBalancer")
 
       migrate
 
@@ -69,7 +69,7 @@ describe FixIbmCloudStiClasses do
     it "Resets IBM VPC STI Classes" do
       vpc_network = ems_stub.create(:type => "ManageIQ::Providers::IbmCloud::VPC::NetworkManager")
 
-      network_port = network_port_stub.create(:ext_management_system => vpc_network, :type => "ManageIQ::Providers::IbmCloud::VPC::NetworkManager::NetworkPort")
+      network_port = network_port_stub.create(:ems_id => vpc_network.id, :type => "ManageIQ::Providers::IbmCloud::VPC::NetworkManager::NetworkPort")
 
       migrate
 
@@ -79,8 +79,8 @@ describe FixIbmCloudStiClasses do
     it "Resets IBM Cloud Object Storage" do
       ibm_object_storage = ems_stub.create(:type => "ManageIQ::Providers::IbmCloud::ObjectStorage::StorageManager")
 
-      cloud_object_store_container = cloud_object_store_container_stub.create(:ext_management_system => ibm_object_storage, :type => "ManageIQ::Providers::IbmCloud::ObjectStorage::StorageManager::CloudObjectStoreContainer")
-      cloud_object_store_object    = cloud_object_store_object_stub.create(:ext_management_system => ibm_object_storage, :type => "ManageIQ::Providers::IbmCloud::ObjectStorage::StorageManager::CloudObjectStoreObject")
+      cloud_object_store_container = cloud_object_store_container_stub.create(:ems_id => ibm_object_storage.id, :type => "ManageIQ::Providers::IbmCloud::ObjectStorage::StorageManager::CloudObjectStoreContainer")
+      cloud_object_store_object    = cloud_object_store_object_stub.create(:ems_id => ibm_object_storage.id, :type => "ManageIQ::Providers::IbmCloud::ObjectStorage::StorageManager::CloudObjectStoreObject")
 
       migrate
 

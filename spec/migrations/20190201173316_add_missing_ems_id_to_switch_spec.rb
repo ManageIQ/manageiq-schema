@@ -34,6 +34,7 @@ describe AddMissingEmsIdToSwitch do
   let(:switch_stub) { migration_stub(:Switch) }
   let(:host_stub) { migration_stub(:Host) }
   let(:ems_stub) { migration_stub(:ExtManagementSystem) }
+  let(:host_switch_stub) { migration_stub(:HostSwitch) }
 
   migration_context :up do
     it "migrates a series of representative rows" do
@@ -44,41 +45,40 @@ describe AddMissingEmsIdToSwitch do
 
       # Hosts
       host_esx          = host_stub.create!(:type                  => "ManageIQ::Providers::Vmware::InfraManager::HostEsx",
-                                            :ext_management_system => vmware_ems)
+                                            :ems_id => vmware_ems.id)
       host_esx_archived = host_stub.create!(:type                  => "ManageIQ::Providers::Vmware::InfraManager::HostEsx",
-                                            :ext_management_system => nil)
+                                            :ems_id => nil)
 
       host_redhat = host_stub.create!(:type                  => "ManageIQ::Providers::Redhat::InfraManager::Host",
-                                      :ext_management_system => redhat_ems)
+                                      :ems_id => redhat_ems.id)
 
       # Switches
       dvswitch               = switch_stub.create!(:name => "DVS", :uid_ems => "dvswitch-1", :shared => true,
                                                    :type => "ManageIQ::Providers::Vmware::InfraManager::DistributedVirtualSwitch")
-      dvswitch_without_assoc = switch_stub.create!(:name                  => "DVS", :uid_ems => "dvswitch-3", :shared => true,
-                                                   :host                  => host_esx,
-                                                   :ext_management_system => vmware_ems,
-                                                   :type                  => "ManageIQ::Providers::Vmware::InfraManager::DistributedVirtualSwitch")
-      dvswitch_archived    = switch_stub.create!(:name                  => "DVS", :uid_ems => "dvswitch-1", :shared => true,
-                                                 :ext_management_system => vmware_ems,
-                                                 :type                  => "ManageIQ::Providers::Vmware::InfraManager::DistributedVirtualSwitch")
+      dvswitch_without_assoc = switch_stub.create!(:name    => "DVS", :uid_ems => "dvswitch-3", :shared => true,
+                                                   :host_id => host_esx.id,
+                                                   :ems_id  => vmware_ems.id,
+                                                   :type    => "ManageIQ::Providers::Vmware::InfraManager::DistributedVirtualSwitch")
+      dvswitch_archived    = switch_stub.create!(:name      => "DVS", :uid_ems => "dvswitch-1", :shared => true,
+                                                 :ems_id    => vmware_ems.id,
+                                                 :type      => "ManageIQ::Providers::Vmware::InfraManager::DistributedVirtualSwitch")
       host_switch          = switch_stub.create!(:name => "vSwitch0", :uid_ems => "vSwitch0", :shared => false,
                                                  :type => "ManageIQ::Providers::Vmware::InfraManager::HostVirtualSwitch")
-      host_switch_archived = switch_stub.create!(:name                  => "vSwitch0", :uid_ems => "vSwitch0",
-                                                 :type                  => "ManageIQ::Providers::Vmware::InfraManager::HostVirtualSwitch")
+      host_switch_archived = switch_stub.create!(:name      => "vSwitch0", :uid_ems => "vSwitch0",
+                                                 :type      => "ManageIQ::Providers::Vmware::InfraManager::HostVirtualSwitch")
       redhat_switch        = switch_stub.create!(:name => "vSwitch0", :uid_ems => "vSwitch0")
-      physical_switch      = switch_stub.create!(:name                  => "Physical Switch", :uid_ems => "switch-1",
-                                                 :type                  => "ManageIQ::Providers::Lenovo::PhysicalInfraManager::PhysicalSwitch",
-                                                 :ext_management_system => lenovo_ems)
-      physical_switch1     = switch_stub.create!(:name                  => "Physical Switch", :uid_ems => "switch-1",
-                                                 :type                  => "ManageIQ::Providers::Lenovo::PhysicalInfraManager::PhysicalSwitch",
-                                                 :ext_management_system => nil)
-
+      physical_switch      = switch_stub.create!(:name      => "Physical Switch", :uid_ems => "switch-1",
+                                                 :type      => "ManageIQ::Providers::Lenovo::PhysicalInfraManager::PhysicalSwitch",
+                                                 :ems_id => lenovo_ems.id)
+      physical_switch1     = switch_stub.create!(:name      => "Physical Switch", :uid_ems => "switch-1",
+                                                 :type      => "ManageIQ::Providers::Lenovo::PhysicalInfraManager::PhysicalSwitch",
+                                                 :ems_id => nil)
       # Host -> switches mapping
-      host_esx.host_switches.create!(:host => host_esx, :switch => dvswitch)
-      host_esx.host_switches.create!(:host => host_esx, :switch => host_switch)
-      host_esx_archived.host_switches.create!(:host => host_esx_archived, :switch => host_switch_archived)
-      host_esx_archived.host_switches.create!(:host => host_esx_archived, :switch => dvswitch_archived)
-      host_redhat.host_switches.create!(:host => host_redhat, :switch => redhat_switch)
+      host_switch_stub.create!(:host_id => host_esx.id, :switch_id => dvswitch.id)
+      host_switch_stub.create!(:host_id => host_esx.id, :switch_id => host_switch.id)
+      host_switch_stub.create!(:host_id => host_esx_archived.id, :switch_id => host_switch_archived.id)
+      host_switch_stub.create!(:host_id => host_esx_archived.id, :switch_id => dvswitch_archived.id)
+      host_switch_stub.create!(:host_id => host_redhat.id, :switch_id => redhat_switch.id)
 
       migrate
 

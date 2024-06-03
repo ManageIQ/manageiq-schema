@@ -15,12 +15,12 @@ describe FixVcloudNetworkStiClasses do
     it "Fixes vCloud Network STI classes" do
       vcloud_network = ems_stub.create(:type => "ManageIQ::Providers::Vmware::NetworkManager")
 
-      load_balancer              = load_balancer_stub.create(:ext_management_system => vcloud_network)
-      load_balancer_health_check = load_balancer_health_check_stub.create(:ext_management_system => vcloud_network)
-      load_balancer_listener     = load_balancer_listener_stub.create(:ext_management_system => vcloud_network)
-      load_balancer_pool         = load_balancer_pool_stub.create(:ext_management_system => vcloud_network)
-      load_balancer_pool_member  = load_balancer_pool_member_stub.create(:ext_management_system => vcloud_network)
-      secrity_group              = security_group_stub.create(:ext_management_system => vcloud_network)
+      load_balancer              = load_balancer_stub.create(:ems_id => vcloud_network.id)
+      load_balancer_health_check = load_balancer_health_check_stub.create(:ems_id => vcloud_network.id)
+      load_balancer_listener     = load_balancer_listener_stub.create(:ems_id => vcloud_network.id)
+      load_balancer_pool         = load_balancer_pool_stub.create(:ems_id => vcloud_network.id)
+      load_balancer_pool_member  = load_balancer_pool_member_stub.create(:ems_id => vcloud_network.id)
+      secrity_group              = security_group_stub.create(:ems_id => vcloud_network.id)
 
       migrate
 
@@ -37,12 +37,12 @@ describe FixVcloudNetworkStiClasses do
     it "Resets vCloud Network STI classes" do
       vcloud_network = ems_stub.create(:type => "ManageIQ::Providers::Vmware::NetworkManager")
 
-      load_balancer              = load_balancer_stub.create(:ext_management_system => vcloud_network, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancer")
-      load_balancer_health_check = load_balancer_health_check_stub.create(:ext_management_system => vcloud_network, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancerHealthCheck")
-      load_balancer_listener     = load_balancer_listener_stub.create(:ext_management_system => vcloud_network, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancerListener")
-      load_balancer_pool         = load_balancer_pool_stub.create(:ext_management_system => vcloud_network, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancerPool")
-      load_balancer_pool_member  = load_balancer_pool_member_stub.create(:ext_management_system => vcloud_network, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancerPoolMember")
-      secrity_group              = security_group_stub.create(:ext_management_system => vcloud_network, :type => "ManageIQ::Providers::Vmware::NetworkManager::SecurityGroup")
+      load_balancer              = load_balancer_stub.create(:ems_id => vcloud_network.id, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancer")
+      load_balancer_health_check = load_balancer_health_check_stub.create(:ems_id => vcloud_network.id, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancerHealthCheck")
+      load_balancer_listener     = load_balancer_listener_stub.create(:ems_id => vcloud_network.id, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancerListener")
+      load_balancer_pool         = load_balancer_pool_stub.create(:ems_id => vcloud_network.id, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancerPool")
+      load_balancer_pool_member  = load_balancer_pool_member_stub.create(:ems_id => vcloud_network.id, :type => "ManageIQ::Providers::Vmware::NetworkManager::LoadBalancerPoolMember")
+      secrity_group              = security_group_stub.create(:ems_id => vcloud_network.id, :type => "ManageIQ::Providers::Vmware::NetworkManager::SecurityGroup")
 
       migrate
 

@@ -7,7 +7,7 @@ RSpec.describe FixGoogleCloudVolumeSti do
   migration_context :up do
     it "Fixes the STI class of Google Cloud Volumes" do
       gce = ems_stub.create!(:type => "ManageIQ::Providers::Google::CloudManager")
-      volume = volume_stub.create!(:ext_management_system => gce, :type => nil)
+      volume = volume_stub.create!(:ems_id => gce.id, :type => nil)
 
       migrate
 
@@ -17,7 +17,7 @@ RSpec.describe FixGoogleCloudVolumeSti do
     it "Doesn't impact non-Google Cloud volumes" do
       osp = ems_stub.create!(:type => "ManageIQ::Providers::Openstack::CloudManager")
       volume = volume_stub.create!(
-        :ext_management_system => osp,
+        :ems_id => osp.id,
         :type                  => "ManageIQ::Providers::Openstack::CloudManager::CloudVolume"
       )
 
@@ -31,7 +31,7 @@ RSpec.describe FixGoogleCloudVolumeSti do
     it "Fixes the STI class of Google Cloud Volumes" do
       gce = ems_stub.create!(:type => "ManageIQ::Providers::Google::CloudManager")
       volume = volume_stub.create!(
-        :ext_management_system => gce,
+        :ems_id => gce.id,
         :type                  => "ManageIQ::Providers::Google::CloudManager::CloudVolume"
       )
 
@@ -43,7 +43,7 @@ RSpec.describe FixGoogleCloudVolumeSti do
     it "Doesn't impact non-Google Cloud volumes" do
       osp = ems_stub.create!(:type => "ManageIQ::Providers::Openstack::CloudManager")
       volume = volume_stub.create!(
-        :ext_management_system => osp,
+        :ems_id => osp.id,
         :type                  => "ManageIQ::Providers::Openstack::CloudManager::CloudVolume"
       )
 

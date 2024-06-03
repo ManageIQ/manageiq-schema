@@ -36,7 +36,7 @@ describe SplitStoragesPerEms do
 
         it "host is still linked to the storage" do
           migrate
-          expect(host.reload.storages.first).to eq(storage_stub.first)
+          expect(host.reload.storages.first.id).to eq(storage_stub.first.id)
         end
       end
 
@@ -62,8 +62,8 @@ describe SplitStoragesPerEms do
           migrate
 
           storage = storage_stub.first
-          expect(host_1.reload.storages.first).to eq(storage)
-          expect(host_2.reload.storages.first).to eq(storage)
+          expect(host_1.reload.storages.first.id).to eq(storage.id)
+          expect(host_2.reload.storages.first.id).to eq(storage.id)
         end
       end
 
@@ -150,7 +150,7 @@ describe SplitStoragesPerEms do
 
         it "links hosts to the old storage" do
           migrate
-          expect(host.reload.host_storages.first.storage).to eq(storage)
+          expect(host.reload.host_storages.first.storage.id).to eq(storage.id)
         end
 
         it "sets the ems_ref" do

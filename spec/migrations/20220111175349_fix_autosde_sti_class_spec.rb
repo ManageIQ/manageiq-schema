@@ -10,8 +10,8 @@ describe FixAutosdeStiClass do
   migration_context :up do
     it "fixes AutoSDE class names" do
       autosde = ems_stub.create(:type => "ManageIQ::Providers::Autosde::StorageManager")
-      storage_resource = storage_resource_stub.create(:ext_management_system => autosde)
-      storage_service = storage_service_stub.create(:ext_management_system => autosde)
+      storage_resource = storage_resource_stub.create(:ems_id => autosde.id)
+      storage_service = storage_service_stub.create(:ems_id => autosde.id)
 
       migrate
 
@@ -23,8 +23,8 @@ describe FixAutosdeStiClass do
   migration_context :down do
     it "resets AutoSDE class names" do
       autosde = ems_stub.create(:type => "ManageIQ::Providers::Autosde::StorageManager")
-      storage_resource = storage_resource_stub.create(:ext_management_system => autosde, :type => "ManageIQ::Providers::Autosde::StorageManager::StorageResource")
-      storage_service = storage_service_stub.create(:ext_management_system => autosde, :type => "ManageIQ::Providers::Autosde::StorageManager::StorageService")
+      storage_resource = storage_resource_stub.create(:ems_id => autosde.id, :type => "ManageIQ::Providers::Autosde::StorageManager::StorageResource")
+      storage_service = storage_service_stub.create(:ems_id => autosde.id, :type => "ManageIQ::Providers::Autosde::StorageManager::StorageService")
 
       migrate
 

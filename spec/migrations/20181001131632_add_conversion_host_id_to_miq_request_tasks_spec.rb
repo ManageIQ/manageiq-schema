@@ -35,7 +35,7 @@ describe AddConversionHostIdToMiqRequestTasks do
 
       expect(task.options).to eq(:dummy_key => 'dummy_value')
       expect(conversion_host_stub.find_by(:resource => host)).not_to be_nil
-      expect(task.conversion_host).to eq(conversion_host_stub.find_by(:resource => host))
+      expect(task.conversion_host.id).to eq(conversion_host_stub.find_by(:resource => host).id)
     end
   end
 
@@ -44,8 +44,8 @@ describe AddConversionHostIdToMiqRequestTasks do
       host = host_stub.create!
       conversion_host = conversion_host_stub.create!(:resource => host)
       task = task_stub.create!(
-        :type            => 'ServiceTemplateTransformationPlanTask',
-        :conversion_host => conversion_host
+        :type               => 'ServiceTemplateTransformationPlanTask',
+        :conversion_host_id => conversion_host.id
       )
 
       migrate

@@ -12,8 +12,8 @@ describe UpdateSwitchTypes do
                                             :type => "ManageIQ::Providers::Lenovo::PhysicalInfraManager::PhysicalSwitch")
 
       host_stub.create!(:type => "ManageIQ::Providers::Vmware::InfraManager::HostEsx").tap do |host|
-        host.host_switches.create!(:host => host, :switch => dvswitch)
-        host.host_switches.create!(:host => host, :switch => host_switch)
+        host.host_switches.create!(:host_id => host.id, :switch_id => dvswitch.id)
+        host.host_switches.create!(:host_id => host.id, :switch_id => host_switch.id)
       end
 
       migrate
