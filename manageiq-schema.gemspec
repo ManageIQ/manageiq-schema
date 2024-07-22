@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pg"
   spec.add_dependency "rails",                   ">=6.0.4", "<7.1"
 
-  spec.add_development_dependency "manageiq-style"
+  spec.add_development_dependency "manageiq-style", ">= 1.5.2"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-rails"
   spec.add_development_dependency "simplecov", ">= 0.21.2"
