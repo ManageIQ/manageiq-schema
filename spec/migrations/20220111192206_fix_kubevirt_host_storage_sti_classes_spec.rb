@@ -10,8 +10,8 @@ describe FixKubevirtHostStorageStiClasses do
   migration_context :up do
     it "Fixes Kubevirt STI classes" do
       kubevirt = ems_stub.create(:type => "ManageIQ::Providers::Kubevirt::InfraManager")
-      host     = host_stub.create(:ext_management_system => kubevirt)
-      storage  = storage_stub.create(:ext_management_system => kubevirt)
+      host     = host_stub.create(:ems_id => kubevirt.id)
+      storage  = storage_stub.create(:ems_id => kubevirt.id)
 
       migrate
 
@@ -23,8 +23,8 @@ describe FixKubevirtHostStorageStiClasses do
   migration_context :down do
     it "Resets Kubevirt STI classes" do
       kubevirt = ems_stub.create(:type => "ManageIQ::Providers::Kubevirt::InfraManager")
-      host     = host_stub.create(:ext_management_system => kubevirt, :type => "ManageIQ::Providers::Kubevirt::InfraManager::Host")
-      storage  = storage_stub.create(:ext_management_system => kubevirt, :type => "ManageIQ::Providers::Kubevirt::InfraManager::Storage")
+      host     = host_stub.create(:ems_id => kubevirt.id, :type => "ManageIQ::Providers::Kubevirt::InfraManager::Host")
+      storage  = storage_stub.create(:ems_id => kubevirt.id, :type => "ManageIQ::Providers::Kubevirt::InfraManager::Storage")
       migrate
 
       expect(host.reload.type).to be_nil

@@ -20,14 +20,14 @@ describe FixIbmPowerVcStiClasses do
 
       network_manager = ems_stub.create(:type => ibm_power_vc_network_klass)
 
-      cloud_network         = cloud_network_stub.create(:ext_management_system => network_manager, :type => "#{openstack_network_klass}::CloudNetwork")
-      cloud_network_public  = cloud_network_stub.create(:ext_management_system => network_manager, :type => "#{openstack_network_klass}::CloudNetwork::Public")
-      cloud_network_private = cloud_network_stub.create(:ext_management_system => network_manager, :type => "#{openstack_network_klass}::CloudNetwork::Private")
-      cloud_subnet          = cloud_subnet_stub.create(:ext_management_system => network_manager)
-      floating_ip           = floating_ip_stub.create(:ext_management_system => network_manager)
-      network_port          = network_port_stub.create(:ext_management_system => network_manager)
-      network_router        = network_router_stub.create(:ext_management_system => network_manager)
-      security_group        = security_group_stub.create(:ext_management_system => network_manager)
+      cloud_network         = cloud_network_stub.create(:ems_id => network_manager.id, :type => "#{openstack_network_klass}::CloudNetwork")
+      cloud_network_public  = cloud_network_stub.create(:ems_id => network_manager.id, :type => "#{openstack_network_klass}::CloudNetwork::Public")
+      cloud_network_private = cloud_network_stub.create(:ems_id => network_manager.id, :type => "#{openstack_network_klass}::CloudNetwork::Private")
+      cloud_subnet          = cloud_subnet_stub.create(:ems_id => network_manager.id)
+      floating_ip           = floating_ip_stub.create(:ems_id => network_manager.id)
+      network_port          = network_port_stub.create(:ems_id => network_manager.id)
+      network_router        = network_router_stub.create(:ems_id => network_manager.id)
+      security_group        = security_group_stub.create(:ems_id => network_manager.id)
 
       migrate
 
@@ -46,10 +46,10 @@ describe FixIbmPowerVcStiClasses do
 
       cinder_manager = ems_stub.create(:type => ibm_power_vc_cinder_klass)
 
-      cloud_volume          = cloud_volume_stub.create(:ext_management_system => cinder_manager)
-      cloud_volume_backup   = cloud_volume_backup_stub.create(:ext_management_system => cinder_manager)
-      cloud_volume_snapshot = cloud_volume_snapshot_stub.create(:ext_management_system => cinder_manager)
-      cloud_volume_type     = cloud_volume_type_stub.create(:ext_management_system => cinder_manager)
+      cloud_volume          = cloud_volume_stub.create(:ems_id => cinder_manager.id)
+      cloud_volume_backup   = cloud_volume_backup_stub.create(:ems_id => cinder_manager.id)
+      cloud_volume_snapshot = cloud_volume_snapshot_stub.create(:ems_id => cinder_manager.id)
+      cloud_volume_type     = cloud_volume_type_stub.create(:ems_id => cinder_manager.id)
 
       migrate
 
@@ -67,14 +67,14 @@ describe FixIbmPowerVcStiClasses do
 
       network_manager = ems_stub.create(:type => ibm_power_vc_network_klass)
 
-      cloud_network         = cloud_network_stub.create(:ext_management_system => network_manager, :type => "#{ibm_power_vc_network_klass}::CloudNetwork")
-      cloud_network_public  = cloud_network_stub.create(:ext_management_system => network_manager, :type => "#{ibm_power_vc_network_klass}::CloudNetwork::Public")
-      cloud_network_private = cloud_network_stub.create(:ext_management_system => network_manager, :type => "#{ibm_power_vc_network_klass}::CloudNetwork::Private")
-      cloud_subnet          = cloud_subnet_stub.create(:ext_management_system => network_manager, :type => "#{ibm_power_vc_network_klass}::CloudSubnet")
-      floating_ip           = floating_ip_stub.create(:ext_management_system => network_manager, :type => "#{ibm_power_vc_network_klass}::FloatingIp")
-      network_port          = network_port_stub.create(:ext_management_system => network_manager, :type => "#{ibm_power_vc_network_klass}::NetworkPort")
-      network_router        = network_router_stub.create(:ext_management_system => network_manager, :type => "#{ibm_power_vc_network_klass}::NetworkRouter")
-      security_group        = security_group_stub.create(:ext_management_system => network_manager, :type => "#{ibm_power_vc_network_klass}::SecurityGroup")
+      cloud_network         = cloud_network_stub.create(:ems_id => network_manager.id, :type => "#{ibm_power_vc_network_klass}::CloudNetwork")
+      cloud_network_public  = cloud_network_stub.create(:ems_id => network_manager.id, :type => "#{ibm_power_vc_network_klass}::CloudNetwork::Public")
+      cloud_network_private = cloud_network_stub.create(:ems_id => network_manager.id, :type => "#{ibm_power_vc_network_klass}::CloudNetwork::Private")
+      cloud_subnet          = cloud_subnet_stub.create(:ems_id => network_manager.id, :type => "#{ibm_power_vc_network_klass}::CloudSubnet")
+      floating_ip           = floating_ip_stub.create(:ems_id => network_manager.id, :type => "#{ibm_power_vc_network_klass}::FloatingIp")
+      network_port          = network_port_stub.create(:ems_id => network_manager.id, :type => "#{ibm_power_vc_network_klass}::NetworkPort")
+      network_router        = network_router_stub.create(:ems_id => network_manager.id, :type => "#{ibm_power_vc_network_klass}::NetworkRouter")
+      security_group        = security_group_stub.create(:ems_id => network_manager.id, :type => "#{ibm_power_vc_network_klass}::SecurityGroup")
 
       migrate
 
@@ -94,10 +94,10 @@ describe FixIbmPowerVcStiClasses do
 
       cinder_manager = ems_stub.create(:type => ibm_power_vc_cinder_klass)
 
-      cloud_volume = cloud_volume_stub.create(:ext_management_system => cinder_manager, :type => "#{ibm_power_vc_cinder_klass}::CloudVolume")
-      cloud_volume_backup = cloud_volume_backup_stub.create(:ext_management_system => cinder_manager, :type => "#{ibm_power_vc_cinder_klass}::CloudVolumeBackup")
-      cloud_volume_snapshot = cloud_volume_snapshot_stub.create(:ext_management_system => cinder_manager, :type => "#{ibm_power_vc_cinder_klass}::CloudVolumeSnapshot")
-      cloud_volume_type = cloud_volume_type_stub.create(:ext_management_system => cinder_manager, :type => "#{ibm_power_vc_cinder_klass}::CloudVolumeType")
+      cloud_volume = cloud_volume_stub.create(:ems_id => cinder_manager.id, :type => "#{ibm_power_vc_cinder_klass}::CloudVolume")
+      cloud_volume_backup = cloud_volume_backup_stub.create(:ems_id => cinder_manager.id, :type => "#{ibm_power_vc_cinder_klass}::CloudVolumeBackup")
+      cloud_volume_snapshot = cloud_volume_snapshot_stub.create(:ems_id => cinder_manager.id, :type => "#{ibm_power_vc_cinder_klass}::CloudVolumeSnapshot")
+      cloud_volume_type = cloud_volume_type_stub.create(:ems_id => cinder_manager.id, :type => "#{ibm_power_vc_cinder_klass}::CloudVolumeType")
 
       migrate
 

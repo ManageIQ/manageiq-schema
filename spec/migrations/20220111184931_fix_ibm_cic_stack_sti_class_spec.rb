@@ -9,7 +9,7 @@ describe FixIbmCicStackStiClass do
   migration_context :up do
     it "Fixes IBM CIC OrchestrationStack STI class" do
       ibm_cic = ems_stub.create(:type => "ManageIQ::Providers::IbmCic::CloudManager")
-      stack   = stack_stub.create(:ext_management_system => ibm_cic)
+      stack   = stack_stub.create(:ems_id => ibm_cic.id)
 
       migrate
 
@@ -20,7 +20,7 @@ describe FixIbmCicStackStiClass do
   migration_context :down do
     it "Resets IBM CIC OrchestrationStack STI class" do
       ibm_cic = ems_stub.create(:type => "ManageIQ::Providers::IbmCic::CloudManager")
-      stack   = stack_stub.create(:ext_management_system => ibm_cic, :type => "ManageIQ::Providers::IbmCic::CloudManager::OrchestrationStack")
+      stack   = stack_stub.create(:ems_id => ibm_cic.id, :type => "ManageIQ::Providers::IbmCic::CloudManager::OrchestrationStack")
 
       migrate
 

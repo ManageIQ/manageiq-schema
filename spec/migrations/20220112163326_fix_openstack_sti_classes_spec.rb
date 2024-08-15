@@ -16,13 +16,13 @@ describe FixOpenstackStiClasses do
       cinder = ems_stub.create(:type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager")
       swift  = ems_stub.create(:type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager")
 
-      cloud_volume          = cloud_volume_stub.create(:ext_management_system => cinder)
-      cloud_volume_snapshot = cloud_volume_snapshot_stub.create(:ext_management_system => cinder)
-      cloud_volume_type     = cloud_volume_type_stub.create(:ext_management_system => cinder)
-      cloud_volume_backup   = cloud_volume_backup_stub.create(:ext_management_system => cinder)
+      cloud_volume          = cloud_volume_stub.create(:ems_id => cinder.id)
+      cloud_volume_snapshot = cloud_volume_snapshot_stub.create(:ems_id => cinder.id)
+      cloud_volume_type     = cloud_volume_type_stub.create(:ems_id => cinder.id)
+      cloud_volume_backup   = cloud_volume_backup_stub.create(:ems_id => cinder.id)
 
-      cloud_object_store_object    = cloud_object_store_object_stub.create(:ext_management_system => swift)
-      cloud_object_store_container = cloud_object_store_container_stub.create(:ext_management_system => swift)
+      cloud_object_store_object    = cloud_object_store_object_stub.create(:ems_id => swift.id)
+      cloud_object_store_container = cloud_object_store_container_stub.create(:ems_id => swift.id)
 
       migrate
 
@@ -41,13 +41,13 @@ describe FixOpenstackStiClasses do
       cinder = ems_stub.create(:type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager")
       swift  = ems_stub.create(:type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager")
 
-      cloud_volume          = cloud_volume_stub.create(:ext_management_system => cinder, :type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume")
-      cloud_volume_snapshot = cloud_volume_snapshot_stub.create(:ext_management_system => cinder, :type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot")
-      cloud_volume_type     = cloud_volume_type_stub.create(:ext_management_system => cinder, :type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeType")
-      cloud_volume_backup   = cloud_volume_backup_stub.create(:ext_management_system => cinder, :type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeBackup")
+      cloud_volume          = cloud_volume_stub.create(:ems_id => cinder.id, :type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume")
+      cloud_volume_snapshot = cloud_volume_snapshot_stub.create(:ems_id => cinder.id, :type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot")
+      cloud_volume_type     = cloud_volume_type_stub.create(:ems_id => cinder.id, :type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeType")
+      cloud_volume_backup   = cloud_volume_backup_stub.create(:ems_id => cinder.id, :type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeBackup")
 
-      cloud_object_store_object    = cloud_object_store_object_stub.create(:ext_management_system => swift, :type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectStoreObject")
-      cloud_object_store_container = cloud_object_store_container_stub.create(:ext_management_system => swift, :type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectStoreContainer")
+      cloud_object_store_object    = cloud_object_store_object_stub.create(:ems_id => swift.id, :type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectStoreObject")
+      cloud_object_store_container = cloud_object_store_container_stub.create(:ems_id => swift.id, :type => "ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectStoreContainer")
 
       migrate
 

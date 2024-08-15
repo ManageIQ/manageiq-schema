@@ -5,12 +5,12 @@ describe MigrateOrchStacksToHaveOwnershipConcept do
   let(:ems) { migration_stub(:ExtManagementSystem) }
   let(:service) { migration_stub(:Service) }
   let(:tenant) { migration_stub(:Tenant).create! }
-  let(:group) { migration_stub(:MiqGroup).create!(:tenant => tenant) }
+  let(:group) { migration_stub(:MiqGroup).create!(:tenant_id => tenant.id) }
   let!(:user) { migration_stub(:User).create!(:userid => "admin", :miq_groups => [group], :current_group => group) }
 
   migration_context :up do
     it "sets owner, tenant, and group from the user if neither the ems and service exist" do
-      stack = orchestration_stack.create!(:ext_management_system => nil)
+      stack = orchestration_stack.create!(:ems_id => nil)
       expect(orchestration_stack.count).to eq(1)
 
       migrate
@@ -20,8 +20,8 @@ describe MigrateOrchStacksToHaveOwnershipConcept do
     end
 
     it "sets owner, tenant, and group from the ems if the ems exists and the service doesn't" do
-      ext_ms = ems.create!(:tenant => tenant)
-      stack = orchestration_stack.create!(:ext_management_system => ext_ms)
+      ext_ms = ems.create!(:tenant_id => tenant.id)
+      stack = orchestration_stack.create!(:ems_id => ext_ms.id)
       expect(orchestration_stack.count).to eq(1)
 
       migrate
@@ -42,7 +42,7 @@ describe MigrateOrchStacksToHaveOwnershipConcept do
 
     it "sets owner, tenant, and group from the service if the service exists and ems doesn't" do
       svc = service.create!(:tenant_id => tenant.id, :miq_group_id => group.id)
-      stack = orchestration_stack.create!(:direct_services => [svc])
+      stack = orchestration_stack.create!(:direct_service_ids => [svc.id])
       expect(orchestration_stack.count).to eq(1)
 
       migrate
@@ -52,9 +52,9 @@ describe MigrateOrchStacksToHaveOwnershipConcept do
     end
 
     it "sets owner, tenant, and group from the service if the service and ems exists" do
-      ext_ms = ems.create!(:tenant => tenant)
+      ext_ms = ems.create!(:tenant_id => tenant.id)
       svc = service.create!(:tenant_id => tenant.id, :miq_group_id => group.id)
-      stack = orchestration_stack.create!(:direct_services => [svc], :ext_management_system => ext_ms)
+      stack = orchestration_stack.create!(:direct_service_ids => [svc.id], :ems_id => ext_ms.id)
       expect(orchestration_stack.count).to eq(1)
 
       migrate

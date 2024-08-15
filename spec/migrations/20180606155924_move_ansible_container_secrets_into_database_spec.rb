@@ -59,13 +59,19 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
       end
 
       before do
-        stub_const("MoveAnsibleContainerSecretsIntoDatabase::TOKEN_FILE", token_path)
-        stub_const("MoveAnsibleContainerSecretsIntoDatabase::CA_CERT_FILE", cert_path)
         expect(URI::HTTPS).to receive(:build).with({
           :host => kube_host,
           :port => kube_port,
           :path => "/api/v1/namespaces/#{namespace}/secrets/ansible-secrets"
         }).and_return(uri_stub)
+
+        ENV["CA_CERT_FILE"] = cert_path
+        ENV["TOKEN_FILE"] = token_path
+      end
+
+      after do
+        ENV.delete("CA_CERT_FILE")
+        ENV.delete("TOKEN_FILE")
       end
 
       it "doesn't add any authentications if the secret is not found" do
@@ -85,7 +91,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
         expect(database_authentications.count).to eq(4)
         expect(ansible_secret_key).to eq("secretkey")
         expect(ansible_rabbitmq_password).to eq("rabbitpassword")
-        expect(ansible_database_password).to eq(ApplicationRecord.configurations[Rails.env]["password"])
+        expect(ansible_database_password).to eq(ApplicationRecord.configurations.configs_for(:env_name => Rails.env, :name => "primary").configuration_hash["password"])
       end
 
       it "updates authentications with the secret values" do
@@ -105,13 +111,15 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
         expect(ansible_secret_key).to eq("secretkey")
         expect(ansible_rabbitmq_password).to eq("rabbitpassword")
         expect(ansible_admin_password).to eq("adminpassword")
-        expect(ansible_database_password).to eq(ApplicationRecord.configurations[Rails.env]["password"])
+        expect(ansible_database_password).to eq(ApplicationRecord.configurations.configs_for(:env_name => Rails.env, :name => "primary").configuration_hash["password"])
       end
     end
   end
 
   def expect_request
-    expect(described_class).to receive(:read_token).with(token_path).and_return("totally-a-token")
+    token.write("totally-a-token")
+    token.close
+
     response = double("RequestIO", :read => secret_json)
     expect(uri_stub).to receive(:open).with({
       'Accept'         => "application/json",
@@ -161,7 +169,7 @@ describe MoveAnsibleContainerSecretsIntoDatabase do
     auths = database_authentications.where(
       :name     => "Ansible Database Authentication",
       :authtype => "ansible_database_password",
-      :userid   => ApplicationRecord.configurations[Rails.env]["username"],
+      :userid   => ApplicationRecord.configurations.configs_for(:env_name => Rails.env, :name => "primary").configuration_hash["username"],
       :type     => "AuthUseridPassword"
     )
     expect(auths.count).to eq(1)

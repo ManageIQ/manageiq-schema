@@ -11,8 +11,8 @@ describe FixAzureStackAzFlavorStiClass do
     it "fixes AzureStack AvailabilityZone and Flavor STI classes" do
       azure_stack = ems_stub.create(:type => "ManageIQ::Providers::AzureStack::CloudManager")
 
-      az     = az_stub.create(:ext_management_system => azure_stack)
-      flavor = flavor_stub.create(:ext_management_system => azure_stack)
+      az     = az_stub.create(:ems_id => azure_stack.id)
+      flavor = flavor_stub.create(:ems_id => azure_stack.id)
 
       migrate
 
@@ -25,8 +25,8 @@ describe FixAzureStackAzFlavorStiClass do
     it "resets AzureStack AvailabilityZone and Flavor STI classes" do
       azure_stack = ems_stub.create(:type => "ManageIQ::Providers::AzureStack::CloudManager")
 
-      az     = az_stub.create(:ext_management_system => azure_stack, :type => "ManageIQ::Providers::AzureStack::CloudManager::AvailabilityZone")
-      flavor = flavor_stub.create(:ext_management_system => azure_stack, :type => "ManageIQ::Providers::AzureStack::CloudManager::Flavor")
+      az     = az_stub.create(:ems_id => azure_stack.id, :type => "ManageIQ::Providers::AzureStack::CloudManager::AvailabilityZone")
+      flavor = flavor_stub.create(:ems_id => azure_stack.id, :type => "ManageIQ::Providers::AzureStack::CloudManager::Flavor")
 
       migrate
 

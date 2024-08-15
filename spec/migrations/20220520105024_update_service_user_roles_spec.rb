@@ -10,39 +10,39 @@ describe UpdateServiceUserRoles do
     let!(:service_accord) { product_feature_stub.create!(:feature_type => "node", :identifier => "service_accord") }
 
     it "does nothing to roles without service_accord" do
-      user_role = user_role_stub.create!(:miq_product_features => [other], :read_only => false)
+      user_role = user_role_stub.create!(:miq_product_feature_ids => [other.id], :read_only => false)
 
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to match_array([other])
+      expect(user_role.miq_product_feature_ids).to match_array([other.id])
     end
 
     it "converts service_accord to service" do
-      user_role = user_role_stub.create!(:miq_product_features => [service_accord], :read_only => false)
+      user_role = user_role_stub.create!(:miq_product_feature_ids => [service_accord.id], :read_only => false)
 
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to match_array([service])
+      expect(user_role.miq_product_feature_ids).to match_array([service.id])
     end
 
     it "converts service_accord to service without duplicate" do
-      user_role = user_role_stub.create!(:miq_product_features => [other, service, service_accord], :read_only => false)
+      user_role = user_role_stub.create!(:miq_product_feature_ids => [other.id, service.id, service_accord.id], :read_only => false)
 
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to match_array([other, service])
+      expect(user_role.miq_product_feature_ids).to match_array([other.id, service.id])
     end
 
     it "leaves service alone" do
-      user_role = user_role_stub.create!(:miq_product_features => [other, service], :read_only => false)
+      user_role = user_role_stub.create!(:miq_product_feature_ids => [other.id, service.id], :read_only => false)
 
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to match_array([other, service])
+      expect(user_role.miq_product_feature_ids).to match_array([other.id, service.id])
     end
   end
 end

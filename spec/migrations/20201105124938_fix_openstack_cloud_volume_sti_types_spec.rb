@@ -13,20 +13,20 @@ RSpec.describe FixOpenstackCloudVolumeStiTypes do
       cinder = ems_stub.create!(:type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager", :parent_ems_id => osp.id)
 
       cloud_volume = cloud_volume_stub.create!(
-        :ext_management_system => cinder,
-        :type                  => "ManageIQ::Providers::Openstack::CloudManager::CloudVolume"
+        :ems_id => cinder.id,
+        :type   => "ManageIQ::Providers::Openstack::CloudManager::CloudVolume"
       )
       cloud_volume_snapshot = cloud_volume_snapshot_stub.create!(
-        :ext_management_system => cinder,
-        :type                  => "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot"
+        :ems_id => cinder.id,
+        :type   => "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot"
       )
       cloud_volume_backup = cloud_volume_backup_stub.create!(
-        :ext_management_system => cinder,
-        :type                  => "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup"
+        :ems_id => cinder.id,
+        :type   => "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup"
       )
       cloud_volume_type = cloud_volume_type_stub.create!(
-        :ext_management_system => cinder,
-        :type                  => "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeType"
+        :ems_id => cinder.id,
+        :type   => "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeType"
       )
 
       migrate
@@ -44,20 +44,20 @@ RSpec.describe FixOpenstackCloudVolumeStiTypes do
       cinder = ems_stub.create!(:type => "ManageIQ::Providers::Openstack::StorageManager::CinderManager", :parent_ems_id => osp.id)
 
       cloud_volume = cloud_volume_stub.create!(
-        :ext_management_system => cinder,
-        :type                  => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume"
+        :ems_id => cinder.id,
+        :type   => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume"
       )
       cloud_volume_snapshot = cloud_volume_snapshot_stub.create!(
-        :ext_management_system => cinder,
-        :type                  => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot"
+        :ems_id => cinder.id,
+        :type   => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot"
       )
       cloud_volume_backup = cloud_volume_backup_stub.create!(
-        :ext_management_system => cinder,
-        :type                  => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeBackup"
+        :ems_id => cinder.id,
+        :type   => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeBackup"
       )
       cloud_volume_type = cloud_volume_type_stub.create!(
-        :ext_management_system => cinder,
-        :type                  => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeType"
+        :ems_id => cinder.id,
+        :type   => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeType"
       )
 
       migrate

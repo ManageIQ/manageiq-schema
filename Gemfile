@@ -13,10 +13,12 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-case ENV['TEST_RAILS_VERSION']
-when "6.0"
-  # Default local bundling to use 6.0 for generating migrations
-  gem "rails",  "~>6.0.4"
-else
-  gem "rails",  "~>6.1.6"
-end
+minimum_version =
+  case ENV.fetch('TEST_RAILS_VERSION', nil)
+  when "7.0"
+    "~>7.0.8"
+  else
+    # Default local bundling to use this version for generating migrations
+    "~>6.1.4"
+  end
+gem "rails", minimum_version

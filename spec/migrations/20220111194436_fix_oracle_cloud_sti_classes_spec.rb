@@ -12,8 +12,8 @@ describe FixOracleCloudStiClasses do
       oracle_cloud   = ems_stub.create(:type => "ManageIQ::Providers::OracleCloud::CloudManager")
       oracle_network = ems_stub.create(:type => "ManageIQ::Providers::OracleCloud::NetworkManager")
 
-      cloud_tenant  = cloud_tenant_stub.create(:ext_management_system => oracle_cloud)
-      load_balancer = load_balancer_stub.create(:ext_management_system => oracle_network)
+      cloud_tenant  = cloud_tenant_stub.create(:ems_id => oracle_cloud.id)
+      load_balancer = load_balancer_stub.create(:ems_id => oracle_network.id)
 
       migrate
 
@@ -27,8 +27,8 @@ describe FixOracleCloudStiClasses do
       oracle_cloud   = ems_stub.create(:type => "ManageIQ::Providers::OracleCloud::CloudManager")
       oracle_network = ems_stub.create(:type => "ManageIQ::Providers::OracleCloud::NetworkManager")
 
-      cloud_tenant  = cloud_tenant_stub.create(:ext_management_system => oracle_cloud, :type => "ManageIQ::Providers::OracleCloud::CloudManager::CloudTenant")
-      load_balancer = load_balancer_stub.create(:ext_management_system => oracle_network, :type => "ManageIQ::Providers::OracleCloud::NetworkManager::LoadBalancer")
+      cloud_tenant  = cloud_tenant_stub.create(:ems_id => oracle_cloud.id, :type => "ManageIQ::Providers::OracleCloud::CloudManager::CloudTenant")
+      load_balancer = load_balancer_stub.create(:ems_id => oracle_network.id, :type => "ManageIQ::Providers::OracleCloud::NetworkManager::LoadBalancer")
 
       migrate
 

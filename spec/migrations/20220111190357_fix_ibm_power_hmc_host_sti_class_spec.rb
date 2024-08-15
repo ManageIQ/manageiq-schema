@@ -9,7 +9,7 @@ describe FixIbmPowerHmcHostStiClass do
   migration_context :up do
     it "Fixes IBM Power HMC Host STI class" do
       hmc  = ems_stub.create(:type => "ManageIQ::Providers::IbmPowerHmc::InfraManager")
-      host = host_stub.create(:ext_management_system => hmc)
+      host = host_stub.create(:ems_id => hmc.id)
 
       migrate
 
@@ -20,7 +20,7 @@ describe FixIbmPowerHmcHostStiClass do
   migration_context :down do
     it "Resets IBM Power HMC Host STI class" do
       hmc  = ems_stub.create(:type => "ManageIQ::Providers::IbmPowerHmc::InfraManager")
-      host = host_stub.create(:ext_management_system => hmc, :type => "ManageIQ::Providers::IbmPowerHmc::InfraManager::Host")
+      host = host_stub.create(:ems_id => hmc.id, :type => "ManageIQ::Providers::IbmPowerHmc::InfraManager::Host")
 
       migrate
 

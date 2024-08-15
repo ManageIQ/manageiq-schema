@@ -30,19 +30,19 @@ describe UpdateAutomationProviderUserRoles do
         :feature_type => "node",
         :identifier   => "automation_manager"
       )
-      user_role = user_role_stub.create!(:miq_product_features => [automation_manager], :read_only => false)
+      user_role = user_role_stub.create!(:miq_product_feature_ids => [automation_manager.id], :read_only => false)
 
-      expect(user_role.miq_product_features).not_to include(ems_automation)
-      expect(user_role.miq_product_features).not_to include(automation_manager_configured_system)
-      expect(user_role.miq_product_features).not_to include(configuration_script)
+      expect(user_role.miq_product_feature_ids).not_to include(ems_automation.id)
+      expect(user_role.miq_product_feature_ids).not_to include(automation_manager_configured_system.id)
+      expect(user_role.miq_product_feature_ids).not_to include(configuration_script.id)
 
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).not_to include(automation_manager)
-      expect(user_role.miq_product_features).to include(ems_automation)
-      expect(user_role.miq_product_features).to include(automation_manager_configured_system)
-      expect(user_role.miq_product_features).to include(configuration_script)
+      expect(user_role.miq_product_feature_ids).not_to include(automation_manager.id)
+      expect(user_role.miq_product_feature_ids).to include(ems_automation.id)
+      expect(user_role.miq_product_feature_ids).to include(automation_manager_configured_system.id)
+      expect(user_role.miq_product_feature_ids).to include(configuration_script.id)
     end
   end
 
@@ -75,20 +75,20 @@ describe UpdateAutomationProviderUserRoles do
         :feature_type => "node",
         :identifier   => "automation_manager"
       )
-      user_role = user_role_stub.create!(:miq_product_features => [ems_automation, automation_manager_configured_system, configuration_script], :read_only => false)
+      user_role = user_role_stub.create!(:miq_product_feature_ids => [ems_automation.id, automation_manager_configured_system.id, configuration_script.id], :read_only => false)
 
-      expect(user_role.miq_product_features).to include(ems_automation)
-      expect(user_role.miq_product_features).to include(automation_manager_configured_system)
-      expect(user_role.miq_product_features).to include(configuration_script)
-      expect(user_role.miq_product_features).not_to include(automation_manager)
+      expect(user_role.miq_product_feature_ids).to include(ems_automation.id)
+      expect(user_role.miq_product_feature_ids).to include(automation_manager_configured_system.id)
+      expect(user_role.miq_product_feature_ids).to include(configuration_script.id)
+      expect(user_role.miq_product_feature_ids).not_to include(automation_manager.id)
 
       migrate
       user_role.reload
 
-      expect(user_role.miq_product_features).to include(automation_manager)
-      expect(user_role.miq_product_features).not_to include(ems_automation)
-      expect(user_role.miq_product_features).not_to include(automation_manager_configured_system)
-      expect(user_role.miq_product_features).not_to include(configuration_script)
+      expect(user_role.miq_product_feature_ids).to include(automation_manager.id)
+      expect(user_role.miq_product_feature_ids).not_to include(ems_automation.id)
+      expect(user_role.miq_product_feature_ids).not_to include(automation_manager_configured_system.id)
+      expect(user_role.miq_product_feature_ids).not_to include(configuration_script.id)
     end
   end
 end

@@ -7,7 +7,7 @@ describe SetVpcAvailabilityZonesSti do
   migration_context :up do
     it "fixes VPC availability zones' STI class" do
       vpc_manager       = ems_stub.create!(:type => "ManageIQ::Providers::IbmCloud::VPC::CloudManager")
-      availability_zone = availability_zone_stub.create!(:ext_management_system => vpc_manager)
+      availability_zone = availability_zone_stub.create!(:ems_id => vpc_manager.id)
 
       migrate
 
@@ -16,7 +16,7 @@ describe SetVpcAvailabilityZonesSti do
 
     it "doesn't impact other availability_zones" do
       aws_manager       = ems_stub.create!(:type => "ManageIQ::Providers::Amazon::CloudManager")
-      availability_zone = availability_zone_stub.create!(:type => "ManageIQ::Providers::Amazon::CloudManager::AvailabilityZone", :ext_management_system => aws_manager)
+      availability_zone = availability_zone_stub.create!(:type => "ManageIQ::Providers::Amazon::CloudManager::AvailabilityZone", :ems_id => aws_manager.id)
 
       migrate
 
@@ -27,7 +27,7 @@ describe SetVpcAvailabilityZonesSti do
   migration_context :down do
     it "resets VPC availability_zones' STI class" do
       vpc_manager       = ems_stub.create!(:type => "ManageIQ::Providers::IbmCloud::VPC::CloudManager")
-      availability_zone = availability_zone_stub.create!(:type => "ManageIQ::Providers::IbmCloud::VPC::CloudManager::AvailabilityZone", :ext_management_system => vpc_manager)
+      availability_zone = availability_zone_stub.create!(:type => "ManageIQ::Providers::IbmCloud::VPC::CloudManager::AvailabilityZone", :ems_id => vpc_manager.id)
 
       migrate
 
@@ -36,7 +36,7 @@ describe SetVpcAvailabilityZonesSti do
 
     it "doesn't impact other availability_zones" do
       aws_manager       = ems_stub.create!(:type => "ManageIQ::Providers::Amazon::CloudManager")
-      availability_zone = availability_zone_stub.create!(:type => "ManageIQ::Providers::Amazon::CloudManager::AvailabilityZone", :ext_management_system => aws_manager)
+      availability_zone = availability_zone_stub.create!(:type => "ManageIQ::Providers::Amazon::CloudManager::AvailabilityZone", :ems_id => aws_manager.id)
 
       migrate
 

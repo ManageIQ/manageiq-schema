@@ -11,7 +11,7 @@ describe SubclassResourcePools do
       end
 
       resource_pools = emss.map do |ems|
-        resource_pool_stub.create!(:ext_management_system => ems)
+        resource_pool_stub.create!(:ems_id => ems.id)
       end
 
       migrate
@@ -23,7 +23,7 @@ describe SubclassResourcePools do
 
     it "doesn't migrate resource pools from other providers" do
       ems = ext_management_system_stub.create!(:type => "ManageIQ::Providers::AnotherManager::InfraManager")
-      respool = resource_pool_stub.create!(:ext_management_system => ems)
+      respool = resource_pool_stub.create!(:ems_id => ems.id)
 
       migrate
 
@@ -38,7 +38,7 @@ describe SubclassResourcePools do
       end
 
       resource_pools = emss.map do |ems|
-        resource_pool_stub.create!(:ext_management_system => ems, :type => "#{ems.type}::ResourcePool")
+        resource_pool_stub.create!(:ems_id => ems.id, :type => "#{ems.type}::ResourcePool")
       end
 
       migrate
@@ -50,7 +50,7 @@ describe SubclassResourcePools do
 
     it "doesn't migrate resource pools from other providers" do
       ems = ext_management_system_stub.create!(:type => "ManageIQ::Providers::AnotherManager::InfraManager")
-      respool = resource_pool_stub.create!(:ext_management_system => ems)
+      respool = resource_pool_stub.create!(:ems_id => ems.id)
 
       migrate
 

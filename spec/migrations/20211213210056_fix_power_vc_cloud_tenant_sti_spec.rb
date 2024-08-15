@@ -9,7 +9,7 @@ describe FixPowerVcCloudTenantSti do
   migration_context :up do
     it "fixes IbmPowerVc CloudTenant STI classes" do
       ibm_powervc_manager = ems_stub.create(:type => "ManageIQ::Providers::IbmPowerVc::CloudManager")
-      cloud_tenant        = cloud_tenant_stub.create(:ext_management_system => ibm_powervc_manager, :type => "ManageIQ::Providers::Openstack::CloudManager::CloudTenant")
+      cloud_tenant        = cloud_tenant_stub.create(:ems_id => ibm_powervc_manager.id, :type => "ManageIQ::Providers::Openstack::CloudManager::CloudTenant")
 
       migrate
 
@@ -18,7 +18,7 @@ describe FixPowerVcCloudTenantSti do
 
     it "doesn't impact other CloudTenants" do
       awesome_cloud_manager = ems_stub.create(:type => "ManageIQ::Providers::AwesomeCloud::CloudManager")
-      cloud_tenant          = cloud_tenant_stub.create(:ext_management_system => awesome_cloud_manager, :type => "ManageIQ::Providers::AwesomeCloud::CloudManager::CloudTenant")
+      cloud_tenant          = cloud_tenant_stub.create(:ems_id => awesome_cloud_manager.id, :type => "ManageIQ::Providers::AwesomeCloud::CloudManager::CloudTenant")
 
       migrate
 
@@ -29,7 +29,7 @@ describe FixPowerVcCloudTenantSti do
   migration_context :down do
     it "resets IbmPowerVc CloudTenant STI classes" do
       ibm_powervc_manager = ems_stub.create(:type => "ManageIQ::Providers::IbmPowerVc::CloudManager")
-      cloud_tenant        = cloud_tenant_stub.create(:ext_management_system => ibm_powervc_manager, :type => "ManageIQ::Providers::IbmPowerVc::CloudManager::CloudTenant")
+      cloud_tenant        = cloud_tenant_stub.create(:ems_id => ibm_powervc_manager.id, :type => "ManageIQ::Providers::IbmPowerVc::CloudManager::CloudTenant")
 
       migrate
 
@@ -38,7 +38,7 @@ describe FixPowerVcCloudTenantSti do
 
     it "doesn't impact other CloudTenants" do
       awesome_cloud_manager = ems_stub.create(:type => "ManageIQ::Providers::AwesomeCloud::CloudManager")
-      cloud_tenant          = cloud_tenant_stub.create(:ext_management_system => awesome_cloud_manager, :type => "ManageIQ::Providers::AwesomeCloud::CloudManager::CloudTenant")
+      cloud_tenant          = cloud_tenant_stub.create(:ems_id => awesome_cloud_manager.id, :type => "ManageIQ::Providers::AwesomeCloud::CloudManager::CloudTenant")
 
       migrate
 
