@@ -1,6 +1,6 @@
 require_migration
 
-describe Updateresourcepoolidentifierstomiqproductfeatures do
+describe UpdateResourcePoolIdentifiersToMiqProductFeatures do
   let(:miq_product_feature) { migration_stub(:MiqProductFeature) }
 
   before do
