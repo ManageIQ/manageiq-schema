@@ -1,4 +1,4 @@
-class Updateresourcepoolidentifierstomiqproductfeatures < ActiveRecord::Migration[6.1]
+class UpdateResourcePoolIdentifiersToMiqProductFeatures < ActiveRecord::Migration[6.1]
   class MiqProductFeature < ActiveRecord::Base; end
 
   FEATURE_MAPPING_UPDATE = {
