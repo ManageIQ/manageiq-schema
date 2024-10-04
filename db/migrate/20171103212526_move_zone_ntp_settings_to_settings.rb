@@ -3,7 +3,7 @@ class MoveZoneNtpSettingsToSettings < ActiveRecord::Migration[5.0]
     serialize :value
   end
   class Zone < ActiveRecord::Base
-    serialize :settings, Hash
+    serialize :settings, :type => Hash
   end
 
   def up

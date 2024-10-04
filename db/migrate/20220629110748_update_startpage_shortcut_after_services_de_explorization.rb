@@ -1,6 +1,6 @@
 class UpdateStartpageShortcutAfterServicesDeExplorization < ActiveRecord::Migration[6.0]
   class User < ActiveRecord::Base
-    serialize :settings, Hash
+    serialize :settings, :type => Hash
   end
 
   def up
