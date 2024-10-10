@@ -1,6 +1,6 @@
 class UpdateChargebackAssignmentsStartpage < ActiveRecord::Migration[5.2]
   class User < ActiveRecord::Base
-    serialize :settings, Hash
+    serialize :settings, :type => Hash
     include ActiveRecord::IdRegions
   end
 
