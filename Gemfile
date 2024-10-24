@@ -14,8 +14,12 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 # your gem to rubygems.org.
 
 minimum_version =
-  case ENV.fetch('TEST_RAILS_VERSION', nil)
-  when "7.0"
+  case ENV['TEST_RAILS_VERSION']
+  when "7.2"
+    "~>7.2.1"
+  when "7.1"
+    "~>7.1.4"
+  else
     # Default local bundling to use this version for generating migrations
     "~>7.0.8"
   end

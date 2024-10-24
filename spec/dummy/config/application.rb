@@ -23,6 +23,11 @@ module Dummy
     # migration specs to honor it.
     config.active_record.belongs_to_required_by_default = false
 
+    # Note, you can't pass kwargs :coder => YAML to serialize until rails 7.1 as it was a positional
+    # argument previously.  To avoid a case statement in all usages of serialize, we're defaulting
+    # all serialized columns to YAML for rails 7.1+ here. Ideally, we would use JSON if we find we can
+    # use a simpler datatype. See: https://github.com/rails/rails/pull/47463
+    config.active_record.default_column_serializer = YAML if Rails.version >= "7.1"
     config.active_record.use_yaml_unsafe_load = true
   end
 end
