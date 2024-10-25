@@ -9,12 +9,13 @@ module ManageIQ
 
       ActiveSupport.on_load(:active_record) do
         require_relative 'migrate_with_cleared_schema_cache'
+        require_relative 'serialize_positional_to_kwargs_bridge'
         require_relative 'schema_statements'
         require_relative 'command_recorder'
         require_relative 'schema_dumper'
 
         ActiveRecord::Migration.prepend(MigrateWithClearedSchemaCache)
-
+        ActiveRecord::AttributeMethods::Serialization::ClassMethods.send(:prepend, ManageIQ::Schema::SerializePositionalToKwargsBridge)
         ActiveRecord::ConnectionAdapters::AbstractAdapter.include(SchemaStatements)
         ActiveRecord::Migration::CommandRecorder.include(CommandRecorder)
         ActiveRecord::ConnectionAdapters::SchemaDumper.prepend(SchemaDumper)

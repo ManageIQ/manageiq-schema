@@ -108,8 +108,7 @@ module Spec
       def migrate_to(version)
         suppress_migration_messages do
           migration_dir  = Rails.application.config.paths["db/migrate"]
-          migration_conn = ::ActiveRecord::Base.connection.schema_migration
-          ActiveRecord::MigrationContext.new(migration_dir, migration_conn).migrate(version)
+          ActiveRecord::MigrationContext.new(migration_dir, schema_migration).migrate(version)
         end
       end
 
@@ -126,16 +125,24 @@ module Spec
 
       def run_migrate
         migration_dir  = Rails.application.config.paths["db/migrate"]
-        migration_conn = ::ActiveRecord::Base.connection.schema_migration
-        context        = ActiveRecord::MigrationContext.new(migration_dir, migration_conn)
+        context        = ActiveRecord::MigrationContext.new(migration_dir, schema_migration)
 
         context.run(migration_direction, this_migration_version)
       end
 
+      def schema_migration
+        # Rails 7.2 refactored the schema_migration metadata and context to the pool
+        # https://www.github.com/rails/rails/pull/51162
+        if Rails.version >= "7.2"
+          ::ActiveRecord::Base.connection.pool.schema_migration
+        else
+          ::ActiveRecord::Base.connection.schema_migration
+        end
+      end
+
       def schema_migrations
         migration_dir  = Rails.application.config.paths["db/migrate"]
-        migration_conn = ::ActiveRecord::Base.connection.schema_migration
-        ActiveRecord::MigrationContext.new(migration_dir, migration_conn).migrations
+        ActiveRecord::MigrationContext.new(migration_dir, schema_migration).migrations
       end
 
       def migrations_and_index
