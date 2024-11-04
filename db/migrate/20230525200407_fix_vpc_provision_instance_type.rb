@@ -11,7 +11,7 @@ class FixVpcProvisionInstanceType < ActiveRecord::Migration[6.1]
 
     self.inheritance_column = :_type_disabled
 
-    serialize :options, Hash
+    serialize :options, :type => Hash
   end
 
   def up
