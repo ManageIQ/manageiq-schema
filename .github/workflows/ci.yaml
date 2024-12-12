@@ -48,7 +48,6 @@ jobs:
       run: bin/setup
     - name: Run tests
       run: bundle exec rake
-      continue-on-error: ${{ matrix.rails-version == '7.2' || matrix.rails-version == '7.1'}}
     - name: Report code coverage
       if: ${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '3.3' && matrix.rails-version == '7.0' }}
       continue-on-error: true
