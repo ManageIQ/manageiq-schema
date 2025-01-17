@@ -20,10 +20,12 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "ancestry"
   spec.add_dependency "activerecord-id_regions", "~> 0.5.0"
+  spec.add_dependency "concurrent-ruby",         "< 1.3.5" # Temporary pin down as concurrent-ruby 1.3.5 breaks Rails 7.0, and rails-core doesn't
+                                                           # plan to ship a new 7.0 to fix it. See https://github.com/rails/rails/pull/54264
   spec.add_dependency "manageiq-password",       ">= 1.2.0", "< 2"
   spec.add_dependency "more_core_extensions",    ">= 3.5", "< 5"
   spec.add_dependency "pg"
-  spec.add_dependency "rails",                   ">=7.0.8.5", "<8.0"
+  spec.add_dependency "rails",                   ">=7.0.8.7", "<8.0"
 
   spec.add_development_dependency "manageiq-style", ">= 1.5.3"
   spec.add_development_dependency "rspec"
