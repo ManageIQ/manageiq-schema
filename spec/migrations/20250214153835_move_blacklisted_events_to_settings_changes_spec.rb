@@ -4,7 +4,9 @@ require_migration
 # file if you do no need it.
 describe MoveBlacklistedEventsToSettingsChanges do
   let(:blacklisted_event_stub) { migration_stub(:BlacklistedEvent) }
-  let(:settings_change_stub) { migration_stub(:SettingsChange) }
+  let(:miq_region_stub)        { migration_stub(:MiqRegion) }
+  let(:settings_change_stub)   { migration_stub(:SettingsChange) }
+  let!(:my_region)             { miq_region_stub.create!(:region => miq_region_stub.my_region_number) }
 
   migration_context :up do
     it "with only default blacklisted events" do
@@ -26,7 +28,7 @@ describe MoveBlacklistedEventsToSettingsChanges do
       expect(settings_change_stub.count).to eq(1)
       expect(settings_change_stub.first).to have_attributes(
         :resource_type => "MiqRegion",
-        :resource_id   => blacklisted_event_stub.my_region_number,
+        :resource_id   => my_region.id,
         :key           => "/ems/ems_vmware/blacklisted_event_names",
         :value         => array_including("MySpecialEvent")
       )

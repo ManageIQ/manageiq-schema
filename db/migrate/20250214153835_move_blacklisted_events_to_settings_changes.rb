@@ -3,6 +3,10 @@ class MoveBlacklistedEventsToSettingsChanges < ActiveRecord::Migration[7.0]
     include ActiveRecord::IdRegions
   end
 
+  class MiqRegion < ActiveRecord::Base
+    include ActiveRecord::IdRegions
+  end
+
   class SettingsChange < ActiveRecord::Base
     include ActiveRecord::IdRegions
 
@@ -52,6 +56,9 @@ class MoveBlacklistedEventsToSettingsChanges < ActiveRecord::Migration[7.0]
 
   def up
     say_with_time("Moving BlacklistedEvent records to SettingsChanges") do
+      my_region_id = MiqRegion.find_by(:region => MiqRegion.my_region_number)&.id
+      return if my_region_id.nil?
+
       BlacklistedEvent.in_my_region.where(:system => false, :enabled => true).group_by(&:provider_model).each do |provider_model, blacklisted_events|
         addition_blacklisted_events = blacklisted_events.pluck(:event_name) - DEFAULT_BLACKLISTED_EVENTS[provider_model]
         next if addition_blacklisted_events.empty?
@@ -59,7 +66,7 @@ class MoveBlacklistedEventsToSettingsChanges < ActiveRecord::Migration[7.0]
         settings_change_key = PROVIDER_MODEL_TO_SETTINGS_KEY[provider_model]
         next if settings_change_key.nil?
 
-        settings_change = SettingsChange.find_or_initialize_by(:resource_type => "MiqRegion", :resource_id => SettingsChange.my_region_number, :key => settings_change_key)
+        settings_change = SettingsChange.find_or_initialize_by(:resource_type => "MiqRegion", :resource_id => my_region_id, :key => settings_change_key)
         settings_change.update!(:value => DEFAULT_BLACKLISTED_EVENTS[provider_model] + addition_blacklisted_events)
       end
     end
