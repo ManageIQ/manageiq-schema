@@ -44,15 +44,43 @@ class MoveBlacklistedEventsToSettingsChanges < ActiveRecord::Migration[7.0]
     "ManageIQ::Providers::Vmware::InfraManager"                      => ["AlarmActionTriggeredEvent", "AlarmCreatedEvent", "AlarmEmailCompletedEvent", "AlarmEmailFailedEvent", "AlarmReconfiguredEvent", "AlarmRemovedEvent", "AlarmScriptCompleteEvent", "AlarmScriptFailedEvent", "AlarmSnmpCompletedEvent", "AlarmSnmpFailedEvent", "AlarmStatusChangedEvent", "AlreadyAuthenticatedSessionEvent", "EventEx", "UserLoginSessionEvent", "UserLogoutSessionEvent"]
   }.freeze
 
-  # TODO: add the rest of the provider settings keys
-  # This is the mapping of BlacklistedEvent#provider_model -> SettingsChange#key
+  # The mapping of BlacklistedEvent#provider_model -> SettingsChange#key
   PROVIDER_MODEL_TO_SETTINGS_KEY = {
-    "ManageIQ::Providers::Vmware::InfraManager" => "/ems/ems_vmware/blacklisted_event_names"
+    "ManageIQ::Providers::Amazon::CloudManager"                  => "/ems/ems_amazon/blacklisted_event_names",
+    "ManageIQ::Providers::AnsibleTower::AutomationManager"       => "/ems/ems_ansible_tower/blacklisted_event_names",
+    "ManageIQ::Providers::Autosde::StorageManager"               => "/ems/ems_autosde/blacklisted_event_names",
+    "ManageIQ::Providers::Awx::AutomationManager"                => "/ems/ems_awx/blacklisted_event_names",
+    "ManageIQ::Providers::Azure::CloudManager"                   => "/ems/ems_azure/blacklisted_event_names",
+    "ManageIQ::Providers::AzureStack::CloudManager"              => "/ems/ems_azure_stack/blacklisted_event_names",
+    "ManageIQ::Providers::CiscoIntersight::PhysicalInfraManager" => "/ems/ems_cisco_intersight/blacklisted_event_names",
+    "ManageIQ::Providers::EmbeddedTerraform::AutomationManager"  => "/ems/ems_embedded_terraform/blacklisted_event_names",
+    "ManageIQ::Providers::Foreman::ConfigurationManager"         => "/ems/ems_foreman/blacklisted_event_names",
+    "ManageIQ::Providers::Google::CloudManager"                  => "/ems/ems_google/blacklisted_event_names",
+    "ManageIQ::Providers::IbmCic::CloudManager"                  => "/ems/ems_ibm_cic/blacklisted_event_names",
+    "ManageIQ::Providers::IbmPowerHmc::InfraManager"             => "/ems/ems_ibm_power_hmc/blacklisted_event_names",
+    "ManageIQ::Providers::IbmPowerVc::CloudManager"              => "/ems/ems_ibm_power_vc/blacklisted_event_names",
+    "ManageIQ::Providers::IbmTerraform::ConfigurationManager"    => "/ems/ems_ibm_terraform/blacklisted_event_names",
+    "ManageIQ::Providers::Kubernetes::ContainerManager"          => "/ems/ems_kubernetes/blacklisted_event_names",
+    "ManageIQ::Providers::Kubevirt::InfraManager"                => "/ems/ems_kubevirt/blacklisted_event_names",
+    "ManageIQ::Providers::Lenovo::PhysicalInfraManager"          => "/ems/ems_lenovo/blacklisted_event_names",
+    "ManageIQ::Providers::Nsxt::NetworkManager"                  => "/ems/ems_nsxt/blacklisted_event_names",
+    "ManageIQ::Providers::Nuage::NetworkManager"                 => "/ems/ems_nuage/blacklisted_event_names",
+    "ManageIQ::Providers::Openshift::ContainerManager"           => "/ems/ems_openshift/blacklisted_event_names",
+    "ManageIQ::Providers::Openstack::CloudManager"               => "/ems/ems_openstack/blacklisted_event_names",
+    "ManageIQ::Providers::OracleCloud::CloudManager"             => "/ems/ems_oracle_cloud/blacklisted_event_names",
+    "ManageIQ::Providers::Ovirt::InfraManager"                   => "/ems/ems_ovirt/blacklisted_event_names",
+    "ManageIQ::Providers::Ovirt::NetworkManager"                 => "/ems/ems_ovirt_network/blacklisted_event_names",
+    "ManageIQ::Providers::Redfish::PhysicalInfraManager"         => "/ems/ems_redfish/blacklisted_event_names",
+    "ManageIQ::Providers::Redhat::InfraManager"                  => "/ems/ems_redhat/blacklisted_event_names",
+    "ManageIQ::Providers::Redhat::NetworkManager"                => "/ems/ems_redhat_network/blacklisted_event_names",
+    "ManageIQ::Providers::Vmware::InfraManager"                  => "/ems/ems_vmware/blacklisted_event_names",
+    "ManageIQ::Providers::Vmware::CloudManager"                  => "/ems/ems_vmware_cloud/blacklisted_event_names",
+    "ManageIQ::Providers::Vmware::NetworkManager"                => "/ems/ems_vmware_cloud_network/blacklisted_event_names",
+    "ManageIQ::Providers::Vmware::ContainerManager"              => "/ems/ems_vmware_tanzu/blacklisted_event_names",
+    "ManageIQ::Providers::Workflows::AutomationManager"          => "/ems/ems_workflows/blacklisted_event_names"
   }.freeze
 
-  SETTINGS_KEY_TO_PROVIDER_MODEL = {
-    "/ems/ems_vmware/blacklisted_event_names" => "ManageIQ::Providers::Vmware::InfraManager"
-  }.freeze
+  SETTINGS_KEY_TO_PROVIDER_MODEL = PROVIDER_MODEL_TO_SETTINGS_KEY.invert
 
   def up
     say_with_time("Moving BlacklistedEvent records to SettingsChanges") do
