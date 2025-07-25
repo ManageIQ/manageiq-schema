@@ -24,5 +24,7 @@ minimum_version =
     "~>7.0.8"
   end
 gem "rails", minimum_version
-# security fix for indirect dependencies
+
+# security fixes for indirect dependencies
 gem "rack", ">=2.2.14" # CVE-2025-46727 https://github.com/advisories/GHSA-gjh7-p2fx-99vx
+gem "thor", ">= 1.4.0" # CVE-2025-54314 https://github.com/advisories/GHSA-mqcp-p2hv-vw6x (railties)
