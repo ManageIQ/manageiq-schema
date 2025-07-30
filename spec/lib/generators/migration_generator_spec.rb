@@ -3,12 +3,7 @@ require 'rails/generators/test_case'
 require 'generators/migration/migration_generator'
 
 describe ManageIQ::Schema::MigrationGenerator do
-  if Rails.version >= "7.1"
-    include Rails::Generators::Testing::Behavior
-  else
-    include Rails::Generators::Testing::Behaviour
-  end
-
+  include Rails::Generators::Testing::Behavior
   include Rails::Generators::Testing::SetupAndTeardown
   include Rails::Generators::Testing::Assertions
   include FileUtils

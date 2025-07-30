@@ -16,12 +16,10 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 minimum_version =
   case ENV['TEST_RAILS_VERSION']
   when "7.2"
-    "~>7.2.1"
-  when "7.1"
-    "~>7.1.4"
+    "~>7.2.2"
   else
     # Default local bundling to use this version for generating migrations
-    "~>7.0.8"
+    "~>7.1.5"
   end
 gem "rails", minimum_version
 
