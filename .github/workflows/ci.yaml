@@ -16,7 +16,6 @@ jobs:
         - '3.3'
         - '3.4'
         rails-version:
-        - '7.0'
         - '7.1'
         - '7.2'
     services:
@@ -47,6 +46,6 @@ jobs:
     - name: Run tests
       run: bundle exec rake
     - name: Report code coverage
-      if: ${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '3.3' && matrix.rails-version == '7.0' }}
+      if: ${{ github.ref == 'refs/heads/master' && matrix.ruby-version == '3.3' && matrix.rails-version == '7.1' }}
       continue-on-error: true
       uses: paambaati/codeclimate-action@v9
