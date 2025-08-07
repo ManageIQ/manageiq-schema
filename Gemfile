@@ -13,7 +13,7 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-gem "rails", "~>7.2.2", ">=7.2.2.1"
+gem "rails", "~>8.0.0", ">=8.0.2"
 
 # security fixes for indirect dependencies
 gem "rack", ">=2.2.14" # CVE-2025-46727 https://github.com/advisories/GHSA-gjh7-p2fx-99vx
