@@ -11,6 +11,11 @@ module Dummy
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults Rails::VERSION::STRING.to_f
 
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks])
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -27,7 +32,7 @@ module Dummy
     # argument previously.  To avoid a case statement in all usages of serialize, we're defaulting
     # all serialized columns to YAML for rails 7.1+ here. Ideally, we would use JSON if we find we can
     # use a simpler datatype. See: https://github.com/rails/rails/pull/47463
-    config.active_record.default_column_serializer = YAML if Rails.version >= "7.1"
+    config.active_record.default_column_serializer = YAML
     config.active_record.use_yaml_unsafe_load = true
   end
 end
