@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails",                   "~> 6.0.6", ">= 6.0.6.1"
 
   spec.add_development_dependency "manageiq-style", ">= 1.5.3"
-  spec.add_development_dependency "rack", "~> 2.2", ">= 2.2.13"
+  spec.add_development_dependency "rack", "~> 2.2", ">= 2.2.14" # CVE-2025-46727
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "rspec-rails"
   spec.add_development_dependency "simplecov", ">= 0.21.2"
