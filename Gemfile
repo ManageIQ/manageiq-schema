@@ -13,16 +13,8 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-minimum_version =
-  case ENV['TEST_RAILS_VERSION']
-  when "7.2"
-    "~>7.2.1"
-  when "7.1"
-    "~>7.1.4"
-  else
-    # Default local bundling to use this version for generating migrations
-    "~>7.0.8"
-  end
-gem "rails", minimum_version
-# security fix for indirect dependencies
+gem "rails", "~>7.2.2", ">=7.2.2.1"
+
+# security fixes for indirect dependencies
 gem "rack", ">=2.2.14" # CVE-2025-46727 https://github.com/advisories/GHSA-gjh7-p2fx-99vx
+gem "thor", ">= 1.4.0" # CVE-2025-54314 https://github.com/advisories/GHSA-mqcp-p2hv-vw6x (railties)
