@@ -1,6 +1,6 @@
 # ManageIQ::Schema
 
-[![CI](https://github.com/ManageIQ/manageiq-schema/actions/workflows/ci.yaml/badge.svg)](https://github.com/ManageIQ/manageiq-schema/actions/workflows/ci.yaml)
+[![CI](https://github.com/ManageIQ/manageiq-schema/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/ManageIQ/manageiq-schema/actions/workflows/ci.yaml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/f7888b08eb72806b2860/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-schema/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/f7888b08eb72806b2860/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-schema/test_coverage)
 
