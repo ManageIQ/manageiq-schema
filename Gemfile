@@ -16,5 +16,5 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 gem "rails", "~>7.2.2", ">=7.2.2.1"
 
 # security fixes for indirect dependencies
-gem "rack", ">=2.2.18" # CVE-2025-59830 https://github.com/advisories/GHSA-625h-95r8-8xpm
+gem "rack", ">=2.2.19" # CVE-2025-61772 https://github.com/rack/rack/security/advisories/GHSA-wpv5-97wm-hp9c
 gem "thor", ">= 1.4.0" # CVE-2025-54314 https://github.com/advisories/GHSA-mqcp-p2hv-vw6x (railties)
