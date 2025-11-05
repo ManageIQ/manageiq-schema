@@ -35,13 +35,14 @@ describe DropLogCollectionConfiguration do
     end
 
     it "deletes settings" do
-      keep = settings_change_stub.create!(:key => "/log/level", :value => "debug")
+      to_keep = settings_change_stub.create!(:key => "/log/level", :value => "debug")
       to_delete = settings_change_stub.create!(:key => "/log/collection/ping_depot", :value => "false")
 
       migrate
 
       expect(settings_change_stub.count).to eq(1)
-      expect(settings_change_stub.first).to eq(keep)
+      expect(settings_change_stub.first).to eq(to_keep)
+      expect { to_delete.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
