@@ -144,7 +144,6 @@ describe "foreign key (*_id) columns" do
       iso_images.pxe_image_type_id
       key_pairs_vms.authentication_id
       lans.parent_id
-      log_files.file_depot_id
       metric_rollups_01.parent_ems_cluster_id
       metric_rollups_01.parent_ems_id
       metric_rollups_01.parent_host_id
@@ -361,7 +360,6 @@ describe "foreign key (*_id) columns" do
       miq_roles_features.miq_product_feature_id
       miq_schedules.file_depot_id
       miq_schedules.resource_id
-      miq_servers.log_file_depot_id
       miq_set_memberships.member_id
       miq_widget_contents.miq_group_id
       miq_widget_shortcuts.miq_shortcut_id
@@ -442,7 +440,6 @@ describe "foreign key (*_id) columns" do
       vms.storage_profile_id
       windows_images.pxe_image_type_id
       windows_images.pxe_server_id
-      zones.log_file_depot_id
     ])
   end
 
