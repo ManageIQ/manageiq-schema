@@ -141,7 +141,6 @@ load_balancer_pool_member_pools
 load_balancer_pool_members
 load_balancer_pools
 load_balancers
-log_files
 metric_rollups_01
 metric_rollups_02
 metric_rollups_03
