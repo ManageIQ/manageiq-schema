@@ -13,6 +13,8 @@ namespace :spec do
     puts "** Creating database with REGION #{ENV["REGION"]}"
   end
 
+  # TODO: Leverage rails 8 feature: "db:migrate loads from schema by default for fresh databases"
+  # Note, db:migrate:reset does drop, create, load schema, migrate
   task :setup_db => [:setup_region, "db:drop", "db:create", "db:migrate"]
 
   desc "Prepare all specs"
