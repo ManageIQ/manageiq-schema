@@ -1,7 +1,7 @@
 module ManageIQ
   module Schema
     module MigrateWithClearedSchemaCache
-      def migrate(*args)
+      def migrate(...)
         clearing_caches do
           super
         end
