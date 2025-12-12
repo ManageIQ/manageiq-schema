@@ -5,4 +5,5 @@ if [ -z "$CI" ]; then
 fi
 
 cp -n spec/dummy/config/database.{tmpl.,}yml
+rm -f spec/dummy/db/schema.rb
 bundle exec rake spec:setup
