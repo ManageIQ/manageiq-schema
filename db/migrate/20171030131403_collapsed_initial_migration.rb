@@ -7302,42 +7302,78 @@ class CollapsedInitialMigration < ActiveRecord::Migration[5.0]
     change_miq_metric_sequence "metrics_22", "metrics"
     change_miq_metric_sequence "metrics_23", "metrics"
 
-    add_miq_metric_table_inheritance "metric_rollups_01", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 1]
-    add_miq_metric_table_inheritance "metric_rollups_02", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 2]
-    add_miq_metric_table_inheritance "metric_rollups_03", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 3]
-    add_miq_metric_table_inheritance "metric_rollups_04", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 4]
-    add_miq_metric_table_inheritance "metric_rollups_05", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 5]
-    add_miq_metric_table_inheritance "metric_rollups_06", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 6]
-    add_miq_metric_table_inheritance "metric_rollups_07", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 7]
-    add_miq_metric_table_inheritance "metric_rollups_08", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 8]
-    add_miq_metric_table_inheritance "metric_rollups_09", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 9]
-    add_miq_metric_table_inheritance "metric_rollups_10", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 10]
-    add_miq_metric_table_inheritance "metric_rollups_11", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 11]
-    add_miq_metric_table_inheritance "metric_rollups_12", "metric_rollups", :conditions => ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 12]
-    add_miq_metric_table_inheritance "metrics_00", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 0]
-    add_miq_metric_table_inheritance "metrics_01", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 1]
-    add_miq_metric_table_inheritance "metrics_02", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 2]
-    add_miq_metric_table_inheritance "metrics_03", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 3]
-    add_miq_metric_table_inheritance "metrics_04", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 4]
-    add_miq_metric_table_inheritance "metrics_05", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 5]
-    add_miq_metric_table_inheritance "metrics_06", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 6]
-    add_miq_metric_table_inheritance "metrics_07", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 7]
-    add_miq_metric_table_inheritance "metrics_08", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 8]
-    add_miq_metric_table_inheritance "metrics_09", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 9]
-    add_miq_metric_table_inheritance "metrics_10", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 10]
-    add_miq_metric_table_inheritance "metrics_11", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 11]
-    add_miq_metric_table_inheritance "metrics_12", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 12]
-    add_miq_metric_table_inheritance "metrics_13", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 13]
-    add_miq_metric_table_inheritance "metrics_14", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 14]
-    add_miq_metric_table_inheritance "metrics_15", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 15]
-    add_miq_metric_table_inheritance "metrics_16", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 16]
-    add_miq_metric_table_inheritance "metrics_17", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 17]
-    add_miq_metric_table_inheritance "metrics_18", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 18]
-    add_miq_metric_table_inheritance "metrics_19", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 19]
-    add_miq_metric_table_inheritance "metrics_20", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 20]
-    add_miq_metric_table_inheritance "metrics_21", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 21]
-    add_miq_metric_table_inheritance "metrics_22", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 22]
-    add_miq_metric_table_inheritance "metrics_23", "metrics", :conditions => ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 23]
+    add_miq_metric_table_inheritance "metric_rollups_01", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_01", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 1]
+    add_miq_metric_table_inheritance "metric_rollups_02", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_02", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 2]
+    add_miq_metric_table_inheritance "metric_rollups_03", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_03", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 3]
+    add_miq_metric_table_inheritance "metric_rollups_04", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_04", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 4]
+    add_miq_metric_table_inheritance "metric_rollups_05", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_05", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 5]
+    add_miq_metric_table_inheritance "metric_rollups_06", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_06", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 6]
+    add_miq_metric_table_inheritance "metric_rollups_07", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_07", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 7]
+    add_miq_metric_table_inheritance "metric_rollups_08", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_08", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 8]
+    add_miq_metric_table_inheritance "metric_rollups_09", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_09", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 9]
+    add_miq_metric_table_inheritance "metric_rollups_10", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_10", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 10]
+    add_miq_metric_table_inheritance "metric_rollups_11", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_11", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 11]
+    add_miq_metric_table_inheritance "metric_rollups_12", "metric_rollups"
+    add_miq_metric_table_constraint  "metric_rollups_12", ["capture_interval_name != ? AND EXTRACT(MONTH FROM timestamp) = ?", "realtime", 12]
+    add_miq_metric_table_inheritance "metrics_00", "metrics"
+    add_miq_metric_table_constraint  "metrics_00", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 0]
+    add_miq_metric_table_inheritance "metrics_01", "metrics"
+    add_miq_metric_table_constraint  "metrics_01", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 1]
+    add_miq_metric_table_inheritance "metrics_02", "metrics"
+    add_miq_metric_table_constraint  "metrics_02", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 2]
+    add_miq_metric_table_inheritance "metrics_03", "metrics"
+    add_miq_metric_table_constraint  "metrics_03", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 3]
+    add_miq_metric_table_inheritance "metrics_04", "metrics"
+    add_miq_metric_table_constraint  "metrics_04", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 4]
+    add_miq_metric_table_inheritance "metrics_05", "metrics"
+    add_miq_metric_table_constraint  "metrics_05", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 5]
+    add_miq_metric_table_inheritance "metrics_06", "metrics"
+    add_miq_metric_table_constraint  "metrics_06", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 6]
+    add_miq_metric_table_inheritance "metrics_07", "metrics"
+    add_miq_metric_table_constraint  "metrics_07", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 7]
+    add_miq_metric_table_inheritance "metrics_08", "metrics"
+    add_miq_metric_table_constraint  "metrics_08", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 8]
+    add_miq_metric_table_inheritance "metrics_09", "metrics"
+    add_miq_metric_table_constraint  "metrics_09", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 9]
+    add_miq_metric_table_inheritance "metrics_10", "metrics"
+    add_miq_metric_table_constraint  "metrics_10", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 10]
+    add_miq_metric_table_inheritance "metrics_11", "metrics"
+    add_miq_metric_table_constraint  "metrics_11", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 11]
+    add_miq_metric_table_inheritance "metrics_12", "metrics"
+    add_miq_metric_table_constraint  "metrics_12", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 12]
+    add_miq_metric_table_inheritance "metrics_13", "metrics"
+    add_miq_metric_table_constraint  "metrics_13", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 13]
+    add_miq_metric_table_inheritance "metrics_14", "metrics"
+    add_miq_metric_table_constraint  "metrics_14", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 14]
+    add_miq_metric_table_inheritance "metrics_15", "metrics"
+    add_miq_metric_table_constraint  "metrics_15", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 15]
+    add_miq_metric_table_inheritance "metrics_16", "metrics"
+    add_miq_metric_table_constraint  "metrics_16", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 16]
+    add_miq_metric_table_inheritance "metrics_17", "metrics"
+    add_miq_metric_table_constraint  "metrics_17", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 17]
+    add_miq_metric_table_inheritance "metrics_18", "metrics"
+    add_miq_metric_table_constraint  "metrics_18", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 18]
+    add_miq_metric_table_inheritance "metrics_19", "metrics"
+    add_miq_metric_table_constraint  "metrics_19", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 19]
+    add_miq_metric_table_inheritance "metrics_20", "metrics"
+    add_miq_metric_table_constraint  "metrics_20", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 20]
+    add_miq_metric_table_inheritance "metrics_21", "metrics"
+    add_miq_metric_table_constraint  "metrics_21", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 21]
+    add_miq_metric_table_inheritance "metrics_22", "metrics"
+    add_miq_metric_table_constraint  "metrics_22", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 22]
+    add_miq_metric_table_inheritance "metrics_23", "metrics"
+    add_miq_metric_table_constraint  "metrics_23", ["capture_interval_name = ? AND EXTRACT(HOUR FROM timestamp) = ?", "realtime", 23]
 
     add_trigger "before", "metrics", "metrics_inheritance_before", <<-SQL
       CASE EXTRACT(HOUR FROM NEW.timestamp)

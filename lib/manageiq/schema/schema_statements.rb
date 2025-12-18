@@ -27,13 +27,24 @@ module ManageIQ
         execute("DROP VIEW #{name}")
       end
 
-      def add_miq_metric_table_inheritance(table, inherit_from, options = {})
+      # Adding inheritance constraint is done from collapsed_initial_migration only.  Constraints are dumped
+      # from the rails schema dumper.
+      # TODO: Change the collapsed_initial_migration to leverage t.check_constraint so we can drop this method.
+      #
+      def add_miq_metric_table_constraint(table, conditions)
         quoted_table      = quote_table_name(table)
-        quoted_inherit    = quote_table_name(inherit_from)
         quoted_constraint = quote_column_name("#{table}_inheritance_check")
-        conditions        = sanitize_sql_for_conditions(options[:conditions])
+        conditions        = sanitize_sql_for_conditions(conditions)
 
         execute("ALTER TABLE #{quoted_table} ADD CONSTRAINT #{quoted_constraint} CHECK (#{conditions})", 'Add inheritance check constraint')
+      end
+
+      # Adding table inheritance is done in both schema_dumper and collapsed_initial_migration
+      #
+      def add_miq_metric_table_inheritance(table, inherit_from)
+        quoted_table      = quote_table_name(table)
+        quoted_inherit    = quote_table_name(inherit_from)
+
         execute("ALTER TABLE #{quoted_table} INHERIT #{quoted_inherit}", 'Add table inheritance')
       end
 
