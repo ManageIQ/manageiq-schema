@@ -57,6 +57,21 @@ module ManageIQ
         execute("ALTER TABLE #{quoted_table} NO INHERIT #{quoted_inherit}", 'Drop table inheritance')
       end
 
+      def inherited_table_names(table_name) # :nodoc:
+        scope = quoted_scope(table_name, type: "BASE TABLE")
+
+        query_values(<<~SQL, "SCHEMA")
+          SELECT parent.relname
+          FROM pg_catalog.pg_inherits i
+            JOIN pg_catalog.pg_class child ON i.inhrelid = child.oid
+            JOIN pg_catalog.pg_class parent ON i.inhparent = parent.oid
+            LEFT JOIN pg_namespace n ON n.oid = child.relnamespace
+          WHERE child.relname = #{scope[:name]}
+            AND child.relkind IN (#{scope[:type]})
+            AND n.nspname = #{scope[:schema]}
+        SQL
+      end if Rails.version < "8.0"
+
       def change_miq_metric_sequence(table, inherit_from)
         drop_sequence(table)
         change_column_default(table, :id, -> { "nextval('#{inherit_from}_id_seq')" })

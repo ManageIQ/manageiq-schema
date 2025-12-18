@@ -4,17 +4,53 @@ module ManageIQ
       METRIC_ROLLUP_TABLE_REGEXP = /(?<METRIC_TYPE>metrics?_?.*)_(?<CHILD_TABLE_NUM>\d\d)$/.freeze
 
       def tables(stream)
-        super
+        ignoring_tables(inherited_tables, stream) { super }
+        ignoring_tables(base_tables, stream) { super }
+
         miq_metric_table_sequences(stream)
         miq_metric_table_inheritances(stream)
         miq_metric_views(stream)
         triggers(stream)
       end
 
+      # We need to ignore tables that are inherited from the parent table because the default
+      # behavior for schema dumping the tables is to dump them sorted:
+      # https://github.com/rails/rails/blob/624fe3cdb9ab774ff598af29f408425178da6677/activerecord/lib/active_record/schema_dumper.rb#L137
+      # This leads to an incorrect sequence in schema.rb:
+      # a) create_table "metric_rollups_01", id: :bigint, options: "INHERITS (metric_rollups_base)"...
+      # b) create_table "metric_rollups_base", force: :cascade do |t|
+      # You're not able to schema load from the dumped schema because metric_rollups_base is
+      # not created at the time a) references it when creating metric_rollups_01.
+      #
+      # We mention this as a long known problem, see the comment from
+      # miq_metric_table_inheritances below:
+      #
+      # "Must be done after all of the table definitions since `metrics_01` is
+      # dumped prior to `metrics_base`, etc."
+      #
+      # We could resolve this by renaming the base table so it came before the subtables alphabetically or
+      # if rails's schema_dumper's tables method handled inheritance and partitioning by ensuring to dump the
+      # base table before the subtables.
+      #
+      # Instead, we resolve this by doing the following:
+      # * Use the ignore_tables feature in rails to ignore the subtables in the tables method
+      #   to dump the base tables and finally, we ignore the base tables and dump the subtables.
+      # * Note: we're manually setting it via ivar because the cattr_accessor needs to be set before
+      #   the schema dumper is initialized:
+      #   https://github.com/rails/rails/blob/624fe3cdb9ab774ff598af29f408425178da6677/activerecord/lib/active_record/schema_dumper.rb#L78-L81
+      def ignoring_tables(tables, stream)
+        before = @ignore_tables.dup
+        @ignore_tables |= tables
+
+        yield
+
+        stream.puts
+        @ignore_tables = before
+      end
+
       def table(table, stream)
         super
         add_id_column_comment(table, stream)
-        track_miq_metric_table_inheritance(table)
       end
 
       def add_id_column_comment(table, stream)
@@ -29,9 +65,11 @@ module ManageIQ
       end
 
       def miq_metric_table_sequences(stream)
-        inherited_metrics_tables.each do |(table, inherit_from)|
-          stream.puts "  change_miq_metric_sequence #{table.inspect}, " \
-                          "#{inherit_from.inspect}"
+        inherited_tables.each do |table|
+          ActiveRecord::Base.connection.inherited_table_names(table).each do |inherit_from|
+            stream.puts "  change_miq_metric_sequence #{table.inspect}, " \
+                        "#{inherit_from.inspect}"
+          end
         end
 
         stream.puts
@@ -40,11 +78,17 @@ module ManageIQ
       # Must be done after all of the table definitions since `metrics_01` is
       # dumped prior to `metrics_base`, etc.
       #
+      # TODO: Remove this once we upgrade to Rails 8.0 and drop support for 7.2!
       def miq_metric_table_inheritances(stream)
-        inherited_metrics_tables.each do |(table, inherit_from)|
-          child_table       = remove_prefix_and_suffix(table).inspect
-          stream.puts "  add_miq_metric_table_inheritance #{child_table}, " \
-                          "#{inherit_from.inspect} "
+        # FYI, Rails 8.0 added this in https://github.com/rails/rails/pull/50475
+        return if Rails.version >= "8.0"
+
+        inherited_tables.each do |table|
+          child_table = remove_prefix_and_suffix(table).inspect
+          ActiveRecord::Base.connection.inherited_table_names(table).each do |inherit_from|
+            stream.puts "  add_miq_metric_table_inheritance #{child_table}, " \
+                        "#{inherit_from.inspect} "
+          end
         end
 
         stream.puts
@@ -62,7 +106,7 @@ module ManageIQ
           # Inverse of the case statement in add_trigger_hook
           direction_key = direction.downcase.gsub(/\s/, "")
 
-          # Formats the SQL we get from the database to do that following:
+          # Formats the SQL we get from the database to do the following:
           #
           # - Removes the "BEGIN" and "END;" stanzas
           # - Chomps the new lines from the beginning (keeps existing indent)
@@ -84,28 +128,19 @@ module ManageIQ
 
       private
 
-      def track_miq_metric_table_inheritance(table)
-        return unless table.match?(METRIC_ROLLUP_TABLE_REGEXP)
-        return unless (inherit_from = determine_table_parent(table))
-
-        inherited_metrics_tables << [table, inherit_from]
+      def base_inherited_tables_partition
+        @base_inherited_tables_partition ||= ActiveRecord::Base.connection.tables.sort.partition do |t|
+          parent = ActiveRecord::Base.connection.inherited_table_names(t)
+          parent.blank?
+        end
       end
 
-      def inherited_metrics_tables
-        @inherited_metrics_tables ||= []
+      def base_tables
+        base_inherited_tables_partition.first
       end
 
-      def determine_table_parent(table_name)
-        table = @connection.execute(<<-SQL)
-          SELECT pg_class.relname AS parent_table
-          FROM   pg_catalog.pg_inherits
-          JOIN pg_class ON pg_class.oid = pg_inherits.inhparent
-          WHERE inhrelid = '#{table_name}'::regclass
-        SQL
-
-        return if table.first.nil?
-
-        table.first["parent_table"]
+      def inherited_tables
+        base_inherited_tables_partition.last
       end
 
       def column_spec_for_primary_key(column)
