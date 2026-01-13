@@ -57,20 +57,27 @@ module ManageIQ
         execute("ALTER TABLE #{quoted_table} NO INHERIT #{quoted_inherit}", 'Drop table inheritance')
       end
 
-      def inherited_table_names(table_name) # :nodoc:
-        scope = quoted_scope(table_name, type: "BASE TABLE")
+      # Backport of the 8.0.4 version of the method for use by rails 7.2 until we drop 7.2
+      # From: https://github.com/rails/rails/blob/v8.0.4/activerecord/lib/active_record/connection_adapters/postgresql/schema_statements.rb#L203-L217
+      if Rails.version < "8.0"
+        # Returns the inherited table name of a given table
+        def inherited_table_names(table_name) # :nodoc:
+          scope = quoted_scope(table_name, type: "BASE TABLE")
 
-        query_values(<<~SQL, "SCHEMA")
-          SELECT parent.relname
-          FROM pg_catalog.pg_inherits i
-            JOIN pg_catalog.pg_class child ON i.inhrelid = child.oid
-            JOIN pg_catalog.pg_class parent ON i.inhparent = parent.oid
-            LEFT JOIN pg_namespace n ON n.oid = child.relnamespace
-          WHERE child.relname = #{scope[:name]}
-            AND child.relkind IN (#{scope[:type]})
-            AND n.nspname = #{scope[:schema]}
-        SQL
-      end if Rails.version < "8.0"
+          query_values(<<~SQL, "SCHEMA")
+            SELECT parent.relname
+            FROM pg_catalog.pg_inherits i
+              JOIN pg_catalog.pg_class child ON i.inhrelid = child.oid
+              JOIN pg_catalog.pg_class parent ON i.inhparent = parent.oid
+              LEFT JOIN pg_namespace n ON n.oid = child.relnamespace
+            WHERE child.relname = #{scope[:name]}
+              AND child.relkind IN (#{scope[:type]})
+              AND n.nspname = #{scope[:schema]}
+          SQL
+        end
+      else
+        puts "\e[33mWarning: If rails 7.0 is no longer supported, this patch for rails 8's inherited_table_names can be deleted :-) #{__FILE__}:#{__LINE__}\e[0m"
+      end
 
       def change_miq_metric_sequence(table, inherit_from)
         drop_sequence(table)
