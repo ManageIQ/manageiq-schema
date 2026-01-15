@@ -10,10 +10,12 @@ class CollapsedInitialMigration < ActiveRecord::Migration[5.0]
     # If a user has not upgraded to at least ManageIQ Gaprindashvili, then they
     #   will have entries in their schema_migrations table, but will not have
     #   migration 20171030131403. This migration will run and disallow that case.
-    if table_exists?("schema_migrations") &&
-       connection.select_value("SELECT COUNT(*) FROM schema_migrations") != 0
-      raise "This database cannot be migrated. You must first upgrade this " \
-            "database using the ManageIQ Gaprindashvili release."
+    if table_exists?("schema_migrations")
+      versions = connection.select_values("SELECT version FROM schema_migrations")
+      if versions.present? && versions != ["0"]
+        raise "This database cannot be migrated. You must first upgrade this " \
+              "database using the ManageIQ Gaprindashvili release."
+      end
     end
 
     # This collapsed initial migration is partly generated from Rails' schema

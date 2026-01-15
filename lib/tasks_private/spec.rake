@@ -13,7 +13,8 @@ namespace :spec do
     puts "** Creating database with REGION #{ENV["REGION"]}"
   end
 
-  task :setup_db => [:setup_region, "db:drop", "db:create", "db:migrate"]
+  # Note, db:migrate:reset does drop, create, load schema, migrate
+  task :setup_db => [:setup_region, "db:migrate:reset"]
 
   desc "Prepare all specs"
   task :setup => [:initialize, :setup_db]
