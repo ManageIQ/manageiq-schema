@@ -76,7 +76,7 @@ module ManageIQ
           SQL
         end
       else
-        puts "\e[33mWarning: If rails 7.0 is no longer supported, this patch for rails 8's inherited_table_names can be deleted :-) #{__FILE__}:#{__LINE__}\e[0m"
+        STDERR.puts "\e[33mWarning: If rails 7.x is no longer supported, this patch for rails 8's inherited_table_names can be deleted :-) #{__FILE__}:#{__LINE__}\e[0m"
       end
 
       def change_miq_metric_sequence(table, inherit_from)
