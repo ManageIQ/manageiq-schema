@@ -9,8 +9,10 @@ class SetDefaultOnExistingServerRoleRecords < ActiveRecord::Migration[7.2]
   end
 
   def up
-    # All new server_role records will default to false so we only need
-    # to set specific ones to true here
-    ServerRole.in_my_region.where(:name => DEFAULT_ROLES).update_all(:default => true)
+    say_with_time("Setting default on server roles") do
+      # All new server_role records will default to false so we only need
+      # to set specific ones to true here
+      ServerRole.in_my_region.where(:name => DEFAULT_ROLES).update_all(:default => true)
+    end
   end
 end
