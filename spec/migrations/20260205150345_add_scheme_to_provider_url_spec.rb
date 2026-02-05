@@ -17,7 +17,7 @@ describe AddSchemeToProviderUrl do
       migrate
 
       expect(awx_endpoint.reload.url).to eq("http://192.168.122.10:3000")
-      expect(aap_endpoint.reload.url).to eq("http://192.168.122.20:3000")
+      expect(aap_endpoint.reload.url).to eq("https://192.168.122.20:3000")
     end
 
     it "doesn't add http to a url with a scheme" do
