@@ -1,6 +1,4 @@
 class AddSchemeToProviderUrl < ActiveRecord::Migration[7.2]
-  PROVIDER_TYPES = %w[ManageIQ::Providers::Awx::Provider ManageIQ::Providers::AnsibleTower::Provider].freeze
-
   class Endpoint < ActiveRecord::Base
     include ActiveRecord::IdRegions
   end
@@ -12,13 +10,22 @@ class AddSchemeToProviderUrl < ActiveRecord::Migration[7.2]
   end
 
   def change
-    say_with_time("Adding http:// scheme to Provider url") do
-      providers = Provider.in_my_region.where(:type => PROVIDER_TYPES)
+    say_with_time("Adding http:// scheme to Awx::Provider urls") do
+      providers = Provider.in_my_region.where(:type => "ManageIQ::Providers::Awx::Provider")
       Endpoint.in_my_region
               .where(:resource_type => "Provider", :resource_id => providers)
               .where.not(:url => nil)
               .where.not("url LIKE ?", "%://%")
               .update_all(["url = CONCAT(?, url)", "http://"])
+    end
+
+    say_with_time("Adding https:// scheme to AnsibleTower::Provider urls") do
+      providers = Provider.in_my_region.where(:type => "ManageIQ::Providers::AnsibleTower::Provider")
+      Endpoint.in_my_region
+              .where(:resource_type => "Provider", :resource_id => providers)
+              .where.not(:url => nil)
+              .where.not("url LIKE ?", "%://%")
+              .update_all(["url = CONCAT(?, url)", "https://"])
     end
   end
 end
