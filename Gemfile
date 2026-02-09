@@ -18,7 +18,7 @@ minimum_version =
   when "8.0"
     "~>8.0.4"
   else
-    "~>7.2.3"
+    "~>8.0.4"
   end
 
 gem "rails", minimum_version
