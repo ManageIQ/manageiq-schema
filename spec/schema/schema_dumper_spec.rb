@@ -48,19 +48,7 @@ describe "SchemaDumper" do
   end
 
   context "metrics table inheritance" do
-    it "Rails 7.x: appends add_miq_metric_table_inheritance for all metrics tables" do
-      skip("Skipping since Rails 8 directly supports schema dumping INHERITS for the metrics subtables") if Rails.version >= "8.0"
-      metric_inheritances = schema.scan(/^\s*add_miq_metric_table_inheritance "([^"]+)"/).flatten
-
-      expect(metric_inheritances.count).to eq(metric_list.count + metric_rollup_list.count)
-
-      combined_metric_list.each do |metric_subdivision|
-        expect(metric_inheritances).to include(metric_subdivision), "add_miq_metric_table_inheritance not defined for #{metric_subdivision}"
-      end
-    end
-
-    it "Rails 8: dumps INHERITS the correct number of times per base metric table" do
-      skip("Skipping since Rails 8 directly supports schema dumping INHERITS natively") if Rails.version < "8.0"
+    it "dumps INHERITS the correct number of times per base metric table" do
       expect(schema.scan('INHERITS (metrics_base)').flatten.count).to eq(24)        # 24 hours per day   - 1 subtable each
       expect(schema.scan('INHERITS (metric_rollups_base)').flatten.count).to eq(12) # 12 months per year - 1 subtable each
     end

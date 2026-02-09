@@ -8,7 +8,6 @@ module ManageIQ
         ignoring_tables(base_tables, stream) { super }
 
         miq_metric_table_sequences(stream)
-        miq_metric_table_inheritances(stream)
         miq_metric_views(stream)
         triggers(stream)
       end
@@ -69,25 +68,6 @@ module ManageIQ
           ActiveRecord::Base.connection.inherited_table_names(table).each do |inherit_from|
             stream.puts "  change_miq_metric_sequence #{table.inspect}, " \
                         "#{inherit_from.inspect}"
-          end
-        end
-
-        stream.puts
-      end
-
-      # Must be done after all of the table definitions since `metrics_01` is
-      # dumped prior to `metrics_base`, etc.
-      #
-      # TODO: Remove this once we upgrade to Rails 8.0 and drop support for 7.2!
-      def miq_metric_table_inheritances(stream)
-        # FYI, Rails 8.0 added this in https://github.com/rails/rails/pull/50475
-        return if Rails.version >= "8.0"
-
-        inherited_tables.each do |table|
-          child_table = remove_prefix_and_suffix(table).inspect
-          ActiveRecord::Base.connection.inherited_table_names(table).each do |inherit_from|
-            stream.puts "  add_miq_metric_table_inheritance #{child_table}, " \
-                        "#{inherit_from.inspect} "
           end
         end
 

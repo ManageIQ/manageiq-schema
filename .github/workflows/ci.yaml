@@ -22,7 +22,6 @@ jobs:
         - '3.3'
         - '3.4'
         rails-version:
-        - '7.2'
         - '8.0'
     services:
       postgres:
