@@ -24,5 +24,5 @@ minimum_version =
 gem "rails", minimum_version
 
 # security fixes for indirect dependencies
-gem "rack", ">=2.2.20" # CVE-2025-61919 https://github.com/advisories/GHSA-6xw4-3v39-52mm
-gem "thor", ">= 1.4.0" # CVE-2025-54314 https://github.com/advisories/GHSA-mqcp-p2hv-vw6x (railties)
+gem "rack", ">= 2.2.22" # CVE-2026-22860 https://github.com/advisories/GHSA-mxw3-3hh2-x2mh
+gem "thor", ">= 1.4.0"  # CVE-2025-54314 https://github.com/advisories/GHSA-mqcp-p2hv-vw6x (railties)
