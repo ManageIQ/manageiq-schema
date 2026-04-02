@@ -7,9 +7,7 @@ class ReencryptPasswordScramsha < ActiveRecord::Migration[6.1]
       username = db_config[:username]
       password = connection.raw_connection.encrypt_password(db_config[:password], username, "scram-sha-256")
 
-      connection.execute <<-SQL
-        ALTER ROLE #{username} WITH PASSWORD '#{password}';
-      SQL
+      connection.execute("ALTER ROLE #{PG::Connection.quote_ident(username)} WITH PASSWORD #{connection.quote(password)};")
     end
   end
 end
