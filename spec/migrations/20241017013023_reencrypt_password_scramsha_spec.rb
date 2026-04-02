@@ -4,32 +4,53 @@ require_migration
 # file if you do no need it.
 describe ReencryptPasswordScramsha do
   migration_context :up do
-    it "Ensures that the user password is stored as scram-sha-256" do
+    it "ensures that the user password is stored as scram-sha-256" do
       allow(ActiveRecord::Base.connection).to receive(:execute).and_call_original
 
       username = ActiveRecord::Base.connection_db_config.configuration_hash[:username]
 
       allow(ActiveRecord::Base.connection_db_config).to receive(:configuration_hash).and_wrap_original do |original_method, *args, &block|
         # set a value for any calls originating from the migration file, not from rails itself
-        original_method.call(*args, &block).dup.tap { |i| i[:password] ||= "abc" if caller_locations.any? {|loc| loc.path.include?(migration_path)} }
+        original_method.call(*args, &block).dup.tap do |i|
+          i[:password] ||= "abc" if caller_locations.any? { |loc| loc.path.include?(migration_path) }
+        end
       end
-      expect(ActiveRecord::Base.connection).to receive(:execute).with(a_string_matching(/ALTER ROLE #{username} WITH PASSWORD \'SCRAM-SHA-256.*\'\;/))
+      expect(ActiveRecord::Base.connection).to receive(:execute).with(a_string_matching(/^ALTER ROLE "#{username}" WITH PASSWORD 'SCRAM-SHA-256.*';$/))
 
       migrate
     end
 
-    it "Handles connections with no password" do
+    it "handles connections with no password" do
+      allow(ActiveRecord::Base.connection_db_config).to receive(:configuration_hash).and_wrap_original do |original_method, *args, &block|
+        # set a value for any calls originating from the migration file, not from rails itself
+        original_method.call(*args, &block).dup.tap do |i|
+          i.delete(:password) if caller_locations.any? { |loc| loc.path.include?(migration_path) }
+        end
+      end
+      expect(ActiveRecord::Base.connection).not_to receive(:execute)
+
+      migrate
+    end
+
+    it "handles roles with special characters" do
       allow(ActiveRecord::Base.connection).to receive(:execute).and_call_original
 
-      username = ActiveRecord::Base.connection_db_config.configuration_hash[:username]
+      username = "test-role-name"
 
       allow(ActiveRecord::Base.connection_db_config).to receive(:configuration_hash).and_wrap_original do |original_method, *args, &block|
         # set a value for any calls originating from the migration file, not from rails itself
-        original_method.call(*args, &block).dup.tap { |i| i.delete(:password) if caller_locations.any? {|loc| loc.path.include?(migration_path)} }
+        original_method.call(*args, &block).dup.tap do |i|
+          if caller_locations.any? { |loc| loc.path.include?(migration_path) }
+            i[:password] ||= "abc"
+            i[:username] = username
+          end
+        end
       end
-      expect(ActiveRecord::Base.connection).not_to receive(:execute).with(a_string_matching(/ALTER ROLE.*\'\;/))
+      expect(ActiveRecord::Base.connection).to receive(:execute).with(a_string_matching(/^ALTER ROLE "#{username}" WITH PASSWORD 'SCRAM-SHA-256.*';$/))
 
-      migrate
+      # Check that migration fails not because of a SyntaxError in quoting the role,
+      # but because the role does not exist in our test database.
+      expect { migrate }.to raise_error(StandardError, /PG::UndefinedObject: ERROR:  role "#{username}" does not exist/)
     end
   end
 end
