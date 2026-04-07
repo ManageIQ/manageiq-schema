@@ -67,9 +67,14 @@ class ConvertRoleNamesToIdsInVisibility < ActiveRecord::Migration[8.0]
     valid_ids = []
     invalid_names = []
 
+    role_names = roles.select { |r| r.kind_of?(String) && r != "_ALL_" }
+
+    # fetch all roles at once
+    roles_by_name = MiqUserRole.in_my_region.where(:name => role_names).index_by(&:name)
+
     roles.each do |role_name_or_id|
       if role_name_or_id.kind_of?(String) && role_name_or_id != "_ALL_"
-        role = MiqUserRole.in_my_region.where(:name => role_name_or_id).first
+        role = roles_by_name[role_name_or_id]
         if role
           valid_ids << role.id
         else
@@ -103,9 +108,15 @@ class ConvertRoleNamesToIdsInVisibility < ActiveRecord::Migration[8.0]
     valid_names = []
     invalid_ids = []
 
+    # extract role IDs for the upfront query
+    role_ids = roles.select { |r| r.kind_of?(Integer) || (r.kind_of?(String) && r.match?(/^\d+$/)) }.collect(&:to_i)
+
+    # fetch all roles at once
+    roles_by_id = MiqUserRole.in_my_region.where(:id => role_ids).index_by(&:id)
+
     roles.each do |role_id|
       if role_id.kind_of?(Integer) || (role_id.kind_of?(String) && role_id.match?(/^\d+$/))
-        role = MiqUserRole.in_my_region.where(:id => role_id.to_i).first
+        role = roles_by_id[role_id.to_i]
         if role
           valid_names << role.name
         else
