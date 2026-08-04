@@ -13,15 +13,17 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
+# rubocop:disable Lint/DuplicateBranch, Style/IdenticalConditionalBranches
 minimum_version =
-  case ENV['TEST_RAILS_VERSION']
+  case ENV.fetch('TEST_RAILS_VERSION', nil)
   when "8.0"
-    "~>8.0.5"
+    ["~>8.0.5", ">=8.0.5.1"]
   else
-    "~>8.0.5"
+    ["~>8.0.5", ">=8.0.5.1"]
   end
+# rubocop:enable Lint/DuplicateBranch, Style/IdenticalConditionalBranches
 
-gem "rails", minimum_version
+gem "rails", *minimum_version
 
 # security fixes for indirect dependencies
 gem "net-imap", ">= 0.6.4.1" # CVE-2026-47242 https://github.com/ruby/net-imap/security/advisories/GHSA-46q3-7gv7-qmgg
