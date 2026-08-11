@@ -19,11 +19,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "ancestry"
-  spec.add_dependency "activerecord-id_regions", "~> 0.6.0"
+  spec.add_dependency "activerecord-id_regions", "~> 0.7.0"
   spec.add_dependency "manageiq-password",       ">= 1.2.0", "< 2"
   spec.add_dependency "more_core_extensions",    ">= 3.5", "< 5"
   spec.add_dependency "pg"
-  spec.add_dependency "rails",                   ">=8.0", "<8.1"
+  spec.add_dependency "rails",                   ">=8.0", "<8.2"
   spec.add_dependency "json",                    "~>2.0"
 
   spec.add_development_dependency "manageiq-style"

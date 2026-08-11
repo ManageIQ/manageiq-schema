@@ -16,6 +16,8 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 # rubocop:disable Lint/DuplicateBranch, Style/IdenticalConditionalBranches
 minimum_version =
   case ENV.fetch('TEST_RAILS_VERSION', nil)
+  when "8.1"
+    ["~>8.1.3"]
   when "8.0"
     ["~>8.0.5", ">=8.0.5.1"]
   else
