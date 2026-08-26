@@ -25,7 +25,7 @@ jobs:
         - '8.0'
     services:
       postgres:
-        image: manageiq/postgresql:13
+        image: manageiq/postgresql:16-el10
         env:
           POSTGRESQL_USER: root
           POSTGRESQL_PASSWORD: smartvm
@@ -37,7 +37,7 @@ jobs:
       PGHOST: localhost
       TEST_RAILS_VERSION: "${{ matrix.rails-version }}"
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
