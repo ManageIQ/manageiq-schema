@@ -132,7 +132,6 @@ iso_images
 jobs
 key_pairs_vms
 lans
-lifecycle_events
 load_balancer_health_check_members
 load_balancer_health_checks
 load_balancer_listener_pools
