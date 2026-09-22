@@ -23,6 +23,7 @@ jobs:
         - '3.4'
         rails-version:
         - '8.0'
+        - '8.1'
     services:
       postgres:
         image: manageiq/postgresql:16-el10
