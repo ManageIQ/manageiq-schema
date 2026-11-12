@@ -26,11 +26,11 @@ class UpdateSwitchTypes < ActiveRecord::Migration[5.0]
   def up
     say_with_time("Setting switch types") do
       # Switches connected to VMware hosts which are shared are DVS type
-      Switch.distinct.where(:type => nil, :shared => true).joins(:hosts).where(:hosts => {:type => VMWARE_HOSTS})
+      Switch.where(:type => nil, :shared => true).joins(:hosts).where(:hosts => {:type => VMWARE_HOSTS})
             .update_all(:type => VMWARE_DISTRIBUTED_VIRTUAL_SWITCH)
 
       # Switches connected to VMware hosts which are not shared are standard host switches
-      Switch.distinct.where(:type => nil, :shared => [false, nil]).joins(:hosts).where(:hosts => {:type => VMWARE_HOSTS})
+      Switch.where(:type => nil, :shared => [false, nil]).joins(:hosts).where(:hosts => {:type => VMWARE_HOSTS})
             .update_all(:type => VMWARE_HOST_VIRTUAL_SWITCH)
     end
   end
