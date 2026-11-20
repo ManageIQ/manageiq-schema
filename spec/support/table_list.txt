@@ -127,6 +127,11 @@ host_service_groups
 host_storages
 host_switches
 hosts
+hpc_job_nodes
+hpc_jobs
+hpc_nodes
+hpc_queue_nodes
+hpc_queues
 import_file_uploads
 iso_images
 jobs
