@@ -31,12 +31,15 @@ class CreateHpcTables < ActiveRecord::Migration[8.0]
       t.integer  :gpus
       t.string   :origin
       t.string   :power_state
+      t.string   :lives_on_type
+      t.bigint   :lives_on_id
       t.jsonb    :extra_attributes, :default => {}
       t.datetime :deleted_on, :index => true
 
       t.timestamps
 
       t.index %i[ems_id ems_ref], :unique => true, :where => "deleted_on IS NULL"
+      t.index %i[lives_on_id lives_on_type]
     end
 
     create_table :hpc_queue_nodes do |t|
