@@ -3,6 +3,7 @@ class RemoveVimStringsFromMiqQueue < ActiveRecord::Migration[6.1]
   include MigrationHelper
 
   class MiqQueue < ActiveRecord::Base
+    self.table_name = "miq_queue"
   end
 
   def up

@@ -1,5 +1,7 @@
 class UpdateAuditManagedResourcesQueueName < ActiveRecord::Migration[6.1]
-  class MiqQueue < ActiveRecord::Base; end
+  class MiqQueue < ActiveRecord::Base
+    self.table_name = "miq_queue"
+  end
 
   def up
     say_with_time("Renaming audit_managed_resources queue items") do
