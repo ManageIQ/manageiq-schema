@@ -17,9 +17,9 @@ require File.join(Bundler::Plugin.index.load_paths("bundler-inject")[0], "bundle
 minimum_version =
   case ENV.fetch('TEST_RAILS_VERSION', nil)
   when "8.0"
-    ["~>8.0.5", ">=8.0.5.1"]
+    ["~>8.0.5", ">=8.0.5.2"]
   else
-    ["~>8.0.5", ">=8.0.5.1"]
+    ["~>8.0.5", ">=8.0.5.2"]
   end
 # rubocop:enable Lint/DuplicateBranch, Style/IdenticalConditionalBranches
 
